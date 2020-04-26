@@ -19,4 +19,18 @@ This project folder contains carbon footprint calculator module and the map modu
 
 Screen shots of our application:
 
-Carbon footprint calculator screen
+## Carbon footprint calculator screen.
+This page allows the user to select the mode of transport and calculate the total carbon emission that will be created for the particular trip
+
+<img src = "Screenshots/calculation.png" width = 400>
+
+## Map screen
+This page allows the user to search their destination and it also calculates distance between the source and destination of the trip and serves the calculation module for calculating carbon emission. 
+
+<img src= "Screenshots/map1.png" width = 400>
+
+It constitutes various components like it uses GoogleAPI for the map generation and for showing places recommendation in the search bar, it also provides polyline in order to show the appropriate route for the trip .
+
+<img src= "Screenshots/map2.png" width = 400>
+
+<img src= "Screenshots/map3.png" width = 400>
