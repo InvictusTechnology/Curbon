@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "990940347121",
+    "firebase_url": "https://curbontest1.firebaseio.com",
+    "project_id": "curbontest1",
+    "storage_bucket": "curbontest1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:990940347121:android:031d600a91abb8982d4750",
+        "android_client_info": {
+          "package_name": "invictustechnology.curbonapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "990940347121-10a7g6nrh0shomll2ni6uhih6ni98t0m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPzCuwvYYjkbz6WdQf3Viw8Vv4DfbXltw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "990940347121-10a7g6nrh0shomll2ni6uhih6ni98t0m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

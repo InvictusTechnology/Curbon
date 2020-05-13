@@ -1,22 +1,32 @@
 import 'package:flutter/material.dart';
 
+// Constants for GoogleMaps in MapScreen
+const googleAPIKey = "AIzaSyDlVVdxGqt8Y_H--YJlvTDtw4X6wXl-MtI";
+const double cameraZoom = 13;
+const double cameraTilt = 0;
+const double cameraBearing = 30;
+
 // Constants for colors
-const inactiveColor = Color(0xFF26CB7E);
+const inactiveColor = Colors.white;
 const activeColor = Color(0xFF67ECAB);
 
 // Constant for TextField Decoration
-const kTextFieldDecoration = InputDecoration(
-  hintText: 'Enter a value',
-  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+const kTextStyle = TextStyle(
+    fontSize: 15,
+    letterSpacing: 0.8,
+    fontWeight: FontWeight.bold,
+    color: Colors.white);
+const kTextFieldStyle = InputDecoration(
+  contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 50),
+  isDense: true,
   border: OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(32.0)),
+    borderRadius: BorderRadius.all(Radius.circular(30.0)),
   ),
   enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.blueAccent, width: 1.0),
-    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-  ),
+      borderSide: BorderSide(color: Color(0xFF26CB7E), width: 1),
+      borderRadius: BorderRadius.all(Radius.circular(30))),
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.blueAccent, width: 2.0),
-    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-  ),
+      borderSide: BorderSide(color: Color(0xFF67ECAB), width: 2),
+      borderRadius: BorderRadius.all(Radius.circular(30))),
+  hintText: 'Enter a value',
 );

@@ -1,67 +1,61 @@
+import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:fluttermapapp/Homepage.dart';
-import 'package:fluttermapapp/screen/home.dart';
-import './maps.dart';
-import './search.dart';
-import './sample.dart';
+import 'package:flutter/services.dart';
+import 'package:curbonapp/screen/details_screen.dart';
+import 'package:curbonapp/screen/first_screen.dart';
+import 'package:curbonapp/screen/forgot_password_screen.dart';
+import 'package:curbonapp/screen/home_screen.dart';
+import 'package:curbonapp/screen/loading_home_screen.dart';
+import 'package:curbonapp/screen/loading_screen.dart';
+import 'package:curbonapp/screen/registration_screen.dart';
+import 'package:curbonapp/screen/result_screen.dart';
+import 'package:curbonapp/screen/maps_screen.dart';
+import 'package:curbonapp/screen/splash_screen.dart';
+import 'package:curbonapp/screen/visualisation1.dart';
+import 'package:curbonapp/screen/login_screen.dart';
+import 'package:curbonapp/screen/profile_screen.dart';
 
-void main() => runApp(MaterialApp(home: BottomNavBar()));
-
-class BottomNavBar extends StatefulWidget {
-  @override
-  _BottomNavBarState createState() => _BottomNavBarState();
+void main() {
+  runApp(MainApp());
 }
 
-class _BottomNavBarState extends State<BottomNavBar> {
-  int _selectedPage = 0;
-  List _pageOptions = [
-    home(),
-    SamplePage(),
-    SearchPage(),
-  ];
-  GlobalKey _bottomNavigationKey = GlobalKey();
-
+// ignore: must_be_immutable
+class MainApp extends StatelessWidget {
+  FirebaseAnalytics analytics = FirebaseAnalytics();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: CurvedNavigationBar(
-        key: _bottomNavigationKey,
-        index: 2,
-        items: <Widget>[
-          Icon(Icons.home, size: 30),
-          Icon(Icons.map, size: 30),
-          Icon(Icons.search, size: 30),
-          Icon(Icons.pie_chart, size: 30),
-          Icon(Icons.account_circle, size: 30),
-        ],
-        color: Colors.tealAccent[700],
-        buttonBackgroundColor: Colors.tealAccent[700],
-        backgroundColor: Colors.tealAccent[400],
-        animationCurve: Curves.easeInOut,
-        animationDuration: Duration(milliseconds: 600),
-        onTap: (int index) {
-          setState(() {
-            _selectedPage = index;
-          });
-        },
-      ),
-      body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            Container(
-              color: Colors.amber,
-              child: Center(
-                child: Column(
-                  children: <Widget>[
-                    _pageOptions[_selectedPage],
-                  ],
-                ),
-              ),
-            ),
-          ],
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    return MaterialApp(
+      theme: ThemeData(
+        fontFamily: 'Proxima',
+        brightness: Brightness.light,
+        accentColor: Colors.white,
+        appBarTheme: AppBarTheme(
+          brightness: Brightness.light,
+          color: Color(0xFF26CB7E),
         ),
       ),
+      routes: {
+        '/': (context) => FirstScreen(),
+        '/calculate': (context) => ResultScreen(),
+        '/detail': (context) => UserDetailScreen(),
+        '/forgot': (context) => ForgotPasswordScreen(),
+        '/home': (context) => HomeScreen(),
+        '/loading': (context) => LoadingScreen(),
+        '/loading_home': (context) => LoadingHomeScreen(),
+        '/login': (context) => LoginScreen(),
+        '/map': (context) => MapScreen(),
+        '/profile': (context) => ProfileScreen(),
+        '/registration': (context) => RegistrationScreen(),
+        '/splash': (context) => SplashScreen(),
+        '/viz1': (BuildContext context) => Visualisation(),
+      },
+      initialRoute: '/splash',
+      navigatorObservers: [FirebaseAnalyticsObserver(analytics: analytics)],
     );
   }
 }
