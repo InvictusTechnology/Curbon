@@ -148,6 +148,19 @@ class _CarbonEmissionChartState extends State<CarbonEmissionChart> {
       lineTouchData: LineTouchData(
         touchTooltipData: LineTouchTooltipData(
           tooltipBgColor: Colors.blueGrey.withOpacity(0.8),
+          getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
+            return touchedBarSpots.map((barSpot) {
+              final flSpot = barSpot;
+              if (flSpot.x == 0 || flSpot.x == 6) {
+                return null;
+              }
+
+              return LineTooltipItem(
+                '${flSpot.y}  KG.CO2',
+                const TextStyle(color: Colors.white, fontSize: 14),
+              );
+            }).toList();
+          },
         ),
         touchCallback: (LineTouchResponse touchResponse) {},
         handleBuiltInTouches: true,

@@ -18,11 +18,11 @@ class VehicleCard extends StatelessWidget {
       onTap: onPress,
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
-        width: 65,
+        width: 72,
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.9),  
+              color: Colors.grey.withOpacity(0.9),
               blurRadius: 1.0,
               spreadRadius: 0.2,
               offset: Offset(2.0, 2.0), // shadow direction: bottom right

@@ -14,7 +14,7 @@ dependencies:
   flutter_google_places: ^0.2.4
   location: ^3.0.2
   google_maps_webservice: ^0.0.16
-  curved_navigation_bar: ^0.3.2
+  geocoder: ^0.2.1
   google_map_polyline: ^0.2.0+1
   auto_size_text: ^2.0.2
   charts_flutter: ^0.9.0

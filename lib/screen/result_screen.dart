@@ -71,6 +71,11 @@ class _ResultScreenState extends State<ResultScreen> {
           return 5;
         }
         break;
+      case 'Motorcycle':
+        {
+          return 3;
+        }
+        break;
       case 'Car':
         {
           return 2;
@@ -188,7 +193,7 @@ class _ResultScreenState extends State<ResultScreen> {
                   margin: EdgeInsets.only(bottom: 7),
                   child: Text(
                     transport,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
@@ -233,6 +238,7 @@ class _ResultScreenState extends State<ResultScreen> {
     String trainCarbon = whatIfCalculate(3);
     String bicycleCarbon = whatIfCalculate(4);
     String walkingCarbon = whatIfCalculate(5);
+    String motorcycleCarbon = whatIfCalculate(6);
 
     whatIfPages = [
       calculationBox(choice: 0, transport: 'Car', carbon: carCarbon),
@@ -241,6 +247,8 @@ class _ResultScreenState extends State<ResultScreen> {
       calculationBox(choice: 3, transport: 'Train', carbon: trainCarbon),
       calculationBox(choice: 4, transport: 'Bicycle', carbon: bicycleCarbon),
       calculationBox(choice: 5, transport: 'Walking', carbon: walkingCarbon),
+      calculationBox(
+          choice: 6, transport: 'Motorbike', carbon: motorcycleCarbon),
     ];
   }
 
@@ -384,7 +392,7 @@ class _ResultScreenState extends State<ResultScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(width: 40),
+                        SizedBox(width: 20),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -538,10 +546,16 @@ class _ResultScreenState extends State<ResultScreen> {
         size: 40,
         color: Colors.green[400],
       );
-    } else {
+    } else if (i == 5) {
       return Icon(
         Icons.directions_walk,
         size: 40,
+        color: Colors.green[400],
+      );
+    } else {
+      return Icon(
+        Icons.motorcycle,
+        size: 35,
         color: Colors.green[400],
       );
     }

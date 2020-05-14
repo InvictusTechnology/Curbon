@@ -38,6 +38,11 @@ class IconContainer extends StatelessWidget {
           transportIcon = Icons.directions_walk;
         }
         break;
+      case 'Motorcycle':
+        {
+          transportIcon = Icons.motorcycle;
+        }
+        break;
       default:
         {
           transportIcon = Icons.error_outline;

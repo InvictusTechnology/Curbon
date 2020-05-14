@@ -9,6 +9,7 @@ List<Transportation> transData = [
   Transportation(vehicle: "train", carbonEmission: 0.045),
   Transportation(vehicle: "bicycle", carbonEmission: 0.00),
   Transportation(vehicle: "walking", carbonEmission: 0.00),
+  Transportation(vehicle: "motorcycle", carbonEmission: 0.094),
 ];
 
 class Calculator {

@@ -7,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:geocoder/geocoder.dart';
 
 import 'package:curbonapp/calculator/distance.dart';
 import 'package:curbonapp/screen/result_screen.dart';
@@ -49,9 +50,22 @@ class _MapScreenState extends State<MapScreen> {
       Navigator.pushReplacementNamed(
           context, _hasLoggedIn == true ? '/loading_home' : '/');
 
+  Future<void> getStartingMessage() async {
+    final coordinates = new Coordinates(widget.currentLat, widget.currentLng);
+    var addresses =
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    var first = addresses.first;
+    setState(() {
+      startingMessage = first.addressLine;
+    });
+    print('----------->');
+    print(startingMessage);
+  }
+
   @override
   void initState() {
     super.initState();
+    getStartingMessage();
     initialLocation = CameraPosition(
         zoom: cameraZoom,
         bearing: cameraBearing,
@@ -227,7 +241,7 @@ class _MapScreenState extends State<MapScreen> {
               Column(
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.only(left: 15, right: 15, top: 5),
+                    margin: EdgeInsets.only(left: 15, right: 15, top: 10),
                     padding: EdgeInsets.all(2),
                     decoration: BoxDecoration(
                       border: Border.all(color: Color(0xFFc7c7c7)),
@@ -246,7 +260,7 @@ class _MapScreenState extends State<MapScreen> {
                             apiKey: googleAPIKey,
                             mode: Mode.overlay,
                           );
-                          displayPrediction(p, 2, homeScaffoldKey.currentState);
+                          displayPrediction(p, 1, homeScaffoldKey.currentState);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -255,7 +269,7 @@ class _MapScreenState extends State<MapScreen> {
                               child: Container(
                                 padding: EdgeInsets.only(right: 12),
                                 child: Text(
-                                  destinationMessage,
+                                  startingMessage,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       fontSize: 14, color: Color(0xFF474747)),
@@ -289,7 +303,7 @@ class _MapScreenState extends State<MapScreen> {
                             apiKey: googleAPIKey,
                             mode: Mode.overlay,
                           );
-                          displayPrediction(p, 1, homeScaffoldKey.currentState);
+                          displayPrediction(p, 2, homeScaffoldKey.currentState);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -298,7 +312,7 @@ class _MapScreenState extends State<MapScreen> {
                               child: Container(
                                 padding: EdgeInsets.only(right: 12),
                                 child: Text(
-                                  startingMessage,
+                                  destinationMessage,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       fontSize: 14, color: Color(0xFF474747)),
@@ -411,7 +425,7 @@ class _MapScreenState extends State<MapScreen> {
                                 ? activeColor
                                 : inactiveColor,
                             cardChild: IconContent(
-                              icon: Icons.motorcycle,
+                              icon: Icons.directions_bike,
                               label: 'Bicycle',
                             ),
                           ),
@@ -431,6 +445,24 @@ class _MapScreenState extends State<MapScreen> {
                             cardChild: IconContent(
                               icon: Icons.directions_walk,
                               label: 'Walking',
+                            ),
+                          ),
+                          VehicleCard(
+                            onPress: () {
+                              setState(() {
+                                selectedVehicle = 'Motorcycle';
+                                userChoice = 6;
+
+                                _visibleCalculate = true;
+                              });
+                            },
+                            colorBorder: activeColor,
+                            colorInside: selectedVehicle == 'Motorcycle'
+                                ? activeColor
+                                : inactiveColor,
+                            cardChild: IconContent(
+                              icon: Icons.motorcycle,
+                              label: 'Motorcycle',
                             ),
                           ),
                         ],

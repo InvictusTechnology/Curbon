@@ -234,7 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       selectChart: _selectedChart == 'Chart 1'
                           ? kActiveChart
                           : kInactiveChart,
-                      title: 'Chart 1',
+                      title: 'Trips',
                     ),
                     changeChartButton(
                         onTapped: () {
@@ -245,7 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         selectChart: _selectedChart == 'Chart 2'
                             ? kActiveChart
                             : kInactiveChart,
-                        title: 'Chart 2'),
+                        title: 'Transport'),
                     changeChartButton(
                         onTapped: () {
                           setState(() {
@@ -259,7 +259,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           topRight: Radius.circular(25),
                           bottomRight: Radius.circular(25),
                         ),
-                        title: 'Chart 3'),
+                        title: 'Carbon'),
                   ],
                 ),
                 widget.tripList[0].destination == 'No record of any address yet'
@@ -283,6 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return GestureDetector(
       onTap: onTapped,
       child: Container(
+        width: 90,
         margin: EdgeInsets.only(top: 20, bottom: 0),
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 6.5),
         decoration: BoxDecoration(
@@ -292,7 +293,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Text(
           title,
           textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
         ),
       ),
     );
