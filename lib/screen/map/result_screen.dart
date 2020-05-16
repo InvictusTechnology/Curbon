@@ -9,6 +9,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curbonapp/components/level_up_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:math';
 
 class ResultScreen extends StatefulWidget {
   final double distance;
@@ -161,20 +162,9 @@ class _ResultScreenState extends State<ResultScreen> {
     return Align(
       alignment: Alignment.topLeft,
       child: Container(
-        padding: EdgeInsets.all(12),
+        padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
             color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey[800],
-                blurRadius: 3.0, // has the effect of softening the shadow
-                spreadRadius: 1.0, // has the effect of extending the shadow
-                offset: Offset(
-                  2.0, // horizontal, move right 10
-                  2.0, // vertical, move down 10
-                ),
-              )
-            ],
             border: Border.all(
               color: Color(0xFF1b1b1b),
             ),
@@ -276,171 +266,169 @@ class _ResultScreenState extends State<ResultScreen> {
 
   @override
   Widget build(BuildContext context) {
+    int tipOne = Random().nextInt(TipsList().getTotalList());
+    int tipTwo = Random().nextInt(TipsList().getTotalList());
     return WillPopScope(
-      child: ModalProgressHUD(
-        inAsyncCall: showSpinner,
-        child: Scaffold(
-          bottomNavigationBar: BottomBar(
-            selectedIndex: 1,
-          ),
-          body: Container(
-            child: SafeArea(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-                child: Column(
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        'Your Carbon Emission',
-                        style: TextStyle(
-                          fontSize: 27.5,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF1b1b1b),
-                        ),
+      child: Scaffold(
+        bottomNavigationBar: BottomBar(
+          selectedIndex: 1,
+        ),
+        body: ModalProgressHUD(
+          inAsyncCall: showSpinner,
+          child: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+              child: Column(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Your Carbon Emission',
+                      style: TextStyle(
+                        fontSize: 27.5,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF1b1b1b),
                       ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          flex: 1,
-                          child: Column(
-                            children: <Widget>[
-                              infoText('To:'),
-                              infoText('From:'),
-                              infoText('Distance:'),
-                            ],
-                          ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          children: <Widget>[
+                            infoText('To:'),
+                            infoText('From:'),
+                            infoText('Distance:'),
+                          ],
                         ),
-                        Expanded(
-                          flex: 2,
-                          child: Column(
-                            children: <Widget>[
-                              resultText(widget.destination),
-                              resultText(widget.starting),
-                              resultText('$convertedDistance km'),
-                            ],
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          children: <Widget>[
+                            resultText(widget.destination),
+                            resultText(widget.starting),
+                            resultText('$convertedDistance km'),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          SizedBox(
+                            height: 35,
                           ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          children: [
-                            SizedBox(
-                              height: 35,
-                            ),
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: Container(
-                                padding: EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey[800],
-                                        blurRadius:
-                                            3.0, // has the effect of softening the shadow
-                                        spreadRadius:
-                                            1.0, // has the effect of extending the shadow
-                                        offset: Offset(
-                                          2.0, // horizontal, move right 10
-                                          2.0, // vertical, move down 10
-                                        ),
-                                      )
-                                    ],
-                                    border: Border.all(
-                                      color: Color(0xFF1b1b1b),
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.5)),
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Container(
-                                          margin: EdgeInsets.only(
-                                              right: 7, bottom: 7),
-                                          child: iconChooser(widget.userChoice),
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.only(
-                                              left: 7, bottom: 7),
-                                          child: Text(
-                                            widget.vehicle,
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                      '$result KgCO2',
-                                      style: TextStyle(fontSize: 20),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Container(
+                              padding: EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey[800],
+                                      blurRadius:
+                                          3.0, // has the effect of softening the shadow
+                                      spreadRadius:
+                                          1.0, // has the effect of extending the shadow
+                                      offset: Offset(
+                                        2.0, // horizontal, move right 10
+                                        2.0, // vertical, move down 10
+                                      ),
                                     )
                                   ],
-                                ),
+                                  border: Border.all(
+                                    color: Color(0xFF1b1b1b),
+                                  ),
+                                  borderRadius: BorderRadius.circular(12.5)),
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            right: 7, bottom: 7),
+                                        child: iconChooser(widget.userChoice),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(bottom: 7),
+                                        child: Text(
+                                          widget.vehicle,
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Text(
+                                    '$result KgCO2',
+                                    style: TextStyle(fontSize: 20),
+                                  )
+                                ],
                               ),
                             ),
-                          ],
-                        ),
-                        SizedBox(width: 20),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: Container(
-                                margin: EdgeInsets.only(top: 12.5),
-                                child: Text(
-                                  'What-If',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Container(
+                              margin: EdgeInsets.only(top: 12.5),
+                              child: Text(
+                                'What if',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
                               ),
                             ),
-                            Container(
-                              height: 100,
-                              width: 150,
-                              padding: EdgeInsets.only(right: 5),
-                              decoration: BoxDecoration(),
-                              child: PageView(
-                                physics: PageScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                controller: _pageController,
-                                children: whatIfPages,
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Container(
-                        margin: EdgeInsets.only(top: 20),
-                        child: Text(
-                          'What can you do?',
-                          style: TextStyle(fontSize: 25),
-                        ),
+                          ),
+                          Container(
+                            height: 100,
+                            width: 140,
+                            padding: EdgeInsets.only(right: 5),
+                            decoration: BoxDecoration(),
+                            child: PageView(
+                              physics: ClampingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              controller: _pageController,
+                              children: whatIfPages,
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Container(
+                      margin: EdgeInsets.only(top: 20),
+                      child: Text(
+                        'What can you do?',
+                        style: TextStyle(fontSize: 25),
                       ),
                     ),
-                    getTips(
-                        '1', TipsList().getTitle(0), TipsList().getContent(0)),
-                    getTips(
-                        '2', TipsList().getTitle(1), TipsList().getContent(1)),
-                  ],
-                ),
+                  ),
+                  getTips('1', TipsList().getTitle(tipOne),
+                      TipsList().getContent(tipOne)),
+                  getTips('2', TipsList().getTitle(tipTwo),
+                      TipsList().getContent(tipTwo)),
+                ],
               ),
             ),
           ),

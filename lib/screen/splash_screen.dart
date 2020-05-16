@@ -16,7 +16,6 @@ class _SplashScreenState extends State<SplashScreen>
     WidgetsFlutterBinding.ensureInitialized();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var email = prefs.getString('email');
-    print(email);
     Timer(Duration(seconds: 1), () {
       Navigator.pushReplacementNamed(
           context, email == null ? '/' : '/loading_home');

@@ -28,8 +28,15 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
       if (user != null) {
         loggedInUser = user;
       }
-      await loggedInUser.sendEmailVerification();
+      var name = user.displayName;
+      if (name != null) {
+        Navigator.pushReplacementNamed(context, '/loading_home');
+      }
+      if (!user.isEmailVerified) {
+        await loggedInUser.sendEmailVerification();
+      }
     } catch (e) {
+      Navigator.pushReplacementNamed(context, '/registration');
       throw e;
     }
   }
@@ -111,9 +118,20 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                   child: Image.asset('assets/detail_screen.png'),
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 30, horizontal: 40),
+                  margin: EdgeInsets.only(right: 30, left: 30, top: 10),
                   child: Text(
-                    'Thank you for being an integral part of the global mission towards Net Zero Carbon Emission. Our common objective is to help society reduce carbon emission',
+                    'Thank you for being an integral part of the global mission towards Net Zero Carbon Emission',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 17.5,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(right: 30, left: 30, top: 10),
+                  child: Text(
+                    'Our objective is to help society reduce carbon emission',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,

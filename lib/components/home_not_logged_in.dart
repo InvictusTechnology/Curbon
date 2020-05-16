@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:curbonapp/components/bottom_navigation_bar.dart';
 
-class HomeNotLoggedIn extends StatefulWidget {
-  @override
-  _HomeNotLoggedInState createState() => _HomeNotLoggedInState();
-}
-
-class _HomeNotLoggedInState extends State<HomeNotLoggedIn> {
+class HomeNotLoggedIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

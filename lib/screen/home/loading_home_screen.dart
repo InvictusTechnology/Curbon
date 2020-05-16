@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:curbonapp/screen/home_screen.dart';
+import 'package:curbonapp/screen/home/home_screen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:curbonapp/components/bottom_navigation_bar.dart';
 import 'package:curbonapp/trips/trips_constructor.dart';

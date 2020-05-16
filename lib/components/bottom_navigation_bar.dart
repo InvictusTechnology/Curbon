@@ -20,7 +20,7 @@ class _BottomBarState extends State<BottomBar>
         Navigator.pushReplacementNamed(context, '/loading');
       }
       if (widget.selectedIndex == 2) {
-        Navigator.pushReplacementNamed(context, '/viz1');
+        Navigator.pushReplacementNamed(context, '/visualisation');
       }
       if (widget.selectedIndex == 3) {
         Navigator.pushReplacementNamed(context, '/profile');

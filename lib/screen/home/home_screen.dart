@@ -3,13 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:curbonapp/components/bottom_navigation_bar.dart';
 import 'package:curbonapp/components/yes_chart_container.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:curbonapp/trips/trips_constructor.dart';
 import 'package:curbonapp/components/previous_trip_card.dart';
 import 'package:flutter/services.dart';
 import 'package:curbonapp/components/no_chart_container.dart';
 import 'package:curbonapp/components/home_not_logged_in.dart';
-import 'package:curbonapp/screen/triphistory_screen.dart';
+import 'package:curbonapp/screen/home/triphistory_screen.dart';
 
 const kInactiveChart = Color(0xFF4f5a70);
 const kActiveChart = Color(0xFF4373d1);
@@ -128,39 +127,14 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.only(top: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(left: 30, right: 10),
-                        child: Text(
-                          'Hello ${widget.name}',
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(right: 5),
-                        child: IconButton(
-                            icon: Icon(
-                              Icons.exit_to_app,
-                              size: 30,
-                            ),
-                            onPressed: () async {
-                              _auth.signOut();
-                              SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
-                              prefs.remove('email');
-                              Navigator.pushReplacementNamed(context, '/');
-                            }),
-                      )
-                    ],
+                  margin: EdgeInsets.only(left: 30, right: 10, top: 15),
+                  child: Text(
+                    'Hello ${widget.name}',
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Container(

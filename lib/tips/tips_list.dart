@@ -24,6 +24,10 @@ class TipsList {
             'By keeping in track all your trips and understand them, you\'re helping us to understand human behaviour in fighting the carbon emissions'),
   ];
 
+  int getTotalList() {
+    return _tipsBank.length;
+  }
+
   String getContent(int i) {
     return _tipsBank[i].content;
   }

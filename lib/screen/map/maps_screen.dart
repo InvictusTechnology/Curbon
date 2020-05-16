@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:geocoder/geocoder.dart';
 
 import 'package:curbonapp/calculator/distance.dart';
-import 'package:curbonapp/screen/result_screen.dart';
+import 'package:curbonapp/screen/map/result_screen.dart';
 import 'package:curbonapp/constant.dart';
 import 'package:curbonapp/components/bottom_navigation_bar.dart';
 import 'package:curbonapp/components/vehicle_cards.dart';
@@ -58,8 +58,7 @@ class _MapScreenState extends State<MapScreen> {
     setState(() {
       startingMessage = first.addressLine;
     });
-    print('----------->');
-    print(startingMessage);
+    sourceLocation = LatLng(widget.currentLat, widget.currentLng);
   }
 
   @override

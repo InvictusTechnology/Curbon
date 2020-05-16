@@ -1,20 +1,23 @@
+import 'package:curbonapp/screen/visualisation/visualisation1.dart';
+import 'package:curbonapp/screen/visualisation/visualisation2.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:curbonapp/screen/details_screen.dart';
+import 'package:curbonapp/screen/login/details_screen.dart';
 import 'package:curbonapp/screen/first_screen.dart';
-import 'package:curbonapp/screen/forgot_password_screen.dart';
-import 'package:curbonapp/screen/home_screen.dart';
-import 'package:curbonapp/screen/loading_home_screen.dart';
-import 'package:curbonapp/screen/loading_screen.dart';
-import 'package:curbonapp/screen/registration_screen.dart';
-import 'package:curbonapp/screen/result_screen.dart';
-import 'package:curbonapp/screen/maps_screen.dart';
+import 'package:curbonapp/screen/login/forgot_password_screen.dart';
+import 'package:curbonapp/screen/home/home_screen.dart';
+import 'package:curbonapp/screen/home/loading_home_screen.dart';
+import 'package:curbonapp/screen/map/loading_screen.dart';
+import 'package:curbonapp/screen/login/registration_screen.dart';
+import 'package:curbonapp/screen/map/result_screen.dart';
+import 'package:curbonapp/screen/visualisation/visualisation_screen.dart';
+import 'package:curbonapp/screen/map/maps_screen.dart';
 import 'package:curbonapp/screen/splash_screen.dart';
-import 'package:curbonapp/screen/visualisation1.dart';
-import 'package:curbonapp/screen/login_screen.dart';
-import 'package:curbonapp/screen/profile_screen.dart';
+import 'package:curbonapp/screen/login/login_screen.dart';
+import 'package:curbonapp/screen/profile/profile_screen.dart';
+import 'package:curbonapp/screen/profile/introduction_pages.dart';
 
 void main() {
   runApp(MainApp());
@@ -45,6 +48,7 @@ class MainApp extends StatelessWidget {
         '/detail': (context) => UserDetailScreen(),
         '/forgot': (context) => ForgotPasswordScreen(),
         '/home': (context) => HomeScreen(),
+        '/intro_pages': (context) => IntroPages(),
         '/loading': (context) => LoadingScreen(),
         '/loading_home': (context) => LoadingHomeScreen(),
         '/login': (context) => LoginScreen(),
@@ -52,7 +56,9 @@ class MainApp extends StatelessWidget {
         '/profile': (context) => ProfileScreen(),
         '/registration': (context) => RegistrationScreen(),
         '/splash': (context) => SplashScreen(),
-        '/viz1': (BuildContext context) => Visualisation(),
+        '/visualisation': (context) => VisualisationScreen(),
+        '/vizz1': (context) => VisualisationOne(),
+        '/vizz2': (context) => VisualisationTwo(),
       },
       initialRoute: '/splash',
       navigatorObservers: [FirebaseAnalyticsObserver(analytics: analytics)],

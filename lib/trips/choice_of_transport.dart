@@ -77,7 +77,6 @@ class _TransportChoiceChartState extends State<TransportChoiceChart> {
     } else if (transport == 'Motorcycle') {
       motorcycle++;
     }
-    print(motorcycle);
   }
 
   @override
@@ -250,7 +249,7 @@ class _TransportChoiceChartState extends State<TransportChoiceChart> {
           return PieChartSectionData(
             color: const Color(0xFFF97370),
             value: (car / totalTransport) * 100,
-            title: isTouched ? car.toString() : car.toString(),
+            title: car == 0 ? '' : car.toString(),
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -261,7 +260,7 @@ class _TransportChoiceChartState extends State<TransportChoiceChart> {
           return PieChartSectionData(
             color: const Color(0xFFFC9F53),
             value: (bus / totalTransport) * 100,
-            title: isTouched ? bus.toString() : bus.toString(),
+            title: bus == 0 ? '' : bus.toString(),
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -272,7 +271,7 @@ class _TransportChoiceChartState extends State<TransportChoiceChart> {
           return PieChartSectionData(
             color: const Color(0xff13d38e),
             value: (tram / totalTransport) * 100,
-            title: isTouched ? tram.toString() : tram.toString(),
+            title: tram == 0 ? '' : tram.toString(),
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -283,7 +282,7 @@ class _TransportChoiceChartState extends State<TransportChoiceChart> {
           return PieChartSectionData(
             color: const Color(0xFF00ab44),
             value: (train / totalTransport) * 100,
-            title: isTouched ? train.toString() : train.toString(),
+            title: train == 0 ? '' : train.toString(),
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -294,7 +293,7 @@ class _TransportChoiceChartState extends State<TransportChoiceChart> {
           return PieChartSectionData(
             color: Color(0xFF3442BF),
             value: (bicycle / totalTransport) * 100,
-            title: isTouched ? bicycle.toString() : bicycle.toString(),
+            title: bicycle == 0 ? '' : bicycle.toString(),
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -305,7 +304,7 @@ class _TransportChoiceChartState extends State<TransportChoiceChart> {
           return PieChartSectionData(
             color: Color(0xff845bef),
             value: (walking / totalTransport) * 100,
-            title: isTouched ? walking.toString() : walking.toString(),
+            title: walking == 0 ? '' : walking.toString(),
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -316,7 +315,7 @@ class _TransportChoiceChartState extends State<TransportChoiceChart> {
           return PieChartSectionData(
             color: Color(0xFFed64d6),
             value: (motorcycle / totalTransport) * 100,
-            title: isTouched ? motorcycle.toString() : motorcycle.toString(),
+            title: motorcycle == 0 ? '' : motorcycle.toString(),
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,

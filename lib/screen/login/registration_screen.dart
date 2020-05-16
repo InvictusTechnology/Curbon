@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:curbonapp/signin/signin_google.dart';
 
 class RegistrationScreen extends StatefulWidget {
   @override
@@ -103,15 +104,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             contentPadding:
                                 EdgeInsets.only(top: 12, bottom: 12, left: 50),
                             suffixIcon: IconButton(
-                              icon: Icon(_obscureText
-                                  ? Icons.visibility_off
-                                  : Icons.visibility),
+                              icon: Icon(
+                                _obscureText
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Colors.green[400],
+                              ),
                               onPressed: _toggle,
                             ),
                             hintText: 'Enter a password')),
                   ),
                   Container(
-                    margin: EdgeInsets.only(bottom: 50),
+                    margin: EdgeInsets.only(bottom: 20),
                     child: Text(
                       _showMinPasswordWarning
                           ? 'Password should be at least 6 characters'
@@ -124,6 +128,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       setState(() {
                         showSpinner = true;
                       });
+                      if (_email == null || _password == null) {
+                        setState(() {
+                          errorMessage =
+                              'You have not entered an email address or password';
+                          showSpinner = false;
+                        });
+                      }
                       try {
                         final newUser =
                             await _auth.createUserWithEmailAndPassword(
@@ -177,6 +188,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 20),
+                  _signInButton(),
                   SizedBox(
                     height: 10,
                   ),
@@ -192,6 +205,50 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ],
               ),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _signInButton() {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(40)),
+      child: OutlineButton(
+        splashColor: Colors.grey,
+        onPressed: () {
+          setState(() {
+            showSpinner = true;
+          });
+          signInWithGoogle(context).whenComplete(() {
+            setState(() {
+              showSpinner = false;
+            });
+          });
+        },
+        color: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+        highlightElevation: 0,
+        borderSide: BorderSide(color: Colors.grey),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image(image: AssetImage('assets/google_logo.png'), height: 30.0),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Text(
+                  'Sign in with Google',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.grey[700],
+                  ),
+                ),
+              )
+            ],
           ),
         ),
       ),

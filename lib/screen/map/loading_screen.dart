@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:curbonapp/components/bottom_navigation_bar.dart';
-import 'package:curbonapp/screen/maps_screen.dart';
+import 'package:curbonapp/screen/map/maps_screen.dart';
 import 'package:google_api_availability/google_api_availability.dart';
 import 'package:location/location.dart';
 

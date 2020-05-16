@@ -93,9 +93,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           contentPadding:
                               EdgeInsets.only(top: 12, bottom: 12, left: 50),
                           suffixIcon: IconButton(
-                            icon: Icon(_obscureText
-                                ? Icons.visibility_off
-                                : Icons.visibility),
+                            icon: Icon(
+                              _obscureText
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color: Colors.green[400],
+                            ),
                             onPressed: _toggle,
                           ),
                           hintText: 'Enter a password')),
@@ -140,8 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           break;
                         case "There is no user record corresponding to this identifier. The user may have been deleted.":
                           setState(() {
-                            errorMessage =
-                                "There is no user record with this identifier";
+                            errorMessage = "Invalid email or password";
                             showSpinner = false;
                           });
                           break;
