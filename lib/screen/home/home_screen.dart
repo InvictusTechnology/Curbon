@@ -202,8 +202,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         });
                       },
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        bottomLeft: Radius.circular(25),
+                        topLeft: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
                       ),
                       selectChart: _selectedChart == 'Chart 1'
                           ? kActiveChart
@@ -230,8 +230,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             ? kActiveChart
                             : kInactiveChart,
                         borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(25),
-                          bottomRight: Radius.circular(25),
+                          topRight: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
                         ),
                         title: 'Carbon'),
                   ],
@@ -257,7 +257,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return GestureDetector(
       onTap: onTapped,
       child: Container(
-        width: 90,
+        width: 100,
         margin: EdgeInsets.only(top: 20, bottom: 0),
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 6.5),
         decoration: BoxDecoration(

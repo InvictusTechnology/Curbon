@@ -64,7 +64,7 @@ class PreviousTripCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey[700],
+            color: Colors.grey[500],
             blurRadius: 5.0,
             spreadRadius: 2.0,
             offset: Offset(2.0, 2.0), // shadow direction: bottom right

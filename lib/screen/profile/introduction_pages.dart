@@ -6,7 +6,7 @@ class IntroPages extends StatefulWidget {
 }
 
 class _IntroPagesState extends State<IntroPages> {
-  List<Widget> introPages = [PageOneIntro(), PageTwoIntro()];
+  List<Widget> introPages = [PageOneIntro(), PageTwoIntro(), PageThreeIntro()];
   PageController _pageController;
   int currentPageValue = 0;
 
@@ -59,7 +59,7 @@ class _IntroPagesState extends State<IntroPages> {
                     color: Colors.black,
                   ),
                   Text(
-                    'Go Back',
+                    'Back',
                     style: TextStyle(
                         color: Color(0xFF1b1b1b), fontWeight: FontWeight.w500),
                   )
@@ -167,6 +167,52 @@ class PageTwoIntro extends StatelessWidget {
                   style: TextStyle(fontSize: 17),
                 ),
               ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class PageThreeIntro extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                  margin: EdgeInsets.only(bottom: 40),
+                  child: Image.asset('assets/info3.png')),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                child: Text(
+                  'We have collected several open datasets to provide you with the most information you can get around carbon emissions',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 17),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                child: Text(
+                  'You can check them out by pressing the Chart button below or from the navigation bar at almost anywhere',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 17),
+                ),
+              ),
+              IconButton(
+                  icon: Icon(
+                    Icons.insert_chart,
+                    size: 40,
+                  ),
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/visualisation');
+                  })
             ],
           ),
         ),

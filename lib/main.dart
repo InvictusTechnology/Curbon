@@ -1,3 +1,5 @@
+import 'package:curbonapp/screen/profile/about_us.dart';
+import 'package:curbonapp/screen/profile/how_this_works.dart';
 import 'package:curbonapp/screen/visualisation/visualisation1.dart';
 import 'package:curbonapp/screen/visualisation/visualisation2.dart';
 import 'package:firebase_analytics/observer.dart';
@@ -44,10 +46,12 @@ class MainApp extends StatelessWidget {
       ),
       routes: {
         '/': (context) => FirstScreen(),
+        '/about': (context) => AboutUsScreen(),
         '/calculate': (context) => ResultScreen(),
         '/detail': (context) => UserDetailScreen(),
         '/forgot': (context) => ForgotPasswordScreen(),
         '/home': (context) => HomeScreen(),
+        '/how': (context) => HowThisWorksWScreen(),
         '/intro_pages': (context) => IntroPages(),
         '/loading': (context) => LoadingScreen(),
         '/loading_home': (context) => LoadingHomeScreen(),

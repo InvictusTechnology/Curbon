@@ -65,42 +65,63 @@ class _TripHistoryScreenState extends State<TripHistoryScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 30, bottom: 10),
-          child: ListView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              for (int i = 0; i <= widget.tripList.length - 1; i++)
-                Column(
+              Container(
+                padding: EdgeInsets.only(bottom: 10, left: 20),
+                child: Text(
+                  'History',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.8),
+                ),
+              ),
+              Expanded(
+                child: ListView(
                   children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(left: 30, right: 30, top: 12.5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    for (int i = 0; i <= widget.tripList.length - 1; i++)
+                      Column(
                         children: <Widget>[
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              getDate(widget.tripList[i].date),
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
+                          Container(
+                            margin:
+                                EdgeInsets.only(left: 30, right: 30, top: 12.5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    getDate(widget.tripList[i].date),
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Text(
+                                  getTime(widget.tripList[i].date),
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
                             ),
                           ),
-                          Text(
-                            getTime(widget.tripList[i].date),
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.w600),
-                          ),
+                          PreviousTripCard(
+                            destination: widget.tripList[i].destination,
+                            starting: widget.tripList[i].starting,
+                            distance: widget.tripList[i].distance,
+                            carbon: widget.tripList[i].carbon,
+                            transport: widget.tripList[i].transport,
+                          )
                         ],
-                      ),
-                    ),
-                    PreviousTripCard(
-                      destination: widget.tripList[i].destination,
-                      starting: widget.tripList[i].starting,
-                      distance: widget.tripList[i].distance,
-                      carbon: widget.tripList[i].carbon,
-                      transport: widget.tripList[i].transport,
-                    )
+                      )
                   ],
-                )
+                ),
+              ),
             ],
           ),
         ),

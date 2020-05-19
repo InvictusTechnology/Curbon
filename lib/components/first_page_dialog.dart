@@ -21,7 +21,7 @@ class CustomDialog extends StatelessWidget {
     this.secondaryButtonRoute,
   });
 
-  static const double padding = 20.0;
+  static const double padding = 15.0;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class CustomDialog extends StatelessWidget {
                 borderRadius: BorderRadius.circular(padding),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black,
+                    color: Colors.grey[800],
                     blurRadius: 10.0,
                     offset: const Offset(0.0, 10.0),
                   ),
@@ -71,7 +71,7 @@ class CustomDialog extends StatelessWidget {
                 RaisedButton(
                   color: primaryColor,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0)),
+                      borderRadius: BorderRadius.circular(10.0)),
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                     child: AutoSizeText(
@@ -80,18 +80,25 @@ class CustomDialog extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w400,
-                        color: Colors.black87,
+                        color: Colors.grey[200],
                       ),
                     ),
                   ),
                   onPressed: () {
                     Navigator.of(context).pop();
-                    Navigator.of(context)
-                        .pushReplacementNamed(primaryButtonRoute);
+                    Navigator.of(context).pushNamed(primaryButtonRoute);
                   },
                 ),
-                SizedBox(height: 10.0),
+                SizedBox(height: 5.0),
                 showSecondaryButton(context),
+                FlatButton(
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/loading');
+                    },
+                    child: Text(
+                      'Not Now',
+                      style: TextStyle(color: Colors.grey[600], fontSize: 18),
+                    ))
               ],
             ),
           )
@@ -114,7 +121,7 @@ class CustomDialog extends StatelessWidget {
         ),
         onPressed: () {
           Navigator.of(context).pop();
-          Navigator.of(context).pushReplacementNamed(secondaryButtonRoute);
+          Navigator.of(context).pushNamed(secondaryButtonRoute);
         },
       );
     } else {

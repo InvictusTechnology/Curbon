@@ -9,6 +9,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:curbonapp/constant.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -121,24 +122,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  Align detailText(String text) {
-    return Align(
-      alignment: Alignment.center,
-      child: Container(
-        margin: EdgeInsets.only(bottom: 5, top: 5),
-        child: Text(
-          text,
-          textAlign: TextAlign.left,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-              fontSize: 16,
-              color: Color(0xFF1b1b1b),
-              fontWeight: FontWeight.w600),
-        ),
-      ),
-    );
-  }
-
   @override
   void initState() {
     showSpinner = true;
@@ -154,241 +137,241 @@ class _ProfileScreenState extends State<ProfileScreen> {
             context, loggedInUser != null ? 'loading_home' : '/');
       },
       child: Scaffold(
-        backgroundColor: Color(0xFF26CB7E),
+        backgroundColor: Colors.grey[100],
         bottomNavigationBar: BottomBar(selectedIndex: 3),
         body: ModalProgressHUD(
           inAsyncCall: showSpinner,
           child: SafeArea(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  padding: EdgeInsets.only(bottom: 20),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: const [
-                        Color(0xFF58d178),
-                        Color(0xFF26CB7E),
-                      ],
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                  margin: EdgeInsets.only(left: 20, top: 30),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Visibility(
-                            visible: !noUser,
-                            child: Container(
-                              width: 80,
-                              child: GestureDetector(
-                                onTap: () async {
-                                  _auth.signOut();
-                                  googleSignIn.signOut();
-                                  SharedPreferences prefs =
-                                      await SharedPreferences.getInstance();
-                                  prefs.remove('email');
-                                  Navigator.pushReplacementNamed(context, '/');
-                                },
-                                child: Column(
-                                  children: [
-                                    Icon(
-                                      Icons.exit_to_app,
-                                      size: 22,
-                                    ),
-                                    Text(
-                                      'Logout',
-                                      style: TextStyle(fontSize: 12),
-                                    )
-                                  ],
+                      Text(
+                        'Profile',
+                        style: TextStyle(
+                          fontSize: 35,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 0.9,
+                        ),
+                      ),
+                      Visibility(
+                        visible: !noUser,
+                        child: Container(
+                          width: 80,
+                          child: GestureDetector(
+                            onTap: () async {
+                              _auth.signOut();
+                              googleSignIn.signOut();
+                              facebookLogin.logOut();
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              prefs.remove('email');
+                              Navigator.pushReplacementNamed(context, '/');
+                            },
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Icons.exit_to_app,
+                                  size: 22,
                                 ),
-                              ),
+                                Text(
+                                  'Logout',
+                                  style: TextStyle(fontSize: 12),
+                                )
+                              ],
                             ),
                           ),
-                          Visibility(
-                            visible: !noUser,
-                            child: Container(
-                              margin: EdgeInsets.only(right: 20),
-                              child: GestureDetector(
-                                onTap: () {
-                                  chooseFile();
-                                },
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      'Edit ',
-                                      style: TextStyle(fontSize: 15),
-                                    ),
-                                    Icon(
-                                      Icons.edit,
-                                      size: 14,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
+                        ),
                       ),
+                    ],
+                  ),
+                ),
+                Container(
+                  color: Colors.white,
+                  margin: EdgeInsets.only(top: 10, bottom: 30),
+                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
                       Stack(
                         children: <Widget>[
                           CircleAvatar(
                             radius: 50,
+                            backgroundColor: themeColor,
                             backgroundImage: AssetImage('assets/avatar.png'),
                           ),
                           if (hasProfilePic)
                             CircleAvatar(
                                 radius: 50,
                                 backgroundImage: NetworkImage(userPhoto)),
+                          Visibility(
+                            visible: !noUser,
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: Container(
+                                margin: EdgeInsets.only(top: 80, left: 80),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    chooseFile();
+                                  },
+                                  child: Icon(
+                                    Icons.edit,
+                                    size: 20,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
                         ],
                       ),
-                      Container(
+                      SizedBox(width: 15),
+                      Expanded(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
-                            detailText(name),
-                            detailText(email),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: 30, right: 30, top: 10, bottom: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Column(
-                              children: <Widget>[
-                                Row(
-                                  children: <Widget>[
-                                    Image.asset(
-                                      'assets/circle.png',
-                                      height: 15,
-                                    ),
-                                    SizedBox(width: 3),
-                                    Text(
-                                      'Current Point',
-                                      style: TextStyle(fontSize: 16),
-                                    ),
-                                  ],
-                                ),
-                                Container(
-                                  width: 130,
-                                  height: 1,
-                                  color: Colors.black,
-                                ),
-                                Text(
-                                  point.toString(),
-                                  style: TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
+                            Text(
+                              name,
+                              style: TextStyle(
+                                  fontSize: 23,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 0.8),
                             ),
-                            Column(
-                              children: <Widget>[
-                                Row(
-                                  children: <Widget>[
-                                    Image.asset(
-                                      'assets/circle.png',
-                                      height: 15,
-                                    ),
-                                    SizedBox(width: 3),
-                                    Text(
-                                      'Current Level',
-                                      style: TextStyle(fontSize: 16),
-                                    ),
-                                  ],
-                                ),
-                                Container(
-                                  width: 130,
-                                  height: 1,
-                                  color: Colors.black,
-                                ),
-                                Text(
-                                  level.toString(),
-                                  style: TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
+                            Text(
+                              email,
+                              overflow: TextOverflow.ellipsis,
                             ),
+                            SizedBox(height: 5),
+                            Text(
+                              'Level $level',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey[700]),
+                            ),
+                            SizedBox(height: 2),
+                            Text(
+                              '$point Points',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey[700]),
+                            )
                           ],
                         ),
                       )
                     ],
                   ),
                 ),
-                Expanded(
-                  child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(10),
-                          topLeft: Radius.circular(10),
+                Container(
+                  color: Colors.white,
+                  margin: EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.only(top: 20, bottom: 20),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(color: Colors.grey[400]))),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/intro_pages');
+                          },
+                          child: Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.sentiment_satisfied,
+                                color: themeColor,
+                              ),
+                              SizedBox(width: 5),
+                              Text(
+                                'Introduction',
+                                style: TextStyle(fontSize: 16),
+                                textAlign: TextAlign.left,
+                              ),
+                            ],
+                          ),
                         ),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black87.withOpacity(0.2),
-                            blurRadius: 5.0,
-                            spreadRadius: 5.0,
-                            offset: Offset(0, -5.0),
-                          )
-                        ],
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          linkButtons(
-                              text: 'Introduction',
-                              iconData: Icons.sentiment_very_satisfied,
-                              onPress: () {
-                                Navigator.pushNamed(context, '/intro_pages');
-                              }),
-                          linkButtons(
-                              text: 'How this works',
-                              iconData: Icons.info_outline),
-                          linkButtons(text: 'About us', iconData: Icons.public),
-                        ],
-                      )),
+                      Container(
+                        padding: EdgeInsets.only(top: 20, bottom: 20),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(color: Colors.grey[400]))),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/how');
+                          },
+                          child: Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.help_outline,
+                                color: themeColor,
+                              ),
+                              SizedBox(width: 5),
+                              Text(
+                                'How this works',
+                                style: TextStyle(fontSize: 16),
+                                textAlign: TextAlign.left,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top: 20, bottom: 20),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/about');
+                          },
+                          child: Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.info_outline,
+                                color: themeColor,
+                              ),
+                              SizedBox(width: 5),
+                              Text(
+                                'About us',
+                                style: TextStyle(fontSize: 16),
+                                textAlign: TextAlign.left,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
+                if (noUser)
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      SizedBox(height: 40),
+                      Text('You have not logged in yet 😓'),
+                      FlatButton(
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(context, '/login');
+                          },
+                          child: Text(
+                            'Login',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: themeColor,
+                                fontSize: 16,
+                                letterSpacing: 0.5),
+                          )),
+                    ],
+                  )
               ],
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget linkButtons({String text, IconData iconData, Function onPress}) {
-    return Expanded(
-      child: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: Color(0xFF26CB7E),
-            ),
-          ),
-        ),
-        child: GestureDetector(
-          onTap: onPress,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Icon(
-                iconData,
-                size: 25,
-                color: Color(0xFF26CB7E),
-              ),
-              SizedBox(width: 5),
-              Text(text,
-                  textAlign: TextAlign.center, style: TextStyle(fontSize: 18)),
-            ],
           ),
         ),
       ),

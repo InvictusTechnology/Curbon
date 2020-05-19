@@ -72,7 +72,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                   margin:
                       EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 30),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                   ),
                   child: TextField(

@@ -56,20 +56,20 @@ class TotalTripsState extends State<TotalTrips> {
   }
 
   void getPerDay() {
-    var dayMinOne = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 1);
+    var dayMinOne =
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
     var dayMinTwo = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 2);
+        DateTime.now().year, DateTime.now().month, DateTime.now().day - 1);
     var dayMinThree = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 3);
+        DateTime.now().year, DateTime.now().month, DateTime.now().day - 2);
     var dayMinFour = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 4);
+        DateTime.now().year, DateTime.now().month, DateTime.now().day - 3);
     var dayMinFive = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 5);
+        DateTime.now().year, DateTime.now().month, DateTime.now().day - 4);
     var dayMinSix = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 6);
+        DateTime.now().year, DateTime.now().month, DateTime.now().day - 5);
     var dayMinSeven = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 7);
+        DateTime.now().year, DateTime.now().month, DateTime.now().day - 6);
 
     for (int i = 0; i <= widget.tripList.length - 1; i++) {
       int epochNumber = widget.tripList[i].date;
@@ -109,9 +109,9 @@ class TotalTripsState extends State<TotalTrips> {
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey[700],
-              spreadRadius: 4,
-              blurRadius: 3,
+              color: Colors.grey[600],
+              spreadRadius: 2,
+              blurRadius: 5,
               offset: Offset(0, 2), // changes position of shadow
             ),
           ],
@@ -185,37 +185,35 @@ class TotalTripsState extends State<TotalTrips> {
                                 return getDay(DateTime(
                                     DateTime.now().year,
                                     DateTime.now().month,
-                                    DateTime.now().day - 7));
+                                    DateTime.now().day - 6));
                               case 1:
                                 return getDay(DateTime(
                                     DateTime.now().year,
                                     DateTime.now().month,
-                                    DateTime.now().day - 6));
+                                    DateTime.now().day - 5));
                               case 2:
                                 return getDay(DateTime(
                                     DateTime.now().year,
                                     DateTime.now().month,
-                                    DateTime.now().day - 5));
+                                    DateTime.now().day - 4));
                               case 3:
                                 return getDay(DateTime(
                                     DateTime.now().year,
                                     DateTime.now().month,
-                                    DateTime.now().day - 4));
+                                    DateTime.now().day - 3));
                               case 4:
                                 return getDay(DateTime(
                                     DateTime.now().year,
                                     DateTime.now().month,
-                                    DateTime.now().day - 3));
+                                    DateTime.now().day - 2));
                               case 5:
                                 return getDay(DateTime(
                                     DateTime.now().year,
                                     DateTime.now().month,
-                                    DateTime.now().day - 2));
-                              case 6:
-                                return getDay(DateTime(
-                                    DateTime.now().year,
-                                    DateTime.now().month,
                                     DateTime.now().day - 1));
+                              case 6:
+                                return getDay(DateTime(DateTime.now().year,
+                                    DateTime.now().month, DateTime.now().day));
                               default:
                                 return '';
                             }
@@ -231,7 +229,7 @@ class TotalTripsState extends State<TotalTrips> {
                           reservedSize: 14,
                           getTitles: (value) {
                             if (value == 0) {
-                              return '0';
+                              return '';
                             } else if (value == 2) {
                               return '2';
                             } else if (value == 4) {
@@ -249,8 +247,21 @@ class TotalTripsState extends State<TotalTrips> {
                         ),
                       ),
                       borderData: FlBorderData(
-                        show: false,
-                      ),
+                          show: true,
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.grey[400],
+                              width: 0.5,
+                            ),
+                            left:
+                                BorderSide(color: Colors.grey[400], width: 0.5),
+                            right: BorderSide(
+                              color: Colors.transparent,
+                            ),
+                            top: BorderSide(
+                              color: Colors.transparent,
+                            ),
+                          )),
                       barGroups: showingBarGroups,
                     ),
                   ),

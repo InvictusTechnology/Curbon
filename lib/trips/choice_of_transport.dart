@@ -23,20 +23,20 @@ class _TransportChoiceChartState extends State<TransportChoiceChart> {
   int totalTransport;
 
   void getPerDay() {
-    var dayMinOne = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 1);
+    var dayMinOne =
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
     var dayMinTwo = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 2);
+        DateTime.now().year, DateTime.now().month, DateTime.now().day - 1);
     var dayMinThree = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 3);
+        DateTime.now().year, DateTime.now().month, DateTime.now().day - 2);
     var dayMinFour = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 4);
+        DateTime.now().year, DateTime.now().month, DateTime.now().day - 3);
     var dayMinFive = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 5);
+        DateTime.now().year, DateTime.now().month, DateTime.now().day - 4);
     var dayMinSix = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 6);
+        DateTime.now().year, DateTime.now().month, DateTime.now().day - 5);
     var dayMinSeven = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 7);
+        DateTime.now().year, DateTime.now().month, DateTime.now().day - 6);
 
     for (int i = 0; i <= widget.tripList.length - 1; i++) {
       int epochNumber = widget.tripList[i].date;
@@ -94,10 +94,10 @@ class _TransportChoiceChartState extends State<TransportChoiceChart> {
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey[700],
-              spreadRadius: 3,
+              color: Colors.grey[600],
+              spreadRadius: 2,
               blurRadius: 5,
-              offset: Offset(2, 2), // changes position of shadow
+              offset: Offset(0, 2), // changes position of shadow
             ),
           ],
           gradient: LinearGradient(

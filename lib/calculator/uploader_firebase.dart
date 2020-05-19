@@ -20,13 +20,15 @@ class Uploader {
 
   int getPoint() {
     switch (transport) {
-      case 'Walking':
+      case 'Bicycle':
         {
+          print(transport);
           return 10;
         }
         break;
       case 'Walking':
         {
+          print('----------');
           return 10;
         }
         break;
@@ -45,6 +47,11 @@ class Uploader {
           return 5;
         }
         break;
+      case 'Motorcycle':
+        {
+          return 2;
+        }
+        break;
       case 'Car':
         {
           return 2;
@@ -61,6 +68,7 @@ class Uploader {
   void setProfile() async {
     int newPoint = getPoint();
     final user = await _auth.currentUser();
+    print(transport);
     var point;
     var profile = await _firestore
         .collection('profile')
@@ -81,8 +89,6 @@ class Uploader {
         .collection('profile')
         .document(user.email)
         .updateData({'point': point});
-
-    print('-----> CALCULATOR - -> $point');
   }
 
   bool getLevelUp() {

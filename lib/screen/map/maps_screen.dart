@@ -76,7 +76,6 @@ class _MapScreenState extends State<MapScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var email = prefs.getString('email');
     email != null ? _hasLoggedIn = true : _hasLoggedIn = false;
-    print('--- $_hasLoggedIn');
 
     _moveToHomeScreen(context);
   }
@@ -196,7 +195,7 @@ class _MapScreenState extends State<MapScreen> {
           visible: _visibleCalculate,
           child: FloatingActionButton.extended(
             heroTag: 'calculate',
-            backgroundColor: Color(0xFF26CB7E),
+            backgroundColor: themeColor,
             onPressed: () {
               double newDistance = distClass.getDistance();
 
@@ -239,8 +238,9 @@ class _MapScreenState extends State<MapScreen> {
                   onMapCreated: onMapCreated),
               Column(
                 children: <Widget>[
+                  SizedBox(height: 10),
                   Container(
-                    margin: EdgeInsets.only(left: 15, right: 15, top: 10),
+                    margin: EdgeInsets.only(left: 15, right: 15),
                     padding: EdgeInsets.all(2),
                     decoration: BoxDecoration(
                       border: Border.all(color: Color(0xFFc7c7c7)),
@@ -277,7 +277,7 @@ class _MapScreenState extends State<MapScreen> {
                             ),
                             Icon(
                               Icons.search,
-                              color: Color(0xFF26CB7E),
+                              color: themeColor,
                             )
                           ],
                         )),
@@ -320,7 +320,7 @@ class _MapScreenState extends State<MapScreen> {
                             ),
                             Icon(
                               Icons.search,
-                              color: Color(0xFF26CB7E),
+                              color: themeColor,
                             )
                           ],
                         )),
@@ -476,7 +476,7 @@ class _MapScreenState extends State<MapScreen> {
                   padding: EdgeInsets.only(bottom: 10, left: 10),
                   child: FloatingActionButton(
                     onPressed: _getLocationButton,
-                    backgroundColor: Color(0xFF26CB7E),
+                    backgroundColor: themeColor,
                     child: Icon(
                       Icons.my_location,
                       color: Colors.white,

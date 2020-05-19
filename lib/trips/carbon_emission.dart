@@ -19,7 +19,7 @@ class CarbonEmissionChart extends StatefulWidget {
 
 class _CarbonEmissionChartState extends State<CarbonEmissionChart> {
   double c1 = 0, c2 = 0, c3 = 0, c4 = 0, c5 = 0, c6 = 0, c7 = 0;
-
+  List vv = [];
   String getDay(DateTime dateTime) {
     var format = DateFormat('E');
     var dayString = format.format(dateTime);
@@ -27,20 +27,20 @@ class _CarbonEmissionChartState extends State<CarbonEmissionChart> {
   }
 
   void getPerDay() {
-    var dayMinOne = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 1);
+    var dayMinOne =
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
     var dayMinTwo = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 2);
+        DateTime.now().year, DateTime.now().month, DateTime.now().day - 1);
     var dayMinThree = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 3);
+        DateTime.now().year, DateTime.now().month, DateTime.now().day - 2);
     var dayMinFour = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 4);
+        DateTime.now().year, DateTime.now().month, DateTime.now().day - 3);
     var dayMinFive = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 5);
+        DateTime.now().year, DateTime.now().month, DateTime.now().day - 4);
     var dayMinSix = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 6);
+        DateTime.now().year, DateTime.now().month, DateTime.now().day - 5);
     var dayMinSeven = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 7);
+        DateTime.now().year, DateTime.now().month, DateTime.now().day - 6);
 
     for (int i = 0; i <= widget.tripList.length - 1; i++) {
       int epochNumber = widget.tripList[i].date;
@@ -78,10 +78,10 @@ class _CarbonEmissionChartState extends State<CarbonEmissionChart> {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.grey[800],
-              spreadRadius: 3.5,
-              blurRadius: 3,
-              offset: Offset(0, 3), // changes position of shadow
+              color: Colors.grey[600],
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: Offset(0, 2), // changes position of shadow
             ),
           ],
           borderRadius: const BorderRadius.all(Radius.circular(18)),
@@ -183,25 +183,25 @@ class _CarbonEmissionChartState extends State<CarbonEmissionChart> {
             switch (value.toInt()) {
               case 1:
                 return getDay(
-                    DateTime(dateNow.year, dateNow.month, dateNow.day - 7));
+                    DateTime(dateNow.year, dateNow.month, dateNow.day - 6));
               case 3:
                 return getDay(
-                    DateTime(dateNow.year, dateNow.month, dateNow.day - 6));
+                    DateTime(dateNow.year, dateNow.month, dateNow.day - 5));
               case 5:
                 return getDay(
-                    DateTime(dateNow.year, dateNow.month, dateNow.day - 5));
+                    DateTime(dateNow.year, dateNow.month, dateNow.day - 4));
               case 7:
                 return getDay(
-                    DateTime(dateNow.year, dateNow.month, dateNow.day - 4));
+                    DateTime(dateNow.year, dateNow.month, dateNow.day - 3));
               case 9:
                 return getDay(
-                    DateTime(dateNow.year, dateNow.month, dateNow.day - 3));
+                    DateTime(dateNow.year, dateNow.month, dateNow.day - 2));
               case 11:
                 return getDay(
-                    DateTime(dateNow.year, dateNow.month, dateNow.day - 2));
+                    DateTime(dateNow.year, dateNow.month, dateNow.day - 1));
               case 13:
                 return getDay(
-                    DateTime(dateNow.year, dateNow.month, dateNow.day - 1));
+                    DateTime(dateNow.year, dateNow.month, dateNow.day));
             }
             return '';
           },
@@ -213,53 +213,58 @@ class _CarbonEmissionChartState extends State<CarbonEmissionChart> {
             fontWeight: FontWeight.bold,
             fontSize: 14,
           ),
+          // ignore: missing_return
           getTitles: (value) {
-            switch (value.toInt()) {
-              case 0:
-                return '0';
-              case 5:
-                return '5';
-              case 10:
-                return '10';
-              case 15:
-                return '15';
-              case 20:
-                return '20';
-              case 25:
-                return '25';
-              case 30:
-                return '30';
-              case 35:
-                return '35';
-              case 40:
-                return '40';
-              case 45:
-                return '45';
-            }
-            return '';
+            vv.add(value);
+            if (vv.last <= 10) {
+              switch (value.toInt()) {
+                case 2:
+                  return '2';
+                case 4:
+                  return '4';
+                case 6:
+                  return '6';
+                case 8:
+                  return '8';
+                case 10:
+                  return '10';
+              }
+              return '';
+            } else if (vv.last <= 100) {
+              switch (value.toInt()) {
+                case 100:
+                  return '100';
+                case 200:
+                  return '200';
+                case 300:
+                  return '300';
+                case 400:
+                  return '400';
+                case 500:
+                  return '500';
+              }
+              return '';
+            } else {}
           },
           margin: 8,
           reservedSize: 30,
         ),
       ),
       borderData: FlBorderData(
-        show: true,
-        border: const Border(
-          bottom: BorderSide(
-            color: Color(0xff4e4965),
-            width: 4,
-          ),
-          left: BorderSide(
-            color: Colors.transparent,
-          ),
-          right: BorderSide(
-            color: Colors.transparent,
-          ),
-          top: BorderSide(
-            color: Colors.transparent,
-          ),
-        ),
-      ),
+          show: true,
+          border: Border(
+            bottom: BorderSide(
+              color: Colors.grey[400],
+              width: 0.5,
+            ),
+            left: BorderSide(color: Colors.grey[400], width: 0.5),
+            right: BorderSide(
+              color: Colors.transparent,
+            ),
+            top: BorderSide(
+              color: Colors.transparent,
+            ),
+          )),
       minX: 0,
       maxX: 14,
       maxY: null,

@@ -1,9 +1,11 @@
 import 'package:curbonapp/components/bottom_navigation_bar.dart';
+import 'package:curbonapp/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'dart:convert';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:curbonapp/components/visualisation_components.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class VisualisationOne extends StatefulWidget {
   @override
@@ -11,10 +13,10 @@ class VisualisationOne extends StatefulWidget {
 }
 
 class _VisualisationOneState extends State<VisualisationOne> {
-  PageController _pageController;
+  final _storage = FirebaseDatabase.instance.reference();
   bool showSpinner = false;
   bool dataReady = false;
-  String selectedChart = 'New South Wales';
+  String selectedChart = 'Australian Capital Territory';
   List<Widget> pageButtons = [];
   List<FlSpot> pointStarter = [];
   List nswList = [];
@@ -28,42 +30,50 @@ class _VisualisationOneState extends State<VisualisationOne> {
   int currentPageValue = 0;
 
   void parseJson() async {
-    String data =
-        await DefaultAssetBundle.of(context).loadString("assets/chart2.json");
-    final jsonResult = json.decode(data);
-    for (int i = 0; i <= jsonResult.length - 1; i++) {
-      if (jsonResult[i]['State'] == 'NSW') {
-        nswList.add(jsonResult[i]['CO2e emissions (tonnes per capita)']);
-      } else if (jsonResult[i]['State'] == 'VIC') {
-        vicList.add(jsonResult[i]['CO2e emissions (tonnes per capita)']);
-      } else if (jsonResult[i]['State'] == 'QLD') {
-        qldList.add(jsonResult[i]['CO2e emissions (tonnes per capita)']);
-      } else if (jsonResult[i]['State'] == 'SA') {
-        saList.add(jsonResult[i]['CO2e emissions (tonnes per capita)']);
-      } else if (jsonResult[i]['State'] == 'WA') {
-        waList.add(jsonResult[i]['CO2e emissions (tonnes per capita)']);
-      } else if (jsonResult[i]['State'] == 'TAS') {
-        tasList.add(jsonResult[i]['CO2e emissions (tonnes per capita)']);
-      } else if (jsonResult[i]['State'] == 'NT') {
-        ntList.add(jsonResult[i]['CO2e emissions (tonnes per capita)']);
-      } else {
-        actList.add(jsonResult[i]['CO2e emissions (tonnes per capita)']);
+    try {
+      var jsonResult;
+      await _storage.child('vizz1').once().then((DataSnapshot snapshot) {
+        jsonResult = snapshot.value;
+      });
+      //After the app finish download, it will load the JSON file to the different states using if-statement
+      for (int i = 0; i <= jsonResult.length - 1; i++) {
+        if (jsonResult[i]['State'] == 'NSW') {
+          nswList.add(jsonResult[i]['CO2e emissions (tonnes per capita)']);
+        } else if (jsonResult[i]['State'] == 'VIC') {
+          vicList.add(jsonResult[i]['CO2e emissions (tonnes per capita)']);
+        } else if (jsonResult[i]['State'] == 'QLD') {
+          qldList.add(jsonResult[i]['CO2e emissions (tonnes per capita)']);
+        } else if (jsonResult[i]['State'] == 'SA') {
+          saList.add(jsonResult[i]['CO2e emissions (tonnes per capita)']);
+        } else if (jsonResult[i]['State'] == 'WA') {
+          waList.add(jsonResult[i]['CO2e emissions (tonnes per capita)']);
+        } else if (jsonResult[i]['State'] == 'TAS') {
+          tasList.add(jsonResult[i]['CO2e emissions (tonnes per capita)']);
+        } else if (jsonResult[i]['State'] == 'NT') {
+          ntList.add(jsonResult[i]['CO2e emissions (tonnes per capita)']);
+        } else {
+          actList.add(jsonResult[i]['CO2e emissions (tonnes per capita)']);
+        }
       }
+      setState(() {
+        showSpinner = false;
+        dataReady = true;
+      });
+    } catch (e) {
+      throw e;
     }
-    setState(() {
-      showSpinner = false;
-      dataReady = true;
-    });
   }
 
   @override
   void initState() {
+    for (int i = 0; i <= 28; i++) {
+      pointStarter.add(FlSpot(i.toDouble() + 1, 0));
+    }
     super.initState();
     showSpinner = true;
     for (int i = 0; i <= 28; i++) {
       pointStarter.add(FlSpot(i.toDouble() + 1, 0));
     }
-    pageButtons = [columnOne(), columnTwo()];
     dataReady = false;
     parseJson();
   }
@@ -77,195 +87,149 @@ class _VisualisationOneState extends State<VisualisationOne> {
           inAsyncCall: showSpinner,
           child: Column(
             children: <Widget>[
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                child: Text(
-                  'State and Territory CO2e Emissions per Capita (Australia)',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 0.7),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                child: AspectRatio(
-                  aspectRatio: 1.23,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(18)),
-                      gradient: LinearGradient(
-                        colors: const [
-                          Color(0xFF0d6cbf),
-                          Color(0xFF013461),
-                        ],
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
-                      ),
-                    ),
-                    child: Stack(
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: <Widget>[
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 10),
-                              child: Text(
-                                "$selectedChart",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 1),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            Text(
-                              '(1990 - 2017)',
-                              style: TextStyle(
-                                color: Colors.grey[300],
-                                fontSize: 16,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    right: 16.0, left: 6.0),
-                                child: LineChart(
-                                  stateData(),
-                                  swapAnimationDuration:
-                                      const Duration(milliseconds: 250),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                          ],
-                        ),
-                      ],
+              Stack(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(left: 40, top: 30, right: 40),
+                    child: Text(
+                      'Australia\'s State and Territory CO2e Emissions per Capita',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.7),
                     ),
                   ),
-                ),
+                  Container(
+                      margin: EdgeInsets.only(top: 20),
+                      child: IconButton(
+                          icon: Icon(Icons.arrow_back_ios),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          }))
+                ],
               ),
+              chartWidget(
+                  selectedChart: selectedChart,
+                  lineChartData: stateData(),
+                  label: '(1990 - 2017)'),
               Expanded(
-                child: Stack(
-                  children: <Widget>[
-                    PageView.builder(
-                      physics: ClampingScrollPhysics(),
-                      itemCount: pageButtons.length,
-                      onPageChanged: (int page) {
-                        getChangedPageAndMoveBar(page);
-                      },
-                      controller: _pageController,
-                      itemBuilder: (context, index) {
-                        return pageButtons[index];
-                      },
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Stack(
-                        alignment: AlignmentDirectional.topStart,
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(bottom: 50),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                for (int i = 0; i < pageButtons.length; i++)
-                                  if (i == currentPageValue) ...[
-                                    circleBar(true)
-                                  ] else
-                                    circleBar(false),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        child: InkWell(
-                          onTap: () => launch(
-                            'https://data.gov.au/dataset/ds-dga-77726fe7-ac78-4e4d-a8f7-05c55b417858/distribution/dist-dga-7c13f590-a4c6-415c-af4d-9a8e982a0578/details?q=state%20and%20territory%20co2e',
-                          ),
-                          child: Text(
-                            'This information was obtained from here',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 15),
+                child: Container(
+                    margin: EdgeInsets.only(top: 20, bottom: 10),
+                    child: ListView(
+                      scrollDirection: Axis.vertical,
+                      physics: BouncingScrollPhysics(),
+                      children: <Widget>[
+                        chartButton(
+                          onPress: () {
+                            setState(() {
+                              selectedChart = 'Australian Capital Territory';
+                            });
+                          },
+                          text: 'Australian Capital Territory',
+                          isSelected:
+                              selectedChart == 'Australian Capital Territory'
+                                  ? true
+                                  : false,
+                        ),
+                        chartButton(
+                            onPress: () {
+                              setState(() {
+                                selectedChart = 'New South Wales';
+                              });
+                            },
+                            text: 'New South Wales',
+                            isSelected: selectedChart == 'New South Wales'
+                                ? true
+                                : false),
+                        chartButton(
+                            onPress: () {
+                              setState(() {
+                                selectedChart = 'Northern Territory';
+                              });
+                            },
+                            text: 'Northern Territory',
+                            isSelected: selectedChart == 'Northern Territory'
+                                ? true
+                                : false),
+                        chartButton(
+                            onPress: () {
+                              setState(() {
+                                selectedChart = 'Queensland';
+                              });
+                            },
+                            text: 'Queensland',
+                            isSelected:
+                                selectedChart == 'Queensland' ? true : false),
+                        chartButton(
+                            onPress: () {
+                              setState(() {
+                                selectedChart = 'South Australia';
+                              });
+                            },
+                            text: 'South Australia',
+                            isSelected: selectedChart == 'South Australia'
+                                ? true
+                                : false),
+                        chartButton(
+                            onPress: () {
+                              setState(() {
+                                selectedChart = 'Tasmania';
+                              });
+                            },
+                            text: 'Tasmania',
+                            isSelected:
+                                selectedChart == 'Tasmania' ? true : false),
+                        chartButton(
+                            onPress: () {
+                              setState(() {
+                                selectedChart = 'Victoria';
+                              });
+                            },
+                            text: 'Victoria',
+                            isSelected:
+                                selectedChart == 'Victoria' ? true : false),
+                        chartButton(
+                            onPress: () {
+                              setState(() {
+                                selectedChart = 'Western Australia';
+                              });
+                            },
+                            text: 'Western Australia',
+                            isSelected: selectedChart == 'Western Australia'
+                                ? true
+                                : false),
+                        Container(
+                          margin: EdgeInsets.only(bottom: 15, top: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text('A link to the dataset can be found '),
+                              InkWell(
+                                onTap: () => launch(
+                                  'https://data.gov.au/dataset/ds-dga-77726fe7-ac78-4e4d-a8f7-05c55b417858/distribution/dist-dga-7c13f590-a4c6-415c-af4d-9a8e982a0578/details?q=state%20and%20territory%20co2e',
+                                ),
+                                child: Text(
+                                  'here',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: themeColor,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                    )
-                  ],
-                ),
-              )
+                      ],
+                    )),
+              ),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Column columnOne() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        chartButton(
-          onPress: 'New South Wales',
-          text: 'New South Wales',
-        ),
-        chartButton(
-          onPress: 'Victoria',
-          text: 'Victoria',
-        ),
-        chartButton(
-          onPress: 'Queensland',
-          text: 'Queensland',
-        ),
-        chartButton(
-          onPress: 'South Australia',
-          text: 'South Australia',
-        ),
-      ],
-    );
-  }
-
-  Column columnTwo() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        chartButton(
-          onPress: 'Western Australia',
-          text: 'Western Australia',
-        ),
-        chartButton(
-          onPress: 'Tasmania',
-          text: 'Tasmania',
-        ),
-        chartButton(
-          onPress: 'Northern Territory',
-          text: 'Northern Territory',
-        ),
-        chartButton(
-          onPress: 'Australian Capital Territory',
-          text: 'Australian Capital Territory',
-        ),
-      ],
     );
   }
 
@@ -274,44 +238,31 @@ class _VisualisationOneState extends State<VisualisationOne> {
     setState(() {});
   }
 
-  Widget circleBar(bool isActive) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 150),
-      margin: EdgeInsets.symmetric(horizontal: 8),
-      height: isActive ? 12 : 8,
-      width: isActive ? 12 : 8,
-      decoration: BoxDecoration(
-          color: isActive ? Color(0xFF459fed) : Color(0xFFadc4b9),
-          borderRadius: BorderRadius.all(Radius.circular(12))),
-    );
-  }
-
-  Container chartButton({String onPress, String text}) {
-    return Container(
-      margin: EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 5),
-      decoration: BoxDecoration(
-        color: Color(0xFF013461),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: FlatButton(
-          onPressed: () {
-            setState(() {
-              selectedChart = onPress;
-            });
-          },
-          child: Text(
-            text,
-            style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-                letterSpacing: 1),
-          )),
-    );
-  }
-
   LineChartData stateData() {
     return LineChartData(
+      gridData: FlGridData(
+        show: true,
+        // ignore: missing_return
+        horizontalInterval: (() {
+          if (selectedChart == 'Northern Territory') {
+            return 20.0;
+          } else if (selectedChart == 'Western Australia' ||
+              selectedChart == 'Queensland' ||
+              selectedChart == 'Tasmania') {
+            return 10.0;
+          } else if (selectedChart == 'Australian Capital Territory') {
+            return 1.0;
+          } else {
+            return 5.0;
+          }
+        }()),
+        getDrawingHorizontalLine: (value) {
+          return FlLine(
+            color: Colors.grey[800],
+            strokeWidth: 0.2,
+          );
+        },
+      ),
       lineTouchData: LineTouchData(
         enabled: true,
         touchTooltipData: LineTouchTooltipData(
@@ -322,24 +273,29 @@ class _VisualisationOneState extends State<VisualisationOne> {
               if (flSpot.x == 0 || flSpot.x == 6) {
                 return null;
               }
-
+              var label;
+              for (int i = 1; i <= 28; i++) {
+                if (flSpot.x == i) {
+                  label = i + 1989;
+                }
+              }
               return LineTooltipItem(
-                '${(flSpot.y).toStringAsFixed(1)}  CO2e',
-                const TextStyle(color: Colors.white, fontSize: 13),
+                '${(flSpot.y).toStringAsFixed(1)}  CO2e \n$label',
+                TextStyle(
+                  color: Colors.white,
+                  fontSize: 13,
+                ),
               );
             }).toList();
           },
         ),
-      ),
-      gridData: FlGridData(
-        show: false,
       ),
       titlesData: FlTitlesData(
         bottomTitles: SideTitles(
           showTitles: true,
           reservedSize: 22,
           textStyle: TextStyle(
-            color: Colors.grey[300],
+            color: Colors.grey[700],
             fontWeight: FontWeight.w400,
             fontSize: 11,
           ),
@@ -361,7 +317,7 @@ class _VisualisationOneState extends State<VisualisationOne> {
               case 25:
                 return '2014';
               case 29:
-                return '2017';
+                return '2018';
             }
             return '';
           },
@@ -369,7 +325,7 @@ class _VisualisationOneState extends State<VisualisationOne> {
         leftTitles: SideTitles(
           showTitles: true,
           textStyle: TextStyle(
-            color: Colors.grey[300],
+            color: Colors.grey[700],
             fontWeight: FontWeight.w400,
             fontSize: 14,
           ),
@@ -447,11 +403,11 @@ class _VisualisationOneState extends State<VisualisationOne> {
           show: true,
           border: Border(
             bottom: BorderSide(
-              color: Colors.white70,
+              color: Colors.grey[400],
               width: 2,
             ),
             left: BorderSide(
-              color: Colors.white70,
+              color: Colors.grey[400],
             ),
             right: BorderSide(
               color: Colors.transparent,
@@ -469,42 +425,42 @@ class _VisualisationOneState extends State<VisualisationOne> {
         switch (selectedChart) {
           case 'New South Wales':
             {
-              return nswLineBarData();
+              return stateLineBarData(0);
             }
             break;
           case 'Victoria':
             {
-              return vicLineBarData();
+              return stateLineBarData(1);
             }
             break;
           case 'Queensland':
             {
-              return qldLineBarData();
+              return stateLineBarData(2);
             }
             break;
           case 'South Australia':
             {
-              return saLineBarData();
+              return stateLineBarData(3);
             }
             break;
           case 'Western Australia':
             {
-              return waLineBarData();
+              return stateLineBarData(4);
             }
             break;
           case 'Tasmania':
             {
-              return tasLineBarData();
+              return stateLineBarData(5);
             }
             break;
           case 'Northern Territory':
             {
-              return ntLineBarData();
+              return stateLineBarData(6);
             }
             break;
           case 'Australian Capital Territory':
             {
-              return actLineBarData();
+              return stateLineBarData(7);
             }
             break;
         }
@@ -512,197 +468,79 @@ class _VisualisationOneState extends State<VisualisationOne> {
     );
   }
 
-  List<LineChartBarData> nswLineBarData() {
-    List<FlSpot> nswPointList = [];
-    for (int i = 0; i <= nswList.length - 1; i++) {
-      nswPointList.add(FlSpot(i.toDouble() + 1, nswList[i]));
+  List<LineChartBarData> stateLineBarData(int chosenData) {
+    List<FlSpot> chosenPointList = [];
+
+    switch (chosenData) {
+      case 0:
+        {
+          chosenPointList.clear();
+          for (int i = 0; i <= nswList.length - 1; i++) {
+            chosenPointList.add(FlSpot(i.toDouble() + 1, nswList[i]));
+          }
+        }
+        break;
+      case 1:
+        {
+          chosenPointList.clear();
+          for (int i = 0; i <= vicList.length - 1; i++) {
+            chosenPointList.add(FlSpot(i.toDouble() + 1, vicList[i]));
+          }
+        }
+        break;
+      case 2:
+        {
+          chosenPointList.clear();
+          for (int i = 0; i <= qldList.length - 1; i++) {
+            chosenPointList.add(FlSpot(i.toDouble() + 1, qldList[i]));
+          }
+        }
+        break;
+      case 3:
+        {
+          chosenPointList.clear();
+          for (int i = 0; i <= saList.length - 1; i++) {
+            chosenPointList.add(FlSpot(i.toDouble() + 1, saList[i]));
+          }
+        }
+        break;
+      case 4:
+        {
+          chosenPointList.clear();
+          for (int i = 0; i <= waList.length - 1; i++) {
+            chosenPointList.add(FlSpot(i.toDouble() + 1, waList[i]));
+          }
+        }
+        break;
+      case 5:
+        {
+          chosenPointList.clear();
+          for (int i = 0; i <= tasList.length - 1; i++) {
+            chosenPointList.add(FlSpot(i.toDouble() + 1, tasList[i]));
+          }
+        }
+        break;
+      case 6:
+        {
+          chosenPointList.clear();
+          for (int i = 0; i <= ntList.length - 1; i++) {
+            chosenPointList.add(FlSpot(i.toDouble() + 1, ntList[i]));
+          }
+        }
+        break;
+      case 7:
+        {
+          chosenPointList.clear();
+          for (int i = 0; i <= actList.length - 1; i++) {
+            chosenPointList.add(FlSpot(i.toDouble() + 1, actList[i]));
+          }
+        }
+        break;
     }
 
     return [
       LineChartBarData(
-        spots: dataReady ? nswPointList : pointStarter,
-        isCurved: true,
-        curveSmoothness: 0,
-        colors: const [
-          Color(0xFF58d178),
-        ],
-        barWidth: 4,
-        isStrokeCapRound: true,
-        dotData: FlDotData(
-          show: false,
-        ),
-        belowBarData: BarAreaData(
-          show: false,
-        ),
-      ),
-    ];
-  }
-
-  List<LineChartBarData> vicLineBarData() {
-    List<FlSpot> vicPointList = [];
-    for (int i = 0; i <= vicList.length - 1; i++) {
-      vicPointList.add(FlSpot(i.toDouble() + 1, vicList[i]));
-    }
-
-    return [
-      LineChartBarData(
-        spots: dataReady ? vicPointList : pointStarter,
-        isCurved: true,
-        curveSmoothness: 0,
-        colors: const [
-          Color(0xFF58d178),
-        ],
-        barWidth: 4,
-        isStrokeCapRound: true,
-        dotData: FlDotData(
-          show: false,
-        ),
-        belowBarData: BarAreaData(
-          show: false,
-        ),
-      ),
-    ];
-  }
-
-  List<LineChartBarData> qldLineBarData() {
-    List<FlSpot> qldPointList = [];
-    for (int i = 0; i <= qldList.length - 1; i++) {
-      qldPointList.add(FlSpot(i.toDouble() + 1, qldList[i]));
-    }
-
-    return [
-      LineChartBarData(
-        spots: dataReady ? qldPointList : pointStarter,
-        isCurved: true,
-        curveSmoothness: 0,
-        colors: const [
-          Color(0xFF58d178),
-        ],
-        barWidth: 4,
-        isStrokeCapRound: true,
-        dotData: FlDotData(
-          show: false,
-        ),
-        belowBarData: BarAreaData(
-          show: false,
-        ),
-      ),
-    ];
-  }
-
-  List<LineChartBarData> saLineBarData() {
-    List<FlSpot> saPointList = [];
-    for (int i = 0; i <= saList.length - 1; i++) {
-      saPointList.add(FlSpot(i.toDouble() + 1, saList[i]));
-    }
-
-    return [
-      LineChartBarData(
-        spots: dataReady ? saPointList : pointStarter,
-        isCurved: true,
-        curveSmoothness: 0,
-        colors: const [
-          Color(0xFF58d178),
-        ],
-        barWidth: 4,
-        isStrokeCapRound: true,
-        dotData: FlDotData(
-          show: false,
-        ),
-        belowBarData: BarAreaData(
-          show: false,
-        ),
-      ),
-    ];
-  }
-
-  List<LineChartBarData> waLineBarData() {
-    List<FlSpot> waPointList = [];
-    for (int i = 0; i <= waList.length - 1; i++) {
-      waPointList.add(FlSpot(i.toDouble() + 1, waList[i]));
-    }
-
-    return [
-      LineChartBarData(
-        spots: dataReady ? waPointList : pointStarter,
-        isCurved: true,
-        curveSmoothness: 0,
-        colors: const [
-          Color(0xFF58d178),
-        ],
-        barWidth: 4,
-        isStrokeCapRound: true,
-        dotData: FlDotData(
-          show: false,
-        ),
-        belowBarData: BarAreaData(
-          show: false,
-        ),
-      ),
-    ];
-  }
-
-  List<LineChartBarData> tasLineBarData() {
-    List<FlSpot> tasPointList = [];
-    for (int i = 0; i <= tasList.length - 1; i++) {
-      tasPointList.add(FlSpot(i.toDouble() + 1, tasList[i]));
-    }
-
-    return [
-      LineChartBarData(
-        spots: dataReady ? tasPointList : pointStarter,
-        isCurved: true,
-        curveSmoothness: 0,
-        colors: const [
-          Color(0xFF58d178),
-        ],
-        barWidth: 4,
-        isStrokeCapRound: true,
-        dotData: FlDotData(
-          show: false,
-        ),
-        belowBarData: BarAreaData(
-          show: false,
-        ),
-      ),
-    ];
-  }
-
-  List<LineChartBarData> ntLineBarData() {
-    List<FlSpot> ntPointList = [];
-    for (int i = 0; i <= ntList.length - 1; i++) {
-      ntPointList.add(FlSpot(i.toDouble() + 1, ntList[i]));
-    }
-
-    return [
-      LineChartBarData(
-        spots: dataReady ? ntPointList : pointStarter,
-        isCurved: true,
-        curveSmoothness: 0,
-        colors: const [
-          Color(0xFF58d178),
-        ],
-        barWidth: 4,
-        isStrokeCapRound: true,
-        dotData: FlDotData(
-          show: false,
-        ),
-        belowBarData: BarAreaData(
-          show: false,
-        ),
-      ),
-    ];
-  }
-
-  List<LineChartBarData> actLineBarData() {
-    List<FlSpot> actPointList = [];
-    for (int i = 0; i <= actList.length - 1; i++) {
-      actPointList.add(FlSpot(i.toDouble() + 1, actList[i]));
-    }
-
-    return [
-      LineChartBarData(
-        spots: dataReady ? actPointList : pointStarter,
+        spots: !dataReady ? pointStarter : chosenPointList,
         isCurved: true,
         curveSmoothness: 0,
         colors: const [

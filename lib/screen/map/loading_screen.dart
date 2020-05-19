@@ -30,7 +30,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
     }
     _availability = (playStoreAvailability);
     String _availableString = _availability.toString().split('.').last;
-    print(_availableString);
     _availableString == 'success' ? getCurrentLocation() : print('Error');
   }
 
@@ -63,7 +62,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
     }
 
     _locationData = await location.getLocation();
-    print(_locationData.longitude);
     Navigator.push(
       context,
       MaterialPageRoute(

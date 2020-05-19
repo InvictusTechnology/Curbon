@@ -42,12 +42,13 @@ class _ResultScreenState extends State<ResultScreen> {
   String convertedDistance;
   String dropdownValue;
   int randomNumber = 0;
+  int currentPageValue = 0;
   bool showSpinner;
   bool isLevelUp;
 
   int getPoint() {
     switch (widget.vehicle) {
-      case 'Walking':
+      case 'Bicycle':
         {
           return 10;
         }
@@ -166,7 +167,7 @@ class _ResultScreenState extends State<ResultScreen> {
         decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(
-              color: Color(0xFF1b1b1b),
+              color: Colors.grey[600],
             ),
             borderRadius: BorderRadius.circular(12.5)),
         child: Column(
@@ -188,9 +189,12 @@ class _ResultScreenState extends State<ResultScreen> {
                 ),
               ],
             ),
-            Text(
-              '$carbon KgCO2',
-              style: TextStyle(fontSize: 20),
+            Expanded(
+              child: Text(
+                '$carbon KgCO2',
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 15),
+              ),
             )
           ],
         ),
@@ -319,6 +323,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     ],
                   ),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
@@ -334,13 +339,13 @@ class _ResultScreenState extends State<ResultScreen> {
                                   color: Colors.white,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.grey[800],
+                                      color: Colors.grey[400],
                                       blurRadius:
-                                          3.0, // has the effect of softening the shadow
+                                          2.0, // has the effect of softening the shadow
                                       spreadRadius:
                                           1.0, // has the effect of extending the shadow
                                       offset: Offset(
-                                        2.0, // horizontal, move right 10
+                                        00, // horizontal, move right 10
                                         2.0, // vertical, move down 10
                                       ),
                                     )
@@ -403,31 +408,63 @@ class _ResultScreenState extends State<ResultScreen> {
                             width: 140,
                             padding: EdgeInsets.only(right: 5),
                             decoration: BoxDecoration(),
-                            child: PageView(
+                            child: PageView.builder(
                               physics: ClampingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
+                              itemCount: whatIfPages.length,
+                              onPageChanged: (int page) {
+                                getChangedPageAndMoveBar(page);
+                              },
                               controller: _pageController,
-                              children: whatIfPages,
+                              itemBuilder: (context, index) {
+                                return whatIfPages[index];
+                              },
                             ),
-                          )
+                          ),
+                          Stack(
+                            alignment: AlignmentDirectional.topStart,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(top: 10),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    for (int i = 0; i < whatIfPages.length; i++)
+                                      if (i == currentPageValue) ...[
+                                        circleBar(true)
+                                      ] else
+                                        circleBar(false),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ],
                   ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Container(
-                      margin: EdgeInsets.only(top: 20),
-                      child: Text(
-                        'What can you do?',
-                        style: TextStyle(fontSize: 25),
-                      ),
+                  Expanded(
+                    child: ListView(
+                      scrollDirection: Axis.vertical,
+                      physics: ClampingScrollPhysics(),
+                      children: <Widget>[
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Container(
+                            margin: EdgeInsets.only(top: 35),
+                            child: Text(
+                              'What can you do?',
+                              style: TextStyle(fontSize: 25),
+                            ),
+                          ),
+                        ),
+                        getTips('1', TipsList().getTitle(tipOne),
+                            TipsList().getContent(tipOne)),
+                        getTips('2', TipsList().getTitle(tipTwo),
+                            TipsList().getContent(tipTwo)),
+                      ],
                     ),
                   ),
-                  getTips('1', TipsList().getTitle(tipOne),
-                      TipsList().getContent(tipOne)),
-                  getTips('2', TipsList().getTitle(tipTwo),
-                      TipsList().getContent(tipTwo)),
                 ],
               ),
             ),
@@ -441,17 +478,29 @@ class _ResultScreenState extends State<ResultScreen> {
     );
   }
 
+  Widget circleBar(bool isActive) {
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 150),
+      margin: EdgeInsets.symmetric(horizontal: 8),
+      height: isActive ? 6 : 4,
+      width: isActive ? 6 : 4,
+      decoration: BoxDecoration(
+          color: isActive ? Color(0xFF26CB7E) : Color(0xFFadc4b9),
+          borderRadius: BorderRadius.all(Radius.circular(12))),
+    );
+  }
+
   Container getTips(String tipsNumber, String tipsTitle, String tipsContent) {
     return Container(
       margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.grey[800],
-              blurRadius: 3.0, // has the effect of softening the shadow
+              color: Colors.grey[400],
+              blurRadius: 2.0, // has the effect of softening the shadow
               spreadRadius: 1.0, // has the effect of extending the shadow
               offset: Offset(
-                2.0, // horizontal, move right 10
+                00, // horizontal, move right 10
                 2.0, // vertical, move down 10
               ),
             )
@@ -500,6 +549,11 @@ class _ResultScreenState extends State<ResultScreen> {
         ],
       ),
     );
+  }
+
+  void getChangedPageAndMoveBar(int page) {
+    currentPageValue = page;
+    setState(() {});
   }
 
   Widget iconChooser(int userChoice) {

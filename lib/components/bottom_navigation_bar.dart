@@ -1,3 +1,4 @@
+import 'package:curbonapp/constant.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -55,7 +56,7 @@ class _BottomBarState extends State<BottomBar>
       currentIndex: widget.selectedIndex,
       showUnselectedLabels: true,
       unselectedItemColor: Colors.grey,
-      selectedItemColor: Color(0xFF26CB7E),
+      selectedItemColor: themeColor,
       onTap: _onItemTapped,
     );
   }
