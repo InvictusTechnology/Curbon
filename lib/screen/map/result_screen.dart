@@ -1,3 +1,4 @@
+import 'package:curbonapp/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:curbonapp/calculator/calculator.dart';
@@ -160,44 +161,44 @@ class _ResultScreenState extends State<ResultScreen> {
   }
 
   Widget calculationBox({int choice, String transport, String carbon}) {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: Container(
-        padding: EdgeInsets.all(8),
-        decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(
-              color: Colors.grey[600],
-            ),
-            borderRadius: BorderRadius.circular(12.5)),
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(right: 5, bottom: 7),
-                  child: iconChooser(choice),
-                ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 7),
-                  child: Text(
-                    transport,
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: Text(
-                '$carbon KgCO2',
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 15),
+    return Container(
+      width: 150,
+      padding: EdgeInsets.all(2),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(
+            color: Colors.grey[300],
+          ),
+          borderRadius: BorderRadius.circular(12.5)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(right: 5, bottom: 7),
+                child: iconChooser(choice),
               ),
-            )
-          ],
-        ),
+              Container(
+                margin: EdgeInsets.only(bottom: 7),
+                child: Text(
+                  transport,
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+          Expanded(
+            child: Text(
+              '$carbon KgCO2',
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              style: TextStyle(fontSize: 17),
+            ),
+          )
+        ],
       ),
     );
   }
@@ -271,7 +272,8 @@ class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
     int tipOne = Random().nextInt(TipsList().getTotalList());
-    int tipTwo = Random().nextInt(TipsList().getTotalList());
+    int tipTwo = Random().nextInt(TipsList().getTotalList() - 1);
+    if (tipTwo >= tipOne) tipTwo += 1;
     return WillPopScope(
       child: Scaffold(
         bottomNavigationBar: BottomBar(
@@ -281,7 +283,8 @@ class _ResultScreenState extends State<ResultScreen> {
           inAsyncCall: showSpinner,
           child: SafeArea(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+              padding:
+                  EdgeInsets.only(left: 30, right: 30, top: 30, bottom: 10),
               child: Column(
                 children: <Widget>[
                   Align(
@@ -334,24 +337,14 @@ class _ResultScreenState extends State<ResultScreen> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Container(
+                              width: 150,
+                              height: 100,
                               padding: EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                   color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey[400],
-                                      blurRadius:
-                                          2.0, // has the effect of softening the shadow
-                                      spreadRadius:
-                                          1.0, // has the effect of extending the shadow
-                                      offset: Offset(
-                                        00, // horizontal, move right 10
-                                        2.0, // vertical, move down 10
-                                      ),
-                                    )
-                                  ],
+                                  boxShadow: kBoxShadow,
                                   border: Border.all(
-                                    color: Color(0xFF1b1b1b),
+                                    color: Colors.grey[400],
                                   ),
                                   borderRadius: BorderRadius.circular(12.5)),
                               child: Column(
@@ -371,7 +364,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                         child: Text(
                                           widget.vehicle,
                                           style: TextStyle(
-                                              fontSize: 15,
+                                              fontSize: 17,
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
@@ -399,7 +392,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                 'What if',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
+                                    fontSize: 20, fontWeight: FontWeight.w600),
                               ),
                             ),
                           ),
@@ -443,21 +436,22 @@ class _ResultScreenState extends State<ResultScreen> {
                       ),
                     ],
                   ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Container(
+                      margin: EdgeInsets.only(top: 20),
+                      child: Text(
+                        'What can you do?',
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ),
                   Expanded(
                     child: ListView(
                       scrollDirection: Axis.vertical,
                       physics: ClampingScrollPhysics(),
                       children: <Widget>[
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Container(
-                            margin: EdgeInsets.only(top: 35),
-                            child: Text(
-                              'What can you do?',
-                              style: TextStyle(fontSize: 25),
-                            ),
-                          ),
-                        ),
                         getTips('1', TipsList().getTitle(tipOne),
                             TipsList().getContent(tipOne)),
                         getTips('2', TipsList().getTitle(tipTwo),
@@ -494,17 +488,7 @@ class _ResultScreenState extends State<ResultScreen> {
     return Container(
       margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey[400],
-              blurRadius: 2.0, // has the effect of softening the shadow
-              spreadRadius: 1.0, // has the effect of extending the shadow
-              offset: Offset(
-                00, // horizontal, move right 10
-                2.0, // vertical, move down 10
-              ),
-            )
-          ],
+          boxShadow: kBoxShadow,
           border: Border.all(
             color: Color(0xFF1b1b1b),
           ),
@@ -561,37 +545,37 @@ class _ResultScreenState extends State<ResultScreen> {
     if (i == 0) {
       return Icon(
         Icons.directions_car,
-        size: 40,
+        size: 35,
         color: Colors.green[400],
       );
     } else if (i == 1) {
       return Icon(
         Icons.directions_bus,
-        size: 40,
+        size: 35,
         color: Colors.green[400],
       );
     } else if (i == 2) {
       return Icon(
         Icons.tram,
-        size: 40,
+        size: 35,
         color: Colors.green[400],
       );
     } else if (i == 3) {
       return Icon(
         Icons.train,
-        size: 40,
+        size: 35,
         color: Colors.green[400],
       );
     } else if (i == 4) {
       return Icon(
         Icons.directions_bike,
-        size: 40,
+        size: 35,
         color: Colors.green[400],
       );
     } else if (i == 5) {
       return Icon(
         Icons.directions_walk,
-        size: 40,
+        size: 35,
         color: Colors.green[400],
       );
     } else {

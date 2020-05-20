@@ -1,3 +1,4 @@
+import 'package:curbonapp/constant.dart';
 import 'package:flutter/material.dart';
 
 class ShowNoChart extends StatelessWidget {
@@ -16,14 +17,7 @@ class ShowNoChart extends StatelessWidget {
               Color(0xFF405b82),
             ],
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey[700],
-              spreadRadius: 2,
-              blurRadius: 3,
-              offset: Offset(2, 2), // changes position of shadow
-            ),
-          ],
+          boxShadow: kBoxShadow,
         ),
         margin: EdgeInsets.only(left: 30, right: 30, bottom: 15, top: 10),
         child: Column(

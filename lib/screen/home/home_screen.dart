@@ -8,7 +8,6 @@ import 'package:curbonapp/components/previous_trip_card.dart';
 import 'package:flutter/services.dart';
 import 'package:curbonapp/components/no_chart_container.dart';
 import 'package:curbonapp/components/home_not_logged_in.dart';
-import 'package:curbonapp/screen/home/triphistory_screen.dart';
 
 const kInactiveChart = Color(0xFF4f5a70);
 const kActiveChart = Color(0xFF4373d1);
@@ -33,7 +32,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _auth = FirebaseAuth.instance;
   FirebaseUser loggedInUser;
-  String _selectedChart = 'Chart 1';
+  String _selectedChart = 'Chart 3';
 
   Widget infoText(String text) {
     return Align(
@@ -173,14 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     highlightColor: Colors.transparent,
                     onPressed: () {
                       if (widget.tripList[0].transport != '') {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => TripHistoryScreen(
-                              tripList: widget.tripList,
-                            ),
-                          ),
-                        );
+                        Navigator.pushNamed(context, '/history');
                       }
                     },
                     child: PreviousTripCard(
@@ -196,20 +188,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     changeChartButton(
-                      onTapped: () {
-                        setState(() {
-                          _selectedChart = 'Chart 1';
-                        });
-                      },
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        bottomLeft: Radius.circular(10),
-                      ),
-                      selectChart: _selectedChart == 'Chart 1'
-                          ? kActiveChart
-                          : kInactiveChart,
-                      title: 'Trips',
-                    ),
+                        onTapped: () {
+                          setState(() {
+                            _selectedChart = 'Chart 3';
+                          });
+                        },
+                        selectChart: _selectedChart == 'Chart 3'
+                            ? kActiveChart
+                            : kInactiveChart,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          bottomLeft: Radius.circular(10),
+                        ),
+                        title: 'Carbon'),
                     changeChartButton(
                         onTapped: () {
                           setState(() {
@@ -221,19 +212,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             : kInactiveChart,
                         title: 'Transport'),
                     changeChartButton(
-                        onTapped: () {
-                          setState(() {
-                            _selectedChart = 'Chart 3';
-                          });
-                        },
-                        selectChart: _selectedChart == 'Chart 3'
-                            ? kActiveChart
-                            : kInactiveChart,
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                        ),
-                        title: 'Carbon'),
+                      onTapped: () {
+                        setState(() {
+                          _selectedChart = 'Chart 1';
+                        });
+                      },
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                      ),
+                      selectChart: _selectedChart == 'Chart 1'
+                          ? kActiveChart
+                          : kInactiveChart,
+                      title: 'Trips',
+                    ),
                   ],
                 ),
                 widget.tripList[0].destination == 'No record of any address yet'

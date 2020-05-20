@@ -1,3 +1,4 @@
+import 'package:curbonapp/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:curbonapp/components/icon_container_home.dart';
 
@@ -16,7 +17,7 @@ class PreviousTripCard extends StatelessWidget {
       this.distance});
 
   EdgeInsetsGeometry _marginContainer =
-      EdgeInsets.only(left: 14, right: 14, top: 10);
+      EdgeInsets.only(left: 14, right: 14, top: 2.5);
 
   Widget infoText(String text) {
     return Align(
@@ -51,25 +52,18 @@ class PreviousTripCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12.5),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 12.5),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: const [
             Color(0xFF1c9c60),
-            Color(0xFF26CB7E),
+            Color(0xFF1d965e),
           ],
           begin: Alignment.bottomCenter,
           end: Alignment.topCenter,
         ),
         borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey[500],
-            blurRadius: 5.0,
-            spreadRadius: 2.0,
-            offset: Offset(2.0, 2.0), // shadow direction: bottom right
-          )
-        ],
+        boxShadow: kBoxShadow,
       ),
       margin: _marginContainer,
       child: Column(
@@ -111,7 +105,7 @@ class PreviousTripCard extends StatelessWidget {
                       Text(
                         distance,
                         style: TextStyle(
-                            fontSize: 23,
+                            fontSize: 25,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                             height: 1.5),
@@ -122,7 +116,7 @@ class PreviousTripCard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
-                          color: Colors.grey[100],
+                          color: Colors.grey[200],
                         ),
                       )
                     ],
@@ -136,7 +130,7 @@ class PreviousTripCard extends StatelessWidget {
                       Text(
                         carbon,
                         style: TextStyle(
-                            fontSize: 23,
+                            fontSize: 25,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                             height: 1.5),
@@ -147,7 +141,7 @@ class PreviousTripCard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
-                          color: Colors.grey[100],
+                          color: Colors.grey[200],
                         ),
                       )
                     ],

@@ -1,4 +1,5 @@
 import 'package:curbonapp/components/bottom_navigation_bar.dart';
+import 'package:curbonapp/constant.dart';
 import 'package:flutter/material.dart';
 
 class VisualisationScreen extends StatelessWidget {
@@ -40,9 +41,6 @@ class VisualisationScreen extends StatelessWidget {
               linkButton('Transport Sector Greenhouse Gas Emissions', () {
                 Navigator.pushNamed(context, '/vizz2');
               }),
-//              linkButton('Environment Resources Consumed', () {
-//                Navigator.pushNamed(context, '/vizz3');
-//              }),
               Expanded(
                 child: Align(
                   alignment: Alignment.bottomCenter,
@@ -70,13 +68,7 @@ class VisualisationScreen extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Color(0xFF1c9c60),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.grey[500],
-                offset: Offset(1, 2),
-                blurRadius: 5,
-                spreadRadius: 1)
-          ]),
+          boxShadow: kBoxShadow),
       child: FlatButton(
         onPressed: onTap,
         child: Text(

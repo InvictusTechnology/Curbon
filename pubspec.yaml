@@ -9,38 +9,38 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_maps_flutter: ^0.5.21+15
-  geolocator: ^5.3.1
-  flutter_google_places: ^0.2.4
-  location: ^3.0.2
-  google_maps_webservice: ^0.0.16
-  geocoder: ^0.2.1
-  google_map_polyline: ^0.2.0+1
+
+  audioplayers: ^0.15.1
   auto_size_text: ^2.0.2
-  google_api_availability: ^2.0.4
+  badges: ^1.1.1
+  cloud_firestore: ^0.13.5
+  date_util: ^0.1.4
+  firebase_analytics: ^5.0.11
+  firebase_auth: ^0.16.0
+  firebase_core: ^0.4.4+3
+  firebase_database: ^3.1.5
+  firebase_storage: ^3.1.5
+  fl_chart: ^0.9.4
+  flutter_facebook_login: ^3.0.0
+  flutter_google_places: ^0.2.4
   flutter_polyline_points: ^0.1.0
   flutter_spinkit: ^4.1.2+1
-  firebase_core: ^0.4.4+3
-  firebase_auth: ^0.16.0
-  firebase_storage: ^3.1.5
-  firebase_database: ^3.1.5
-  cloud_firestore: ^0.13.5
-  shared_preferences: ^0.5.7
-  intl: ^0.16.1
-  badges: ^1.1.1
-  fl_chart: ^0.9.4
-  modal_progress_hud: ^0.1.3
-  firebase_analytics: ^5.0.11
   flutter_swiper: ^1.1.6
-  audioplayers: ^0.15.1
-  image_picker: ^0.6.6+1
-  date_util: ^0.1.4
+  fluttertoast: ^4.0.1
+  geocoder: ^0.2.1
+  geolocator: ^5.3.1
+  google_api_availability: ^2.0.4
+  google_maps_flutter: ^0.5.21+15
+  google_maps_webservice: ^0.0.16
+  google_map_polyline: ^0.2.0+1
   google_sign_in: ^4.4.6
+  image_picker: ^0.6.6+1
+  intl: ^0.16.1
+  location: ^3.0.2
+  modal_progress_hud: ^0.1.3
+  shared_preferences: ^0.5.7
   url_launcher: ^5.4.7
-  flutter_facebook_login: ^3.0.0
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
@@ -55,6 +55,11 @@ flutter:
     - assets/
 
   fonts:
-  - family: Proxima
-    fonts:
-    - asset: fonts/ProximaNova-Regular.otf
+    - family: Assistant
+      fonts:
+        - asset: fonts/Assistant-Bold.ttf
+        - asset: fonts/Assistant-ExtraBold.ttf
+        - asset: fonts/Assistant-ExtraLight.ttf
+        - asset: fonts/Assistant-Light.ttf
+        - asset: fonts/Assistant-Regular.ttf
+        - asset: fonts/Assistant-SemiBold.ttf

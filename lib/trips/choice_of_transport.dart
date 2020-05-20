@@ -1,3 +1,4 @@
+import 'package:curbonapp/constant.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'indicator.dart';
@@ -22,67 +23,32 @@ class _TransportChoiceChartState extends State<TransportChoiceChart> {
       motorcycle = 0;
   int totalTransport;
 
-  void getPerDay() {
-    var dayMinOne =
-        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-    var dayMinTwo = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 1);
-    var dayMinThree = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 2);
-    var dayMinFour = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 3);
-    var dayMinFive = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 4);
-    var dayMinSix = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 5);
-    var dayMinSeven = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 6);
-
+  void calculateTransport() {
     for (int i = 0; i <= widget.tripList.length - 1; i++) {
-      int epochNumber = widget.tripList[i].date;
-      DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(epochNumber);
-      var newDate = DateTime(dateTime.year, dateTime.month, dateTime.day);
-      if (newDate == dayMinOne) {
-        calculateTransport(widget.tripList[i].transport);
-      } else if (newDate == dayMinTwo) {
-        calculateTransport(widget.tripList[i].transport);
-      } else if (newDate == dayMinThree) {
-        calculateTransport(widget.tripList[i].transport);
-      } else if (newDate == dayMinFour) {
-        calculateTransport(widget.tripList[i].transport);
-      } else if (newDate == dayMinFive) {
-        calculateTransport(widget.tripList[i].transport);
-      } else if (newDate == dayMinSix) {
-        calculateTransport(widget.tripList[i].transport);
-      } else if (newDate == dayMinSeven) {
-        calculateTransport(widget.tripList[i].transport);
+      String transport = widget.tripList[i].transport;
+      if (transport == 'Car') {
+        car++;
+      } else if (transport == 'Bus') {
+        bus++;
+      } else if (transport == 'Tram') {
+        tram++;
+      } else if (transport == 'Train') {
+        train++;
+      } else if (transport == 'Bicycle') {
+        bicycle++;
+      } else if (transport == 'Walking') {
+        walking++;
+      } else if (transport == 'Motorcycle') {
+        motorcycle++;
       }
     }
     totalTransport = car + bus + tram + train + bicycle + walking + motorcycle;
   }
 
-  void calculateTransport(String transport) {
-    if (transport == 'Car') {
-      car++;
-    } else if (transport == 'Bus') {
-      bus++;
-    } else if (transport == 'Tram') {
-      tram++;
-    } else if (transport == 'Train') {
-      train++;
-    } else if (transport == 'Bicycle') {
-      bicycle++;
-    } else if (transport == 'Walking') {
-      walking++;
-    } else if (transport == 'Motorcycle') {
-      motorcycle++;
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    getPerDay();
+    calculateTransport();
   }
 
   @override
@@ -92,14 +58,7 @@ class _TransportChoiceChartState extends State<TransportChoiceChart> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey[600],
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: Offset(0, 2), // changes position of shadow
-            ),
-          ],
+          boxShadow: kBoxShadow,
           gradient: LinearGradient(
             colors: const [
               Color(0xFF2D4261),

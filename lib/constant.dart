@@ -1,5 +1,18 @@
 import 'package:flutter/material.dart';
 
+// Constant for boxShadow
+const kBoxShadow = [
+  BoxShadow(
+    color: Color(0xFFc9c9c9),
+    blurRadius: 5.0,
+    spreadRadius: 2.0,
+    offset: Offset(
+      0.0,
+      2.0,
+    ),
+  )
+];
+
 // Constants for GoogleMaps in MapScreen
 const googleAPIKey = "AIzaSyDlVVdxGqt8Y_H--YJlvTDtw4X6wXl-MtI";
 const double cameraZoom = 13;
@@ -20,7 +33,6 @@ const kTextStyle = TextStyle(
     fontWeight: FontWeight.bold,
     color: Colors.white);
 const kTextFieldStyle = InputDecoration(
-  contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 50),
   isDense: true,
   border: OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(10.0)),

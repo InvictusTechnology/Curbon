@@ -66,15 +66,10 @@ Container chartButton({Function onPress, String text, bool isSelected}) {
   return Container(
     margin: EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 5),
     decoration: BoxDecoration(
-        color: isSelected ? themeColor : Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.grey[500],
-              offset: Offset(1, 2),
-              blurRadius: 5,
-              spreadRadius: 1)
-        ]),
+      color: isSelected ? themeColor : Colors.white,
+      borderRadius: BorderRadius.circular(10),
+      boxShadow: kBoxShadow,
+    ),
     child: FlatButton(
         onPressed: onPress,
         child: Text(

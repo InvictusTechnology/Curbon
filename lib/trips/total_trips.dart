@@ -1,3 +1,4 @@
+import 'package:curbonapp/constant.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -19,7 +20,6 @@ class TotalTripsState extends State<TotalTrips> {
   List<BarChartGroupData> showingBarGroups;
 
   int d1 = 0, d2 = 0, d3 = 0, d4 = 0, d5 = 0, d6 = 0, d7 = 0;
-  double c1 = 0, c2 = 0, c3 = 0, c4 = 0, c5 = 0, c6 = 0, c7 = 0;
 
   @override
   void initState() {
@@ -77,25 +77,18 @@ class TotalTripsState extends State<TotalTrips> {
       var newDate = DateTime(dateTime.year, dateTime.month, dateTime.day);
       if (newDate == dayMinOne) {
         d1++;
-        c1 = c1 + double.parse(widget.tripList[i].carbon);
       } else if (newDate == dayMinTwo) {
         d2++;
-        c2 = c2 + double.parse(widget.tripList[i].carbon);
       } else if (newDate == dayMinThree) {
         d3++;
-        c3 = c3 + double.parse(widget.tripList[i].carbon);
       } else if (newDate == dayMinFour) {
         d4++;
-        c4 = c4 + double.parse(widget.tripList[i].carbon);
       } else if (newDate == dayMinFive) {
         d5++;
-        c5 = c5 + double.parse(widget.tripList[i].carbon);
       } else if (newDate == dayMinSix) {
         d6++;
-        c6 = c6 + double.parse(widget.tripList[i].carbon);
       } else if (newDate == dayMinSeven) {
         d7++;
-        c7 = c7 + double.parse(widget.tripList[i].carbon);
       }
     }
   }
@@ -107,14 +100,7 @@ class TotalTripsState extends State<TotalTrips> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey[600],
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: Offset(0, 2), // changes position of shadow
-            ),
-          ],
+          boxShadow: kBoxShadow,
           gradient: LinearGradient(
             colors: const [
               Color(0xFF2D4261),
@@ -151,7 +137,7 @@ class TotalTripsState extends State<TotalTrips> {
                 ],
               ),
               const SizedBox(
-                height: 34,
+                height: 20,
               ),
               Expanded(
                 child: Padding(

@@ -10,6 +10,8 @@ import 'package:curbonapp/signin/signin_google.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
+import '../../constant.dart';
+
 class RegistrationScreen extends StatefulWidget {
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
@@ -51,21 +53,24 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Container(
-                        margin: EdgeInsets.only(bottom: 50),
+                        margin: EdgeInsets.only(bottom: 100),
                         child: Text(
                           'Register',
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 30,
+                              fontSize: 35,
                               fontWeight: FontWeight.w900,
                               letterSpacing: 0.9),
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.left,
                         ),
                       ),
-                      Text(
-                        'Email',
-                        style: kTextStyle,
-                        textAlign: TextAlign.center,
+                      Container(
+                        margin: EdgeInsets.only(left: 5),
+                        child: Text(
+                          'Email',
+                          style: kTextStyle,
+                          textAlign: TextAlign.left,
+                        ),
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 5, bottom: 7.5),
@@ -78,16 +83,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               _email = value;
                             },
                             keyboardType: TextInputType.emailAddress,
-                            textAlign: TextAlign.center,
+                            textAlign: TextAlign.left,
                             decoration: kTextFieldStyle.copyWith(
                                 hintText: 'Enter an email address')),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 15),
+                        margin: EdgeInsets.only(top: 15, left: 5),
                         child: Text(
                           'Password',
                           style: kTextStyle,
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.left,
                         ),
                       ),
                       Container(
@@ -101,17 +106,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               checkPassword(value);
                               _password = value;
                             },
-                            textAlign: TextAlign.center,
+                            textAlign: TextAlign.left,
                             obscureText: _obscureText,
                             decoration: kTextFieldStyle.copyWith(
-                                contentPadding: EdgeInsets.only(
-                                    top: 12, bottom: 12, left: 50),
                                 suffixIcon: IconButton(
                                   icon: Icon(
                                     _obscureText
                                         ? Icons.visibility_off
                                         : Icons.visibility,
-                                    color: Colors.green[400],
+                                    color: activeColor,
                                   ),
                                   onPressed: _toggle,
                                 ),

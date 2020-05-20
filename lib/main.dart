@@ -1,3 +1,4 @@
+import 'package:curbonapp/screen/home/history_screen.dart';
 import 'package:curbonapp/screen/profile/about_us.dart';
 import 'package:curbonapp/screen/profile/how_this_works.dart';
 import 'package:curbonapp/screen/visualisation/visualisation1.dart';
@@ -36,7 +37,7 @@ class MainApp extends StatelessWidget {
     ]);
     return MaterialApp(
       theme: ThemeData(
-        fontFamily: 'Proxima',
+        fontFamily: 'Assistant',
         brightness: Brightness.light,
         accentColor: Colors.white,
         appBarTheme: AppBarTheme(
@@ -50,6 +51,7 @@ class MainApp extends StatelessWidget {
         '/calculate': (context) => ResultScreen(),
         '/detail': (context) => UserDetailScreen(),
         '/forgot': (context) => ForgotPasswordScreen(),
+        '/history': (context) => HistoryScreen(),
         '/home': (context) => HomeScreen(),
         '/how': (context) => HowThisWorksWScreen(),
         '/intro_pages': (context) => IntroPages(),

@@ -31,12 +31,20 @@ class _LoadingHomeScreenState extends State<LoadingHomeScreen> {
   }
 
   void getDocument(String name) async {
+    // Get the millisecondsSinceEpoch to limit the day since last 7 days only
+    var time = DateTime(
+            DateTime.now().year, DateTime.now().month, DateTime.now().day - 6)
+        .millisecondsSinceEpoch;
+
     var currentUser = loggedInUser.email;
+
+    // Implement the time var to limit the retrieve to end only after D-7
     final pastTrips = await _firestore
         .collection('past_trips')
         .where('user', isEqualTo: currentUser)
         .orderBy('createdTime', descending: true)
-        .getDocuments();
+        .endAt([time]).getDocuments();
+
     for (var trip in pastTrips.documents) {
       tripList.add(
         Trips(

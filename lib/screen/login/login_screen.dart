@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
+import '../../constant.dart';
+
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -49,16 +51,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           'Login',
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 30,
+                              fontSize: 35,
                               fontWeight: FontWeight.w900,
                               letterSpacing: 0.9),
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.left,
                         ),
                       ),
                       Text(
                         'Email',
                         style: kTextStyle,
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.left,
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 5, bottom: 15),
@@ -71,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               _email = value;
                             },
                             keyboardType: TextInputType.emailAddress,
-                            textAlign: TextAlign.center,
+                            textAlign: TextAlign.left,
                             decoration: kTextFieldStyle.copyWith(
                                 hintText: 'Enter an email address')),
                       ),
@@ -80,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Text(
                           'Password',
                           style: kTextStyle,
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.left,
                         ),
                       ),
                       Container(
@@ -94,27 +96,43 @@ class _LoginScreenState extends State<LoginScreen> {
                               _password = value;
                             },
                             obscureText: _obscureText,
-                            textAlign: TextAlign.center,
+                            textAlign: TextAlign.left,
                             decoration: kTextFieldStyle.copyWith(
-                                contentPadding: EdgeInsets.only(
-                                    top: 12, bottom: 12, left: 50),
                                 suffixIcon: IconButton(
                                   icon: Icon(
                                     _obscureText
                                         ? Icons.visibility_off
                                         : Icons.visibility,
-                                    color: Colors.green[400],
+                                    color: activeColor,
                                   ),
                                   onPressed: _toggle,
                                 ),
                                 hintText: 'Enter a password')),
+                      ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: FlatButton(
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                            onPressed: () {
+                              Navigator.pushReplacementNamed(
+                                  context, '/forgot');
+                            },
+                            child: Text(
+                              'Forgot Password',
+                              style: TextStyle(
+                                  color: Color(0xFF26BC7E), fontSize: 14),
+                            )),
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       Text(
                         errorMessage == null ? ' ' : errorMessage,
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.red, fontSize: 15),
                       ),
-                      SizedBox(height: 40),
+                      SizedBox(height: 20),
                       RaisedButton(
                         onPressed: () async {
                           setState(() {
@@ -194,18 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: 12,
                       ),
-                      FlatButton(
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/forgot');
-                          },
-                          child: Text(
-                            'Forgot Password',
-                            style: TextStyle(
-                                color: Color(0xFF26BC7E), fontSize: 14),
-                          )),
-                      SizedBox(height: 30),
+                      SizedBox(height: 40),
                       FlatButton(
                           onPressed: () {
                             Navigator.pushReplacementNamed(

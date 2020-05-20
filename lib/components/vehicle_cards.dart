@@ -1,3 +1,4 @@
+import 'package:curbonapp/constant.dart';
 import 'package:flutter/material.dart';
 
 class VehicleCard extends StatelessWidget {
@@ -20,14 +21,7 @@ class VehicleCard extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
         width: 72,
         decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.9),
-              blurRadius: 1.0,
-              spreadRadius: 0.2,
-              offset: Offset(2.0, 2.0), // shadow direction: bottom right
-            )
-          ],
+          boxShadow: kBoxShadow,
           color: colorInside,
           border: Border.all(color: colorBorder),
           borderRadius: BorderRadius.circular(15),

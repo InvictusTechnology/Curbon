@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:curbonapp/constant.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -21,10 +22,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final _firestore = Firestore.instance;
   FirebaseUser loggedInUser;
   File _image;
-  bool showSpinner = false;
-  bool noUser = false;
-  bool hasProfilePic = false;
-  String userPhoto = 'assets/avatar.png';
+  bool showSpinner;
+  bool noUser;
+  bool hasProfilePic;
+  bool hasUpdatedPhoto;
+  bool hasVerified;
+  String userPhoto;
   String name = '';
   String email = '';
   int point = 0;
@@ -51,7 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
-  Future chooseFile() async {
+  void chooseFile() async {
     setState(() {
       showSpinner = true;
     });
@@ -61,16 +64,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
       await ImagePicker.pickImage(source: ImageSource.gallery).then((image) {
         setState(() {
           _image = image;
+          hasUpdatedPhoto = true;
         });
+        startUpload(loggedInUser.email);
+        updateInfo.photoUrl = _image.path;
       });
-      startUpload(loggedInUser.email);
-      updateInfo.photoUrl = _image.path;
-
       await loggedInUser.updateProfile(updateInfo);
       await loggedInUser.reload();
       loggedInUser = await _auth.currentUser();
 
-      setState(() {
+      setState(() async {
+        hasUpdatedPhoto = true;
         showSpinner = false;
       });
     } catch (e) {
@@ -86,12 +90,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
       final user = await _auth.currentUser();
       if (user != null) {
         loggedInUser = user;
-        var profile =
-            await _firestore.collection('profile').document(user.email).get();
-        point = profile.data['point'];
-        level = profile.data['level'];
+        try {
+          var profile =
+              await _firestore.collection('profile').document(user.email).get();
+          point = profile.data['point'];
+          level = profile.data['level'];
+        } catch (e) {
+          await _firestore
+              .collection('profile')
+              .document(loggedInUser.email)
+              .setData({
+            'user': loggedInUser.email,
+            'point': 0,
+            'level': 1,
+          });
+        }
+
+        hasVerified = loggedInUser.isEmailVerified;
         name = user.displayName;
         email = user.email;
+        print('just reached');
         if (user.photoUrl != null) userPhoto = user.photoUrl;
         final ref = FirebaseStorage.instance
             .ref()
@@ -99,6 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             .child('${loggedInUser.email}.png');
         try {
           userPhoto = await ref.getDownloadURL() as String;
+
           setState(() {
             showSpinner = false;
             hasProfilePic = true;
@@ -118,6 +137,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       }
     } catch (e) {
       print(e);
+      setState(() {
+        showSpinner = false;
+      });
       throw e;
     }
   }
@@ -126,6 +148,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     showSpinner = true;
     super.initState();
+    userPhoto = 'assets/avatar.png';
+    hasProfilePic = false;
+    noUser = false;
+    hasUpdatedPhoto = false;
+    hasVerified = true;
     getUserProfile();
   }
 
@@ -147,18 +174,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: 20, top: 30),
+                  margin: EdgeInsets.only(left: 30, top: 30),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
                         'Profile',
+                        textAlign: TextAlign.left,
                         style: TextStyle(
-                          fontSize: 35,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 0.9,
-                        ),
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.8),
                       ),
                       Visibility(
                         visible: !noUser,
@@ -210,7 +237,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           if (hasProfilePic)
                             CircleAvatar(
                                 radius: 50,
+                                backgroundColor: Colors.grey[200],
                                 backgroundImage: NetworkImage(userPhoto)),
+                          if (hasUpdatedPhoto)
+                            CircleAvatar(
+                              radius: 50,
+                              backgroundImage: FileImage(_image),
+                            ),
                           Visibility(
                             visible: !noUser,
                             child: Align(
@@ -239,14 +272,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: <Widget>[
                             Text(
                               name,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
                               style: TextStyle(
                                   fontSize: 23,
                                   fontWeight: FontWeight.w600,
-                                  letterSpacing: 0.8),
+                                  letterSpacing: 0.1),
                             ),
-                            Text(
-                              email,
-                              overflow: TextOverflow.ellipsis,
+                            Row(
+                              children: <Widget>[
+                                Text(
+                                  email,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                                (() {
+                                  try {
+                                    if (loggedInUser.isEmailVerified) {
+                                      return Icon(
+                                        Icons.verified_user,
+                                        size: 13,
+                                        color: themeColor,
+                                      );
+                                    } else {
+                                      return Text('');
+                                    }
+                                  } catch (e) {
+                                    return Text('');
+                                  }
+                                }())
+                              ],
                             ),
                             SizedBox(height: 5),
                             Text(
@@ -350,31 +406,92 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ),
+                if (!hasVerified)
+                  Column(
+                    children: <Widget>[
+                      SizedBox(height: 40),
+                      Text('You have not verified your email'),
+                      FlatButton(
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        onPressed: () async {
+                          setState(() {
+                            showSpinner = true;
+                          });
+                          try {
+                            await loggedInUser.sendEmailVerification();
+                            showToast();
+                          } catch (e) {
+                            print(e);
+                            showErrorToast();
+                          }
+                          setState(() {
+                            showSpinner = false;
+                          });
+                        },
+                        child: Text(
+                          'Verify Email',
+                          style: TextStyle(
+                              color: themeColor,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      )
+                    ],
+                  ),
                 if (noUser)
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       SizedBox(height: 40),
-                      Text('You have not logged in yet 😓'),
+                      Text(
+                        'You have not logged in yet 😓',
+                        style: TextStyle(fontSize: 15),
+                      ),
                       FlatButton(
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/login');
-                          },
-                          child: Text(
-                            'Login',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: themeColor,
-                                fontSize: 16,
-                                letterSpacing: 0.5),
-                          )),
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, '/login');
+                        },
+                        child: Text(
+                          'Login',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: themeColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              letterSpacing: 0.2),
+                        ),
+                      ),
                     ],
-                  )
+                  ),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  void showErrorToast() {
+    Fluttertoast.showToast(
+      msg: 'You have sent too many requests, try again later',
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 3,
+      backgroundColor: Color(0x991b1b1b),
+      textColor: Colors.white,
+      fontSize: 16,
+    );
+  }
+
+  void showToast() {
+    Fluttertoast.showToast(
+        msg: "An email verification has been sent to ${loggedInUser.email}",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Color(0x991b1b1b),
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:curbonapp/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:curbonapp/trips/trips_constructor.dart';
@@ -76,14 +77,7 @@ class _CarbonEmissionChartState extends State<CarbonEmissionChart> {
       aspectRatio: 1.23,
       child: Container(
         decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey[600],
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: Offset(0, 2), // changes position of shadow
-            ),
-          ],
+          boxShadow: kBoxShadow,
           borderRadius: const BorderRadius.all(Radius.circular(18)),
           gradient: LinearGradient(
             colors: const [
@@ -106,11 +100,8 @@ class _CarbonEmissionChartState extends State<CarbonEmissionChart> {
                       color: Colors.white,
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
-                      letterSpacing: 1.5),
+                      letterSpacing: 1),
                   textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  height: 4,
                 ),
                 Text(
                   'Within the Last 7 Days',
@@ -121,7 +112,7 @@ class _CarbonEmissionChartState extends State<CarbonEmissionChart> {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(
-                  height: 37,
+                  height: 25,
                 ),
                 Expanded(
                   child: Padding(

@@ -43,7 +43,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   margin:
                       EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 15),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                   ),
                   child: TextField(

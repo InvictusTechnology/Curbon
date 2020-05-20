@@ -68,8 +68,8 @@ class IconContainer extends StatelessWidget {
               transport,
               textAlign: TextAlign.center,
               style: TextStyle(
-                  fontSize: 12.5,
-                  fontWeight: FontWeight.w500,
+                  fontSize: 18.5,
+                  fontWeight: FontWeight.w600,
                   color: Colors.white),
             )
           ],

@@ -6,9 +6,11 @@ class Trips {
   String carbon; // will be in (kg of CO2/passenger-kilometre)
   String user;
   int date;
+  String id;
 
   Trips(
       {this.destination,
+      this.id,
       this.starting,
       this.distance,
       this.carbon,
