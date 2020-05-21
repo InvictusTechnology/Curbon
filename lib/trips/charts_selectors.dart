@@ -2,12 +2,17 @@ import 'package:curbonapp/trips/trips_constructor.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class MostTransport extends StatelessWidget {
+class MostTransport extends StatefulWidget {
   List<Trips> tripList;
   Function onTapped;
   double size;
   MostTransport(this.tripList, this.onTapped, this.size);
+  @override
+  _MostTransportState createState() => _MostTransportState();
+}
 
+class _MostTransportState extends State<MostTransport>
+    with TickerProviderStateMixin {
   int car = 0,
       bus = 0,
       tram = 0,
@@ -21,7 +26,7 @@ class MostTransport extends StatelessWidget {
   IconData icon;
 
   int getHighest() {
-    for (var trip in tripList) {
+    for (var trip in widget.tripList) {
       String transport = trip.transport;
       if (transport == 'Car') {
         car++;
@@ -96,186 +101,227 @@ class MostTransport extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     getHighest();
-    return Stack(
-      alignment: Alignment.center,
-      children: <Widget>[
-        Container(
-            height: size,
-            width: size,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: LinearGradient(
-                  colors: const [
-                    Color(0xFF5ab2e8),
-                    Color(0xFF9ad7fc),
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 75,
+      height: 75,
+      child: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          AnimatedSize(
+            curve: Curves.easeOut,
+            vsync: this,
+            duration: Duration(seconds: 2),
+            child: Container(
+                height: widget.size,
+                width: widget.size,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      colors: const [
+                        Color(0xFF5ab2e8),
+                        Color(0xFF9ad7fc),
+                      ],
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                    ))),
+          ),
+          GestureDetector(
+            onTap: widget.onTapped,
+            child: Container(
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle, color: Color(0xFF1f316e)),
+              width: 60,
+              height: 60,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      icon,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      '${biggest}x',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey[300]),
+                    )
                   ],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                ))),
-        GestureDetector(
-          onTap: onTapped,
-          child: Container(
-            decoration:
-                BoxDecoration(shape: BoxShape.circle, color: Color(0xFF1f316e)),
-            width: 60,
-            height: 60,
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(
-                    icon,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    '${biggest}x',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey[300]),
-                  )
-                ],
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
 
-// ignore: must_be_immutable
-class TripsTotal extends StatelessWidget {
+class TripsTotal extends StatefulWidget {
   List<Trips> tripList;
   Function onTapped;
   double size;
   TripsTotal(this.tripList, this.onTapped, this.size);
-  int totalTrips;
 
   @override
+  _TripsTotalState createState() => _TripsTotalState();
+}
+
+class _TripsTotalState extends State<TripsTotal> with TickerProviderStateMixin {
+  @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: <Widget>[
-        Container(
-            height: size,
-            width: size,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: LinearGradient(
-                  colors: const [
-                    Color(0xFF5ab2e8),
-                    Color(0xFF9ad7fc),
+    return Container(
+      height: 75,
+      width: 75,
+      child: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          AnimatedSize(
+            curve: Curves.easeOut,
+            vsync: this,
+            duration: Duration(seconds: 2),
+            child: Container(
+                height: widget.size,
+                width: widget.size,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      colors: const [
+                        Color(0xFF5ab2e8),
+                        Color(0xFF9ad7fc),
+                      ],
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                    ))),
+          ),
+          GestureDetector(
+            onTap: widget.onTapped,
+            child: Container(
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle, color: Color(0xFF1f316e)),
+              width: 60,
+              height: 60,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      '${widget.tripList.length}',
+                      maxLines: 1,
+                      style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                    Text(
+                      'Trips',
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey[300]),
+                    )
                   ],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                ))),
-        GestureDetector(
-          onTap: onTapped,
-          child: Container(
-            decoration:
-                BoxDecoration(shape: BoxShape.circle, color: Color(0xFF1f316e)),
-            width: 60,
-            height: 60,
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    '${tripList.length}',
-                    maxLines: 1,
-                    style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                  Text(
-                    'Trips',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey[300]),
-                  )
-                ],
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
 
-// ignore: must_be_immutable
-class CarbonTotal extends StatelessWidget {
+class CarbonTotal extends StatefulWidget {
   List<Trips> tripList;
   Function onTapped;
   double size;
   CarbonTotal(this.tripList, this.onTapped, this.size);
+  @override
+  _CarbonTotalState createState() => _CarbonTotalState();
+}
 
+class _CarbonTotalState extends State<CarbonTotal>
+    with TickerProviderStateMixin {
   double getCalculate() {
     double carbonTotal = 0;
-    for (int i = 0; i <= tripList.length - 1; i++) {
-      carbonTotal = carbonTotal + double.parse(tripList[i].carbon);
+    for (int i = 0; i <= widget.tripList.length - 1; i++) {
+      carbonTotal = carbonTotal + double.parse(widget.tripList[i].carbon);
     }
     return carbonTotal;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: <Widget>[
-        Container(
-            height: size,
-            width: size,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: LinearGradient(
-                  colors: const [
-                    Color(0xFF5ab2e8),
-                    Color(0xFF9ad7fc),
+    return Container(
+      height: 75,
+      width: 75,
+      child: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          AnimatedSize(
+            curve: Curves.easeOut,
+            vsync: this,
+            duration: Duration(seconds: 2),
+            child: Container(
+                height: widget.size,
+                width: widget.size,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      colors: const [
+                        Color(0xFF5ab2e8),
+                        Color(0xFF9ad7fc),
+                      ],
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                    ))),
+          ),
+          GestureDetector(
+            onTap: widget.onTapped,
+            child: Container(
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle, color: Color(0xFF1f316e)),
+              width: 60,
+              height: 60,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      '${(getCalculate()).toStringAsFixed(2)}',
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                    Text(
+                      'KG.CO2',
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey[300]),
+                    )
                   ],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                ))),
-        GestureDetector(
-          onTap: onTapped,
-          child: Container(
-            decoration:
-                BoxDecoration(shape: BoxShape.circle, color: Color(0xFF1f316e)),
-            width: 60,
-            height: 60,
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    '${getCalculate()}',
-                    maxLines: 1,
-                    style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                  Text(
-                    'KG.CO2',
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey[300]),
-                  )
-                ],
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
