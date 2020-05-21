@@ -168,6 +168,7 @@ class _MostTransportState extends State<MostTransport>
   }
 }
 
+// ignore: must_be_immutable
 class TripsTotal extends StatefulWidget {
   List<Trips> tripList;
   Function onTapped;
@@ -242,6 +243,7 @@ class _TripsTotalState extends State<TripsTotal> with TickerProviderStateMixin {
   }
 }
 
+// ignore: must_be_immutable
 class CarbonTotal extends StatefulWidget {
   List<Trips> tripList;
   Function onTapped;
@@ -274,18 +276,20 @@ class _CarbonTotalState extends State<CarbonTotal>
             vsync: this,
             duration: Duration(seconds: 2),
             child: Container(
-                height: widget.size,
-                width: widget.size,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                      colors: const [
-                        Color(0xFF5ab2e8),
-                        Color(0xFF9ad7fc),
-                      ],
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                    ))),
+              height: widget.size,
+              width: widget.size,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  colors: const [
+                    Color(0xFF5ab2e8),
+                    Color(0xFF9ad7fc),
+                  ],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                ),
+              ),
+            ),
           ),
           GestureDetector(
             onTap: widget.onTapped,

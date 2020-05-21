@@ -2,7 +2,15 @@ import 'package:curbonapp/components/bottom_navigation_bar.dart';
 import 'package:curbonapp/constant.dart';
 import 'package:flutter/material.dart';
 
-class VisualisationScreen extends StatelessWidget {
+class VisualisationScreen extends StatefulWidget {
+  @override
+  _VisualisationScreenState createState() => _VisualisationScreenState();
+}
+
+class _VisualisationScreenState extends State<VisualisationScreen>
+    with TickerProviderStateMixin {
+  String chosen = '';
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -36,6 +44,9 @@ class VisualisationScreen extends StatelessWidget {
               linkButton(
                   'Australia\'s State and Territory CO2e Emissions per Capita',
                   () {
+                setState(() {
+                  chosen = 'vizz1';
+                });
                 Navigator.pushNamed(context, '/vizz1');
               }),
               linkButton('Transport Sector Greenhouse Gas Emissions', () {
@@ -62,19 +73,24 @@ class VisualisationScreen extends StatelessWidget {
   }
 
   Widget linkButton(String text, Function onTap) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Color(0xFF1c9c60),
-          boxShadow: kBoxShadow),
-      child: FlatButton(
-        onPressed: onTap,
-        child: Text(
-          text,
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white, fontSize: 16),
+    return AnimatedSize(
+      duration: Duration(seconds: 2),
+      vsync: this,
+      curve: Curves.bounceIn,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Color(0xFF1c9c60),
+            boxShadow: kBoxShadow),
+        child: FlatButton(
+          onPressed: onTap,
+          child: Text(
+            text,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
         ),
       ),
     );

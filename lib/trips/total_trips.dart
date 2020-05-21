@@ -253,9 +253,6 @@ class TotalTripsState extends State<TotalTrips> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 12,
-              ),
             ],
           ),
         ),

@@ -10,8 +10,22 @@ import 'package:flutter/services.dart';
 import 'package:curbonapp/components/no_chart_container.dart';
 import 'package:curbonapp/components/home_not_logged_in.dart';
 
-const kInactiveChart = Color(0xFF4f5a70);
-const kActiveChart = Color(0xFF4373d1);
+const kInactiveChart = LinearGradient(
+  colors: const [
+    Color(0xFF2D4261),
+    Color(0xFF1f316e),
+  ],
+  begin: Alignment.bottomCenter,
+  end: Alignment.topCenter,
+);
+const kActiveChart = LinearGradient(
+  colors: const [
+    Color(0xFF5ab2e8),
+    Color(0xFF9ad7fc),
+  ],
+  begin: Alignment.bottomCenter,
+  end: Alignment.topCenter,
+);
 
 // ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
@@ -266,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget changeChartButton(
       {Function onTapped,
-      Color selectChart,
+      LinearGradient selectChart,
       BorderRadius borderRadius,
       String title}) {
     return GestureDetector(
@@ -277,7 +291,7 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 6.5),
         decoration: BoxDecoration(
           borderRadius: borderRadius,
-          color: selectChart,
+          gradient: selectChart,
         ),
         child: Text(
           title,

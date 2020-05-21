@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:intl/intl.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:curbonapp/trips/trips_constructor.dart';
 
 final _firestore = Firestore.instance;
@@ -112,6 +112,28 @@ class HistoryStream extends StatelessWidget {
   bool isEdited;
   HistoryStream(this.isEdited);
 
+  void showErrorToast() {
+    Fluttertoast.showToast(
+        msg: "An error has occurred, please try again",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Color(0x991b1b1b),
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
+
+  void showToast() {
+    Fluttertoast.showToast(
+        msg: "Successfully deleted the trip",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Color(0x991b1b1b),
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
+
   void _showDialog(BuildContext context, var documentID) {
     showDialog(
       context: context,
@@ -120,7 +142,7 @@ class HistoryStream extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          backgroundColor: Colors.grey[100].withOpacity(0.9),
+          backgroundColor: Colors.grey[100].withOpacity(1),
           title: Text(
             "Alert",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -151,12 +173,17 @@ class HistoryStream extends StatelessWidget {
                     fontWeight: FontWeight.w600),
               ),
               onPressed: () async {
-                await _firestore
-                    .collection('past_trips')
-                    .document(documentID)
-                    .delete();
-
-                Navigator.of(context).pop();
+                try {
+                  await _firestore
+                      .collection('past_trips')
+                      .document(documentID)
+                      .delete();
+                  Navigator.of(context).pop();
+                  showToast();
+                } catch (e) {
+                  showErrorToast();
+                  Navigator.of(context).pop();
+                }
               },
             ),
           ],

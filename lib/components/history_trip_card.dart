@@ -2,7 +2,7 @@ import 'package:curbonapp/constant.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class HistoryCard extends StatelessWidget {
+class HistoryCard extends StatefulWidget {
   String destination;
   String starting;
   String time;
@@ -20,13 +20,20 @@ class HistoryCard extends StatelessWidget {
       this.time,
       this.onPress,
       this.isVisible});
+  @override
+  _HistoryCardState createState() => _HistoryCardState();
+}
 
+class _HistoryCardState extends State<HistoryCard>
+    with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.topRight,
       children: <Widget>[
-        Container(
+        AnimatedContainer(
+          duration: Duration(seconds: 2),
+          curve: Curves.bounceIn,
           margin: EdgeInsets.symmetric(horizontal: 10),
           padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
@@ -45,14 +52,14 @@ class HistoryCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          time,
+                          widget.time,
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 15),
                         ),
                         SizedBox(height: 15),
-                        iconSelector(transport),
+                        iconSelector(widget.transport),
                         Text(
-                          transport,
+                          widget.transport,
                           style: TextStyle(fontSize: 11),
                         )
                       ],
@@ -68,14 +75,14 @@ class HistoryCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                starting,
+                                widget.starting,
                                 textAlign: TextAlign.left,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(fontSize: 15),
                               ),
                               Text(
-                                destination,
+                                widget.destination,
                                 textAlign: TextAlign.left,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -90,7 +97,7 @@ class HistoryCard extends StatelessWidget {
                             textBaseline: TextBaseline.alphabetic,
                             children: <Widget>[
                               Text(
-                                distance,
+                                widget.distance,
                                 style: TextStyle(
                                     fontSize: 22, fontWeight: FontWeight.w600),
                               ),
@@ -99,7 +106,7 @@ class HistoryCard extends StatelessWidget {
                                   child: Text(' km')),
                               SizedBox(width: 25),
                               Text(
-                                carbon,
+                                widget.carbon,
                                 style: TextStyle(
                                     fontSize: 22, fontWeight: FontWeight.w600),
                               ),
@@ -119,8 +126,8 @@ class HistoryCard extends StatelessWidget {
           highlightColor: Colors.white,
           splashColor: Colors.transparent,
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          onPressed: onPress,
-          child: isVisible
+          onPressed: widget.onPress,
+          child: widget.isVisible
               ? Align(
                   alignment: Alignment.topRight,
                   child: Container(
