@@ -49,6 +49,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: SafeArea(
@@ -237,7 +238,7 @@ class HistoryStream extends StatelessWidget {
                   topLeft: Radius.circular(10),
                   topRight: Radius.circular(10),
                 ),
-                color: Color(0x0707BCFD),
+                color: Colors.grey[100],
               ),
               margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
               padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
@@ -258,7 +259,7 @@ class HistoryStream extends StatelessWidget {
             if (dateStringMinOne == dateStringNow) {
               historyCards.add(Container(
                 decoration: BoxDecoration(
-                  color: Color(0x0707BCFD),
+                  color: Colors.grey[100],
                 ),
                 margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
@@ -271,7 +272,7 @@ class HistoryStream extends StatelessWidget {
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10)),
-                    color: Color(0x0707BCFD),
+                    color: Colors.grey[100],
                   ),
                   margin: EdgeInsets.fromLTRB(10, 50, 10, 0),
                   padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),

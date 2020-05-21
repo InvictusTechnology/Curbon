@@ -1,4 +1,5 @@
 import 'package:curbonapp/constant.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:curbonapp/components/icon_container_home.dart';
 
@@ -18,21 +19,6 @@ class PreviousTripCard extends StatelessWidget {
 
   EdgeInsetsGeometry _marginContainer =
       EdgeInsets.only(left: 14, right: 14, top: 2.5);
-
-  Widget infoText(String text) {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: Text(
-        text,
-        maxLines: 1,
-        style: TextStyle(
-            color: Colors.grey[100],
-            fontSize: 15.5,
-            fontWeight: FontWeight.w500,
-            height: 1.6),
-      ),
-    );
-  }
 
   Widget resultText(String text) {
     return Align(
@@ -70,20 +56,33 @@ class PreviousTripCard extends StatelessWidget {
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: Container(
+              Container(
+                  width: 50,
                   child: Column(
-                    children: <Widget>[
-                      infoText('To:'),
-                      infoText('From:'),
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'To:',
+                        style: TextStyle(
+                            color: Colors.grey[200],
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15.5,
+                            height: 1.6),
+                      ),
+                      Text(
+                        'From:',
+                        style: TextStyle(
+                            color: Colors.grey[200],
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15.5,
+                            height: 1.6),
+                      )
                     ],
-                  ),
-                ),
-              ),
+                  )),
               Expanded(
-                flex: 5,
                 child: Container(
                   child: Column(
                     children: <Widget>[

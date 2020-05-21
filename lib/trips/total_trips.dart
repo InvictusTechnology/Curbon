@@ -96,7 +96,7 @@ class TotalTripsState extends State<TotalTrips> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 1,
+      aspectRatio: 1.23,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),

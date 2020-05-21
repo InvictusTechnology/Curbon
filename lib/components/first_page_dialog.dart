@@ -1,4 +1,3 @@
-import 'package:curbonapp/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -38,7 +37,7 @@ class CustomDialog extends StatelessWidget {
               color: Colors.grey[100],
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(padding),
-              boxShadow: kBoxShadow,
+              boxShadow: [BoxShadow(color: Colors.grey[700])],
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,

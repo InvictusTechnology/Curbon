@@ -1,3 +1,4 @@
+import 'package:curbonapp/trips/charts_selectors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -145,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 30, right: 30, top: 7.5),
+                  margin: EdgeInsets.only(left: 30, right: 30, top: 2.5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -167,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(bottom: 15),
+                  margin: EdgeInsets.only(bottom: 10),
                   child: FlatButton(
                     highlightColor: Colors.transparent,
                     onPressed: () {
@@ -183,6 +184,28 @@ class _HomeScreenState extends State<HomeScreen> {
                       carbon: widget.tripList[0].carbon,
                     ),
                   ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CarbonTotal(widget.tripList, () {
+                      setState(() {
+                        _selectedChart = 'Chart 3';
+                      });
+                    }, _selectedChart == 'Chart 3' ? 72 : 60),
+                    SizedBox(width: 20),
+                    MostTransport(widget.tripList, () {
+                      setState(() {
+                        _selectedChart = 'Chart 2';
+                      });
+                    }, _selectedChart == 'Chart 2' ? 72 : 60),
+                    SizedBox(width: 20),
+                    TripsTotal(widget.tripList, () {
+                      setState(() {
+                        _selectedChart = 'Chart 1';
+                      });
+                    }, _selectedChart == 'Chart 1' ? 72 : 60)
+                  ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -250,7 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onTap: onTapped,
       child: Container(
         width: 100,
-        margin: EdgeInsets.only(top: 20, bottom: 0),
+        margin: EdgeInsets.only(top: 10, bottom: 0),
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 6.5),
         decoration: BoxDecoration(
           borderRadius: borderRadius,

@@ -51,7 +51,7 @@ class IconContainer extends StatelessWidget {
 
     return Icon(
       transportIcon,
-      size: 46,
+      size: 30,
       color: Colors.white,
     );
   }
@@ -68,9 +68,9 @@ class IconContainer extends StatelessWidget {
               transport,
               textAlign: TextAlign.center,
               style: TextStyle(
-                  fontSize: 18.5,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white),
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200]),
             )
           ],
         ),

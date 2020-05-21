@@ -99,7 +99,7 @@ class _TransportChoiceChartState extends State<TransportChoiceChart> {
                 Expanded(
                   flex: 1,
                   child: AspectRatio(
-                    aspectRatio: 1.23,
+                    aspectRatio: 1.3,
                     child: PieChart(
                       PieChartData(
                           pieTouchData:
@@ -119,7 +119,7 @@ class _TransportChoiceChartState extends State<TransportChoiceChart> {
                             show: false,
                           ),
                           sectionsSpace: 0,
-                          centerSpaceRadius: 40,
+                          centerSpaceRadius: 35,
                           sections: showingSections()),
                     ),
                   ),
