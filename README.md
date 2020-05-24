@@ -10,18 +10,18 @@ An APK has been provided in a Google Drive link (ask one of our admins for a lin
 Or you build the APK on your own by cloning this project, then on the terminal type the following code
             flutter build apk
 
-# Functionalities
-## User Profile
+## Functionalities
+### User Profile
 Users can create and register their account from 3 different providers, default Firebase account (email and password), Google and Facebook
 
-## Map Screen
+### Map Screen
 A map will be displayed in the second tab of Navigation bar.
 It will be used to get user's location as starting point. Then, user can also add the destination address (also starting address).
 
-## Result Screen
+### Result Screen
 
-## History Trips
+### History Trips
 
-## Visualisation
+### Visualisation
 
-## External Links
+### External Links
