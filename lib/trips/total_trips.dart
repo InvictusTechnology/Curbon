@@ -124,7 +124,7 @@ class TotalTripsState extends State<TotalTrips> {
                     'Number of Trips',
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 22,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
                   Text(

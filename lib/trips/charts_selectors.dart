@@ -1,5 +1,6 @@
 import 'package:curbonapp/trips/trips_constructor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_circular_text/circular_text.dart';
 
 // ignore: must_be_immutable
 class MostTransport extends StatefulWidget {
@@ -132,6 +133,26 @@ class _MostTransportState extends State<MostTransport>
                       end: Alignment.topCenter,
                     ))),
           ),
+          CircularText(
+              children: [
+                TextItem(
+                  text: Text(
+                    "MOST USED TRANSPORT".toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 28,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  space: 8,
+                  startAngle: -90,
+                  startAngleAlignment: StartAngleAlignment.center,
+                  direction: CircularTextDirection.clockwise,
+                ),
+              ],
+              radius: 160,
+              position: CircularTextPosition.inside,
+              backgroundPaint: Paint()..color = Colors.transparent),
           GestureDetector(
             onTap: widget.onTapped,
             child: Container(
@@ -206,6 +227,26 @@ class _TripsTotalState extends State<TripsTotal> with TickerProviderStateMixin {
                       end: Alignment.topCenter,
                     ))),
           ),
+          CircularText(
+              children: [
+                TextItem(
+                  text: Text(
+                    "TRIPS THIS WEEK".toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 28,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  space: 8,
+                  startAngle: -90,
+                  startAngleAlignment: StartAngleAlignment.center,
+                  direction: CircularTextDirection.clockwise,
+                ),
+              ],
+              radius: 160,
+              position: CircularTextPosition.inside,
+              backgroundPaint: Paint()..color = Colors.transparent),
           GestureDetector(
             onTap: widget.onTapped,
             child: Container(
@@ -291,6 +332,26 @@ class _CarbonTotalState extends State<CarbonTotal>
               ),
             ),
           ),
+          CircularText(
+              children: [
+                TextItem(
+                  text: Text(
+                    "EMITTED THIS WEEK".toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 28,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  space: 8,
+                  startAngle: -90,
+                  startAngleAlignment: StartAngleAlignment.center,
+                  direction: CircularTextDirection.clockwise,
+                ),
+              ],
+              radius: 160,
+              position: CircularTextPosition.inside,
+              backgroundPaint: Paint()..color = Colors.transparent),
           GestureDetector(
             onTap: widget.onTapped,
             child: Container(

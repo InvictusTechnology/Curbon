@@ -44,9 +44,11 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final _auth = FirebaseAuth.instance;
   FirebaseUser loggedInUser;
+  // For animation
+  bool _isReady;
   String _selectedChart = 'Chart 3';
 
   Widget infoText(String text) {
@@ -82,6 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _isReady = false;
     getCurrentUser();
   }
 
@@ -96,7 +99,13 @@ class _HomeScreenState extends State<HomeScreen> {
       if (user != null) {
         loggedInUser = user;
       }
+      setState(() {
+        _isReady = true;
+      });
     } catch (e) {
+      setState(() {
+        _isReady = true;
+      });
       throw e;
     }
   }
@@ -133,6 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
           return;
         },
         child: Scaffold(
+          backgroundColor: Colors.grey[100],
           bottomNavigationBar: BottomBar(
             selectedIndex: 0,
           ),
@@ -152,7 +162,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 30, top: 10, right: 30),
+                  margin:
+                      EdgeInsets.only(left: 30, top: 10, right: 30, bottom: 5),
                   child: Text(
                     'Let\'s see your previous trip:',
                     style: TextStyle(fontSize: 17.5, color: Colors.grey[700]),
@@ -181,46 +192,62 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 10),
-                  child: FlatButton(
-                    highlightColor: Colors.transparent,
-                    onPressed: () {
-                      if (widget.tripList[0].transport != '') {
-                        Navigator.pushNamed(context, '/history');
-                      }
-                    },
-                    child: PreviousTripCard(
-                      destination: widget.tripList[0].destination,
-                      starting: widget.tripList[0].starting,
-                      distance: widget.tripList[0].distance,
-                      transport: widget.tripList[0].transport,
-                      carbon: widget.tripList[0].carbon,
+                AnimatedSize(
+                  vsync: this,
+                  duration: Duration(seconds: 1),
+                  curve: Curves.easeOut,
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    height: _isReady ? null : 0,
+                    child: FlatButton(
+                      highlightColor: Colors.transparent,
+                      onPressed: () {
+                        if (widget.tripList[0].transport != '') {
+                          Navigator.pushNamed(context, '/history');
+                        }
+                      },
+                      child: PreviousTripCard(
+                        destination: widget.tripList[0].destination,
+                        starting: widget.tripList[0].starting,
+                        distance: widget.tripList[0].distance,
+                        transport: widget.tripList[0].transport,
+                        carbon: widget.tripList[0].carbon,
+                      ),
                     ),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CarbonTotal(widget.tripList, () {
-                      setState(() {
-                        _selectedChart = 'Chart 3';
-                      });
-                    }, _selectedChart == 'Chart 3' ? 72 : 60),
-                    SizedBox(width: 20),
-                    MostTransport(widget.tripList, () {
-                      setState(() {
-                        _selectedChart = 'Chart 2';
-                      });
-                    }, _selectedChart == 'Chart 2' ? 72 : 60),
-                    SizedBox(width: 20),
-                    TripsTotal(widget.tripList, () {
-                      setState(() {
-                        _selectedChart = 'Chart 1';
-                      });
-                    }, _selectedChart == 'Chart 1' ? 72 : 60)
-                  ],
-                ),
+                widget.tripList[0].transport == ''
+                    ? Text('')
+                    : Container(
+                        margin: EdgeInsets.symmetric(horizontal: 30),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(75)),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CarbonTotal(widget.tripList, () {
+                              setState(() {
+                                _selectedChart = 'Chart 3';
+                              });
+                            }, _selectedChart == 'Chart 3' ? 75 : 60),
+                            SizedBox(width: 20),
+                            MostTransport(widget.tripList, () {
+                              setState(() {
+                                _selectedChart = 'Chart 2';
+                              });
+                            }, _selectedChart == 'Chart 2' ? 75 : 60),
+                            SizedBox(width: 20),
+                            TripsTotal(widget.tripList, () {
+                              setState(() {
+                                _selectedChart = 'Chart 1';
+                              });
+                            }, _selectedChart == 'Chart 1' ? 75 : 60)
+                          ],
+                        ),
+                      ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[

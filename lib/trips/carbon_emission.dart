@@ -20,6 +20,7 @@ class CarbonEmissionChart extends StatefulWidget {
 
 class _CarbonEmissionChartState extends State<CarbonEmissionChart> {
   double c1 = 0, c2 = 0, c3 = 0, c4 = 0, c5 = 0, c6 = 0, c7 = 0;
+  double biggest;
   List vv = [];
   String getDay(DateTime dateTime) {
     var format = DateFormat('E');
@@ -63,11 +64,18 @@ class _CarbonEmissionChartState extends State<CarbonEmissionChart> {
         c7 = c7 + double.parse(widget.tripList[i].carbon);
       }
     }
+    List numbers = [c1, c2, c3, c4, c5, c6, c7];
+    for (int i = 0; i <= numbers.length - 1; i++) {
+      if (numbers[i] >= biggest) {
+        biggest = numbers[i];
+      }
+    }
   }
 
   @override
   void initState() {
     super.initState();
+    biggest = 0.0;
     getPerDay();
   }
 
@@ -98,9 +106,9 @@ class _CarbonEmissionChartState extends State<CarbonEmissionChart> {
                   'Your Carbon Emission',
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 25,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      letterSpacing: 1),
+                      letterSpacing: 0),
                   textAlign: TextAlign.center,
                 ),
                 Text(
@@ -206,8 +214,7 @@ class _CarbonEmissionChartState extends State<CarbonEmissionChart> {
           ),
           // ignore: missing_return
           getTitles: (value) {
-            vv.add(value);
-            if (vv.last <= 10) {
+            if (biggest <= 10) {
               switch (value.toInt()) {
                 case 2:
                   return '2';
@@ -221,7 +228,21 @@ class _CarbonEmissionChartState extends State<CarbonEmissionChart> {
                   return '10';
               }
               return '';
-            } else if (vv.last <= 100) {
+            } else if (biggest <= 100) {
+              switch (value.toInt()) {
+                case 20:
+                  return '20';
+                case 40:
+                  return '40';
+                case 60:
+                  return '60';
+                case 80:
+                  return '80';
+                case 100:
+                  return '100';
+              }
+              return '';
+            } else {
               switch (value.toInt()) {
                 case 100:
                   return '100';
@@ -235,7 +256,7 @@ class _CarbonEmissionChartState extends State<CarbonEmissionChart> {
                   return '500';
               }
               return '';
-            } else {}
+            }
           },
           margin: 8,
           reservedSize: 30,

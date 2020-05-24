@@ -109,7 +109,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         hasVerified = loggedInUser.isEmailVerified;
         name = user.displayName;
         email = user.email;
-        print('just reached');
         if (user.photoUrl != null) userPhoto = user.photoUrl;
         final ref = FirebaseStorage.instance
             .ref()
@@ -121,7 +120,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           setState(() {
             showSpinner = false;
             hasProfilePic = true;
-            print(userPhoto);
           });
         } catch (e) {
           setState(() {
@@ -331,15 +329,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.only(top: 20, bottom: 20),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(color: Colors.grey[400]))),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, '/intro_pages');
-                          },
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/intro_pages');
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(top: 20, bottom: 20),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(color: Colors.grey[400]))),
                           child: Row(
                             children: <Widget>[
                               Icon(
@@ -356,15 +354,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.only(top: 20, bottom: 20),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(color: Colors.grey[400]))),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, '/how');
-                          },
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/how');
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(top: 20, bottom: 20),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(color: Colors.grey[400]))),
                           child: Row(
                             children: <Widget>[
                               Icon(
@@ -381,12 +379,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.only(top: 20, bottom: 20),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, '/about');
-                          },
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/about');
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(top: 20, bottom: 20),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(color: Colors.grey[400]))),
                           child: Row(
                             children: <Widget>[
                               Icon(
@@ -396,6 +397,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               SizedBox(width: 5),
                               Text(
                                 'About us',
+                                style: TextStyle(fontSize: 16),
+                                textAlign: TextAlign.left,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/tips_list');
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(top: 20, bottom: 20),
+                          decoration: BoxDecoration(),
+                          child: Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.filter_list,
+                                color: themeColor,
+                              ),
+                              SizedBox(width: 5),
+                              Text(
+                                'List of tips',
                                 style: TextStyle(fontSize: 16),
                                 textAlign: TextAlign.left,
                               ),

@@ -16,10 +16,12 @@ class HistoryScreen extends StatefulWidget {
   _HistoryScreenState createState() => _HistoryScreenState();
 }
 
-class _HistoryScreenState extends State<HistoryScreen> {
+class _HistoryScreenState extends State<HistoryScreen>
+    with TickerProviderStateMixin {
   final _auth = FirebaseAuth.instance;
   bool showSpinner;
   bool isEdited;
+  bool _isReady;
   List<Trips> tripList = [];
 
   void getCurrentUserData() async {
@@ -28,11 +30,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
       currentUser = user;
       setState(() {
         showSpinner = false;
+        _isReady = true;
       });
     } catch (e) {
       print(e);
       setState(() {
         showSpinner = false;
+        _isReady = true;
       });
       throw e;
     }
@@ -41,6 +45,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   void initState() {
     super.initState();
+    _isReady = false;
     showSpinner = true;
     isEdited = false;
     getCurrentUserData();
@@ -98,7 +103,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   ],
                 ),
               ),
-              HistoryStream(isEdited),
+              Expanded(
+                child: AnimatedContainer(
+                  duration: Duration(seconds: 1),
+                  curve: Curves.decelerate,
+                  margin: EdgeInsets.only(top: _isReady ? 0 : 1000),
+                  child: HistoryStream(isEdited),
+                ),
+              ),
             ],
           ),
         ),
@@ -314,10 +326,8 @@ class HistoryStream extends StatelessWidget {
             }
           }
         }
-        return Expanded(
-          child: ListView(
-            children: historyCards,
-          ),
+        return ListView(
+          children: historyCards,
         );
       },
     );

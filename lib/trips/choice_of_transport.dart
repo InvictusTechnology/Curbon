@@ -77,7 +77,7 @@ class _TransportChoiceChartState extends State<TransportChoiceChart> {
                 'Choice of Transport',
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 22,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
             ),

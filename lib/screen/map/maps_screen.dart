@@ -26,7 +26,7 @@ class MapScreen extends StatefulWidget {
   _MapScreenState createState() => _MapScreenState();
 }
 
-class _MapScreenState extends State<MapScreen> {
+class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
   GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: googleAPIKey);
   GoogleMapController mapController;
   Distance distClass = Distance();
@@ -191,35 +191,42 @@ class _MapScreenState extends State<MapScreen> {
         bottomNavigationBar: BottomBar(
           selectedIndex: 1,
         ),
-        floatingActionButton: Visibility(
-          visible: _visibleCalculate,
-          child: FloatingActionButton.extended(
-            heroTag: 'calculate',
-            backgroundColor: themeColor,
-            onPressed: () {
-              double newDistance = distClass.getDistance();
+        floatingActionButton: AnimatedSize(
+          curve: Curves.elasticInOut,
+          vsync: this,
+          duration: Duration(seconds: 1),
+          child: Container(
+            height: _visibleCalculate ? 50 : 0,
+            child: FloatingActionButton.extended(
+              heroTag: 'calculate',
+              backgroundColor: themeColor,
+              onPressed: () {
+                double newDistance = distClass.getDistance();
 
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ResultScreen(
-                    distance: newDistance,
-                    destination: destinationMessage,
-                    starting: startingMessage,
-                    vehicle: selectedVehicle.toString(),
-                    userChoice: userChoice,
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ResultScreen(
+                      distance: newDistance,
+                      destination: destinationMessage,
+                      starting: startingMessage,
+                      vehicle: selectedVehicle.toString(),
+                      userChoice: userChoice,
+                    ),
                   ),
-                ),
-              );
-            },
-            label: Text(
-              'Calculate',
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
-            ),
-            icon: Icon(
-              Icons.add_circle_outline,
-              color: Colors.white,
+                );
+              },
+              label: Text(
+                'Calculate',
+                style: TextStyle(
+                    color:
+                        _visibleCalculate ? Colors.white : Colors.transparent,
+                    fontWeight: FontWeight.w600),
+              ),
+              icon: Icon(
+                Icons.add_circle_outline,
+                color: _visibleCalculate ? Colors.white : Colors.transparent,
+              ),
             ),
           ),
         ),
@@ -325,8 +332,10 @@ class _MapScreenState extends State<MapScreen> {
                           ],
                         )),
                   ),
-                  Visibility(
-                    visible: _visibleTransport,
+                  AnimatedSize(
+                    duration: Duration(seconds: 1),
+                    vsync: this,
+                    curve: Curves.elasticInOut,
                     child: Container(
                       margin: EdgeInsets.symmetric(
                         horizontal: 15,
@@ -335,7 +344,7 @@ class _MapScreenState extends State<MapScreen> {
                         color: Colors.transparent,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      height: 75,
+                      height: _visibleTransport ? 75 : 0,
                       child: ListView(
                         scrollDirection: Axis.horizontal,
                         children: <Widget>[

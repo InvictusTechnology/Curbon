@@ -31,7 +31,8 @@ class ResultScreen extends StatefulWidget {
   _ResultScreenState createState() => _ResultScreenState();
 }
 
-class _ResultScreenState extends State<ResultScreen> {
+class _ResultScreenState extends State<ResultScreen>
+    with TickerProviderStateMixin {
   final _firestore = Firestore.instance;
   FirebaseAuth _auth = FirebaseAuth.instance;
   void _moveToHomeScreen(BuildContext context) =>
@@ -46,6 +47,7 @@ class _ResultScreenState extends State<ResultScreen> {
   int currentPageValue = 0;
   bool showSpinner;
   bool isLevelUp;
+  bool _isReady;
 
   int getPoint() {
     switch (widget.vehicle) {
@@ -129,6 +131,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
     print(isLevelUp);
     setState(() {
+      _isReady = true;
       showSpinner = false;
     });
   }
@@ -250,6 +253,7 @@ class _ResultScreenState extends State<ResultScreen> {
   @override
   void initState() {
     super.initState();
+    _isReady = false;
     setState(() {
       showSpinner = true;
     });
@@ -303,8 +307,8 @@ class _ResultScreenState extends State<ResultScreen> {
                   ),
                   Row(
                     children: <Widget>[
-                      Expanded(
-                        flex: 1,
+                      Container(
+                        width: 75,
                         child: Column(
                           children: <Widget>[
                             infoText('To:'),
@@ -325,56 +329,66 @@ class _ResultScreenState extends State<ResultScreen> {
                       )
                     ],
                   ),
+                  SizedBox(height: 15),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            height: 35,
+                          Text(
+                            'Your transport',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w600),
                           ),
                           Align(
                             alignment: Alignment.topLeft,
-                            child: Container(
-                              width: 150,
-                              height: 100,
-                              padding: EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  boxShadow: kBoxShadow,
-                                  border: Border.all(
-                                    color: Colors.grey[400],
-                                  ),
-                                  borderRadius: BorderRadius.circular(12.5)),
-                              child: Column(
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            right: 7, bottom: 7),
-                                        child: iconChooser(widget.userChoice),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(bottom: 7),
-                                        child: Text(
-                                          widget.vehicle,
-                                          style: TextStyle(
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.bold),
+                            child: AnimatedSize(
+                              vsync: this,
+                              duration: Duration(seconds: 1),
+                              curve: Curves.easeInOutCirc,
+                              child: Container(
+                                width: 150,
+                                height: _isReady ? 100 : 0,
+                                padding: EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: kBoxShadow,
+                                    border: Border.all(
+                                      color: Colors.grey[400],
+                                    ),
+                                    borderRadius: BorderRadius.circular(12.5)),
+                                child: Column(
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              right: 7, bottom: 7),
+                                          child: iconChooser(widget.userChoice),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  Text(
-                                    '$result KgCO2',
-                                    style: TextStyle(fontSize: 20),
-                                  )
-                                ],
+                                        Container(
+                                          margin: EdgeInsets.only(bottom: 7),
+                                          child: Text(
+                                            widget.vehicle,
+                                            style: TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                      '$result KG.CO2',
+                                      style: TextStyle(fontSize: 18),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -387,7 +401,6 @@ class _ResultScreenState extends State<ResultScreen> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Container(
-                              margin: EdgeInsets.only(top: 12.5),
                               child: Text(
                                 'What if',
                                 textAlign: TextAlign.left,
@@ -450,12 +463,29 @@ class _ResultScreenState extends State<ResultScreen> {
                   Expanded(
                     child: ListView(
                       scrollDirection: Axis.vertical,
-                      physics: ClampingScrollPhysics(),
+                      physics: BouncingScrollPhysics(),
                       children: <Widget>[
-                        getTips('1', TipsList().getTitle(tipOne),
-                            TipsList().getContent(tipOne)),
-                        getTips('2', TipsList().getTitle(tipTwo),
-                            TipsList().getContent(tipTwo)),
+                        AnimatedSize(
+                          vsync: this,
+                          duration: Duration(seconds: 1),
+                          curve: Curves.easeInOutCirc,
+                          child: getTips(
+                            '1',
+                            TipsList().getTitle(tipOne),
+                            TipsList().getContent(tipOne),
+                            _isReady ? 10 : 1000,
+                          ),
+                        ),
+                        AnimatedSize(
+                          vsync: this,
+                          duration: Duration(seconds: 1),
+                          curve: Curves.easeInOutCirc,
+                          child: getTips(
+                              '2',
+                              TipsList().getTitle(tipTwo),
+                              TipsList().getContent(tipTwo),
+                              _isReady ? 10 : 1000),
+                        ),
                       ],
                     ),
                   ),
@@ -484,9 +514,10 @@ class _ResultScreenState extends State<ResultScreen> {
     );
   }
 
-  Container getTips(String tipsNumber, String tipsTitle, String tipsContent) {
+  Container getTips(
+      String tipsNumber, String tipsTitle, String tipsContent, double margin) {
     return Container(
-      margin: EdgeInsets.only(top: 10),
+      margin: EdgeInsets.only(top: margin),
       decoration: BoxDecoration(
           boxShadow: kBoxShadow,
           border: Border.all(
@@ -517,7 +548,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     tipsTitle,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
                   ),
                 ),
               ),
@@ -527,7 +558,7 @@ class _ResultScreenState extends State<ResultScreen> {
             alignment: Alignment.topLeft,
             child: Text(
               tipsContent,
-              style: TextStyle(height: 1.5, fontSize: 15),
+              style: TextStyle(height: 1.4, fontSize: 15),
             ),
           )
         ],
@@ -546,43 +577,43 @@ class _ResultScreenState extends State<ResultScreen> {
       return Icon(
         Icons.directions_car,
         size: 35,
-        color: Colors.green[400],
+        color: themeColor,
       );
     } else if (i == 1) {
       return Icon(
         Icons.directions_bus,
         size: 35,
-        color: Colors.green[400],
+        color: themeColor,
       );
     } else if (i == 2) {
       return Icon(
         Icons.tram,
         size: 35,
-        color: Colors.green[400],
+        color: themeColor,
       );
     } else if (i == 3) {
       return Icon(
         Icons.train,
         size: 35,
-        color: Colors.green[400],
+        color: themeColor,
       );
     } else if (i == 4) {
       return Icon(
         Icons.directions_bike,
         size: 35,
-        color: Colors.green[400],
+        color: themeColor,
       );
     } else if (i == 5) {
       return Icon(
         Icons.directions_walk,
         size: 35,
-        color: Colors.green[400],
+        color: themeColor,
       );
     } else {
       return Icon(
         Icons.motorcycle,
         size: 35,
-        color: Colors.green[400],
+        color: themeColor,
       );
     }
   }

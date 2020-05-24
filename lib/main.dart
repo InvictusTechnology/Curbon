@@ -1,6 +1,7 @@
 import 'package:curbonapp/screen/home/history_screen.dart';
 import 'package:curbonapp/screen/profile/about_us.dart';
 import 'package:curbonapp/screen/profile/how_this_works.dart';
+import 'package:curbonapp/screen/profile/list_tips.dart';
 import 'package:curbonapp/screen/visualisation/visualisation1.dart';
 import 'package:curbonapp/screen/visualisation/visualisation2.dart';
 import 'package:firebase_analytics/observer.dart';
@@ -62,6 +63,7 @@ class MainApp extends StatelessWidget {
         '/profile': (context) => ProfileScreen(),
         '/registration': (context) => RegistrationScreen(),
         '/splash': (context) => SplashScreen(),
+        '/tips_list': (context) => TipsListScreen(),
         '/visualisation': (context) => VisualisationScreen(),
         '/vizz1': (context) => VisualisationOne(),
         '/vizz2': (context) => VisualisationTwo(),

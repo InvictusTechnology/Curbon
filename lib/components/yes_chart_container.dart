@@ -27,7 +27,7 @@ class _ShowChartState extends State<ShowChart> {
           scrollDirection: Axis.vertical,
           children: [
             Container(
-              padding: EdgeInsets.only(left: 30, right: 30, top: 5, bottom: 10),
+              padding: EdgeInsets.only(left: 30, right: 30, top: 5, bottom: 0),
               child: (() {
                 if (widget.selectedChart == 'Chart 1') {
                   return TotalTrips(tripList: widget.tripList);
