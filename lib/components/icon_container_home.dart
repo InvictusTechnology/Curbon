@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Simple class for icon of vehicle in the HomeScreen, designed only to fit Home page
 // ignore: must_be_immutable
 class IconContainer extends StatelessWidget {
   String transport;

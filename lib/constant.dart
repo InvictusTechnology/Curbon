@@ -1,5 +1,23 @@
 import 'package:flutter/material.dart';
 
+// Constants for chart buttons color
+const kInactiveChart = LinearGradient(
+  colors: const [
+    Color(0xFF2D4261),
+    Color(0xFF1f316e),
+  ],
+  begin: Alignment.bottomCenter,
+  end: Alignment.topCenter,
+);
+const kActiveChart = LinearGradient(
+  colors: const [
+    Color(0xFF5ab2e8),
+    Color(0xFF9ad7fc),
+  ],
+  begin: Alignment.bottomCenter,
+  end: Alignment.topCenter,
+);
+
 // Constant for boxShadow
 const kBoxShadow = [
   BoxShadow(

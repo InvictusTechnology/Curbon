@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Icon component for other usage (other than Home page)
 class IconContent extends StatelessWidget {
   IconContent({this.icon, this.label});
 

@@ -29,10 +29,12 @@ void main() {
 
 // ignore: must_be_immutable
 class MainApp extends StatelessWidget {
-  FirebaseAnalytics analytics = FirebaseAnalytics();
+  FirebaseAnalytics analytics =
+      FirebaseAnalytics(); // Firebase analytics to analyse the user's behaviour in using the app
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
+      // This will prevent the device orientation, only force it to stay vertical
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);

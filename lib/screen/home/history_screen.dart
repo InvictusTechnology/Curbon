@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:curbonapp/trips/trips_constructor.dart';
 
+// Instances for cloud firestore and Firebase users
 final _firestore = Firestore.instance;
 FirebaseUser currentUser;
 
@@ -18,12 +19,13 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen>
     with TickerProviderStateMixin {
-  final _auth = FirebaseAuth.instance;
+  final _auth = FirebaseAuth.instance; // for authentication
   bool showSpinner;
   bool isEdited;
   bool _isReady;
   List<Trips> tripList = [];
 
+  // get the current user
   void getCurrentUserData() async {
     try {
       final user = await _auth.currentUser();
@@ -85,6 +87,7 @@ class _HistoryScreenState extends State<HistoryScreen>
                       ],
                     ),
                     FlatButton(
+                        // used for users if they want to remove that trip from history
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         onPressed: () {
                           setState(() {
@@ -119,11 +122,13 @@ class _HistoryScreenState extends State<HistoryScreen>
   }
 }
 
+// StreamBuilder class for History trips
 // ignore: must_be_immutable
 class HistoryStream extends StatelessWidget {
   bool isEdited;
   HistoryStream(this.isEdited);
 
+  // a toast showing the error message
   void showErrorToast() {
     Fluttertoast.showToast(
         msg: "An error has occurred, please try again",
@@ -135,6 +140,7 @@ class HistoryStream extends StatelessWidget {
         fontSize: 16.0);
   }
 
+  // a toast showing successful message
   void showToast() {
     Fluttertoast.showToast(
         msg: "Successfully deleted the trip",
@@ -204,6 +210,7 @@ class HistoryStream extends StatelessWidget {
     );
   }
 
+  // format DateTime into humanreadable time
   String getTime(int epoch) {
     var formatTime = DateFormat('H:mm');
     DateTime time = DateTime.fromMillisecondsSinceEpoch(epoch);

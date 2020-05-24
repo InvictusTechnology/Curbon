@@ -1,6 +1,7 @@
 import 'package:curbonapp/constant.dart';
 import 'package:flutter/material.dart';
 
+// This class is to create the BottomBarNavigation components. To prevent repititive codes, it'd be best to keep in one file and reuse it
 // ignore: must_be_immutable
 class BottomBar extends StatefulWidget {
   int selectedIndex;

@@ -1,3 +1,4 @@
+// A constructor or model to get the distance to be passed around between classes
 class Distance {
   double distance;
 

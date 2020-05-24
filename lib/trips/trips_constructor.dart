@@ -1,3 +1,4 @@
+// class for trips constructor that will be used when creating the user trip history
 class Trips {
   String destination;
   String starting;

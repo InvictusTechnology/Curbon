@@ -14,8 +14,9 @@ class _VisualisationScreenState extends State<VisualisationScreen>
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
+      // ignore: missing_return
       onWillPop: () {
-        return Navigator.pushReplacementNamed(context, '/loading_home');
+        Navigator.pushReplacementNamed(context, '/loading_home');
       },
       child: Scaffold(
         backgroundColor: Colors.white,

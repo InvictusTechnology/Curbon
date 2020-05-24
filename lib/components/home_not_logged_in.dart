@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:curbonapp/components/bottom_navigation_bar.dart';
 import 'package:curbonapp/constant.dart';
 
+// This class is used to create a duplicate screen of Home page, but only used if user is not logged in yet
 class HomeNotLoggedIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

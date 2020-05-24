@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audio_cache.dart';
 
+// Component to create a dialog when leveling up, to be shown in the Result screen
 class LevelUpDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -14,6 +15,7 @@ class LevelUpDialog extends StatelessWidget {
     );
   }
 
+  // This will play a sound when level up
   void playSound() {
     print('Clicked');
     final player = AudioCache();

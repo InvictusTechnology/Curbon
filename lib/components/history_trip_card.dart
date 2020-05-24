@@ -1,6 +1,7 @@
 import 'package:curbonapp/constant.dart';
 import 'package:flutter/material.dart';
 
+// This class is used to create the card containing trip history information. Used in HistoryScreen
 // ignore: must_be_immutable
 class HistoryCard extends StatefulWidget {
   String destination;

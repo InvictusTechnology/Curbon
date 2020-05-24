@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Indicator class widget will be used in ChoiceOfTransport class
 class Indicator extends StatelessWidget {
   final Color color;
   final String text;

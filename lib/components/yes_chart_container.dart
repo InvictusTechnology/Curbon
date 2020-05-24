@@ -4,6 +4,7 @@ import 'package:curbonapp/trips/total_trips.dart';
 import 'package:curbonapp/trips/choice_of_transport.dart';
 import 'package:curbonapp/trips/trips_constructor.dart';
 
+// This component is called in Home page if user has data to be shown in the chart
 // ignore: must_be_immutable
 class ShowChart extends StatefulWidget {
   List<Trips> tripList;

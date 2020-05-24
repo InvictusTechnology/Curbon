@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:curbonapp/components/icon_container_home.dart';
 
+// This is a component to be called in the Home page showing the previous trip
 // ignore: must_be_immutable
 class PreviousTripCard extends StatelessWidget {
   String destination;

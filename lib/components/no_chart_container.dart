@@ -1,6 +1,7 @@
 import 'package:curbonapp/constant.dart';
 import 'package:flutter/material.dart';
 
+// This class is called when user has nothing to show in the Home page chart
 class ShowNoChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

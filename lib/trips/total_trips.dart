@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'trips_constructor.dart';
 
+// Calculate the total trips each day within 7 days
 // ignore: must_be_immutable
 class TotalTrips extends StatefulWidget {
   List<Trips> tripList;

@@ -95,40 +95,43 @@ class _ResultScreenState extends State<ResultScreen>
   }
 
   void setProfile() async {
-    int newPoint = getPoint();
-    final user = await _auth.currentUser();
-    var point;
-    var level;
-    var profile = await _firestore
-        .collection('profile')
-        .where('user', isEqualTo: user.email)
-        .getDocuments();
+    try {
+      int newPoint = getPoint();
+      final user = await _auth.currentUser();
+      var point;
+      var level;
+      var profile = await _firestore
+          .collection('profile')
+          .where('user', isEqualTo: user.email)
+          .getDocuments();
 
-    for (var doc in profile.documents) {
-      point = doc.data['point'];
-      level = doc.data['level'];
-    }
-    point = point + newPoint;
-    if (point >= 100) {
-      point = point - 100;
-      level = level + 1;
-      isLevelUp = true;
-      showDialog(
-          context: context,
-          builder: (context) {
-            Future.delayed(Duration(seconds: 2), () {
-              Navigator.of(context).pop(true);
+      for (var doc in profile.documents) {
+        point = doc.data['point'];
+        level = doc.data['level'];
+      }
+      point = point + newPoint;
+      if (point >= 100) {
+        point = point - 100;
+        level = level + 1;
+        isLevelUp = true;
+        showDialog(
+            context: context,
+            builder: (context) {
+              Future.delayed(Duration(seconds: 2), () {
+                Navigator.of(context).pop(true);
+              });
+              return LevelUpDialog();
             });
-            return LevelUpDialog();
-          });
-    } else {
-      isLevelUp = false;
+      } else {
+        isLevelUp = false;
+      }
+      await _firestore
+          .collection('profile')
+          .document(user.email)
+          .updateData({'point': point, 'level': level});
+    } catch (e) {
+      print('++++');
     }
-    await _firestore
-        .collection('profile')
-        .document(user.email)
-        .updateData({'point': point, 'level': level});
-
     print(isLevelUp);
     setState(() {
       _isReady = true;

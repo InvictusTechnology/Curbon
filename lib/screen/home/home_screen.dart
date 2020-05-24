@@ -2,6 +2,7 @@ import 'package:curbonapp/trips/charts_selectors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:curbonapp/constant.dart';
 import 'package:curbonapp/components/bottom_navigation_bar.dart';
 import 'package:curbonapp/components/yes_chart_container.dart';
 import 'package:curbonapp/trips/trips_constructor.dart';
@@ -9,23 +10,6 @@ import 'package:curbonapp/components/previous_trip_card.dart';
 import 'package:flutter/services.dart';
 import 'package:curbonapp/components/no_chart_container.dart';
 import 'package:curbonapp/components/home_not_logged_in.dart';
-
-const kInactiveChart = LinearGradient(
-  colors: const [
-    Color(0xFF2D4261),
-    Color(0xFF1f316e),
-  ],
-  begin: Alignment.bottomCenter,
-  end: Alignment.topCenter,
-);
-const kActiveChart = LinearGradient(
-  colors: const [
-    Color(0xFF5ab2e8),
-    Color(0xFF9ad7fc),
-  ],
-  begin: Alignment.bottomCenter,
-  end: Alignment.topCenter,
-);
 
 // ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
@@ -49,8 +33,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   FirebaseUser loggedInUser;
   // For animation
   bool _isReady;
-  String _selectedChart = 'Chart 3';
+  String _selectedChart = 'Chart 3'; //Initial chart to be shown
 
+  // Simple widget component to be called to show addresses
   Widget infoText(String text) {
     return Align(
       alignment: Alignment.topLeft,
@@ -66,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
+  // Simple widget component to be called to show addresses
   Widget resultText(String text) {
     return Align(
       alignment: Alignment.topLeft,
@@ -85,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _isReady = false;
-    getCurrentUser();
+    getCurrentUser(); // initiate the get current user
   }
 
   @override
@@ -93,6 +79,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  // get current user
   void getCurrentUser() async {
     try {
       final user = await _auth.currentUser();
@@ -305,6 +292,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     }
   }
 
+  // Widget to be called for the change charts buttons
   Widget changeChartButton(
       {Function onTapped,
       LinearGradient selectChart,

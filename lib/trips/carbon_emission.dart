@@ -4,12 +4,14 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:curbonapp/trips/trips_constructor.dart';
 import 'package:intl/intl.dart';
 
+// Constructor to get the day and carbon calculation
 class MonthDays {
   int day;
   double carbon;
   MonthDays({this.day, this.carbon});
 }
 
+// This class is used to create the CarbonEmission chart in HomePage
 // ignore: must_be_immutable
 class CarbonEmissionChart extends StatefulWidget {
   List<Trips> tripList;
@@ -19,16 +21,20 @@ class CarbonEmissionChart extends StatefulWidget {
 }
 
 class _CarbonEmissionChartState extends State<CarbonEmissionChart> {
+  // variables to hold the carbon from each day
   double c1 = 0, c2 = 0, c3 = 0, c4 = 0, c5 = 0, c6 = 0, c7 = 0;
-  double biggest;
-  List vv = [];
+  double biggest; // to get the biggest carbon
+
+  // to format the DateTime into a human readable day
   String getDay(DateTime dateTime) {
     var format = DateFormat('E');
     var dayString = format.format(dateTime);
     return dayString;
   }
 
+  // Calculate the carbon emission each day for the last 7 days (from today)
   void getPerDay() {
+    // get the number of day, from today - 6
     var dayMinOne =
         DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
     var dayMinTwo = DateTime(
@@ -44,6 +50,7 @@ class _CarbonEmissionChartState extends State<CarbonEmissionChart> {
     var dayMinSeven = DateTime(
         DateTime.now().year, DateTime.now().month, DateTime.now().day - 6);
 
+    // Run a loop to read the list of trips passed previously in Loading_Home, match with the date, then add to the matching carbonPerDay
     for (int i = 0; i <= widget.tripList.length - 1; i++) {
       int epochNumber = widget.tripList[i].date;
       DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(epochNumber);
@@ -64,6 +71,7 @@ class _CarbonEmissionChartState extends State<CarbonEmissionChart> {
         c7 = c7 + double.parse(widget.tripList[i].carbon);
       }
     }
+    // To get the highest number of carbon, so the label will look better depending on the carbon
     List numbers = [c1, c2, c3, c4, c5, c6, c7];
     for (int i = 0; i <= numbers.length - 1; i++) {
       if (numbers[i] >= biggest) {
@@ -75,7 +83,7 @@ class _CarbonEmissionChartState extends State<CarbonEmissionChart> {
   @override
   void initState() {
     super.initState();
-    biggest = 0.0;
+    biggest = 0.0; // set biggest to 0
     getPerDay();
   }
 

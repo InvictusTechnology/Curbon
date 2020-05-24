@@ -1,6 +1,7 @@
 import 'package:curbonapp/constant.dart';
 import 'package:flutter/material.dart';
 
+// This class is called in the Map Screen for user to choose a transport
 class VehicleCard extends StatelessWidget {
   VehicleCard(
       {@required this.colorBorder,

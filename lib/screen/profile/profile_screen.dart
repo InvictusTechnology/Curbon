@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:curbonapp/signin/signin_google.dart';
+import 'package:curbonapp/signin/signin_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:curbonapp/components/bottom_navigation_bar.dart';
@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:curbonapp/constant.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -158,8 +159,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        return Navigator.pushReplacementNamed(
-            context, loggedInUser != null ? 'loading_home' : '/');
+        Navigator.pushReplacementNamed(
+            context, loggedInUser != null ? '/loading_home' : '/');
       },
       child: Scaffold(
         backgroundColor: Colors.grey[100],
@@ -356,7 +357,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, '/how');
+                          launch(
+                              'http://34.86.96.123/2020/05/24/how-it-works/');
                         },
                         child: Container(
                           padding: EdgeInsets.only(top: 20, bottom: 20),
@@ -371,7 +373,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               SizedBox(width: 5),
                               Text(
-                                'How this works',
+                                'How it works',
                                 style: TextStyle(fontSize: 16),
                                 textAlign: TextAlign.left,
                               ),
@@ -381,7 +383,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, '/about');
+                          launch('http://34.86.96.123/');
                         },
                         child: Container(
                           padding: EdgeInsets.only(top: 20, bottom: 20),
@@ -397,6 +399,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               SizedBox(width: 5),
                               Text(
                                 'About us',
+                                style: TextStyle(fontSize: 16),
+                                textAlign: TextAlign.left,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          launch(
+                              'http://34.86.96.123/2020/05/24/ethical-and-social-responsibilities/');
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(top: 20, bottom: 20),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(color: Colors.grey[400]))),
+                          child: Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.star_border,
+                                color: themeColor,
+                              ),
+                              SizedBox(width: 5),
+                              Text(
+                                'Ethical and social responsibilities',
                                 style: TextStyle(fontSize: 16),
                                 textAlign: TextAlign.left,
                               ),

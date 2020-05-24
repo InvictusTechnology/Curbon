@@ -1,7 +1,9 @@
 import 'package:curbonapp/trips/trips_constructor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_circular_text/circular_text.dart';
+// INTRO: this file is used to store classes for the circular widget in HomePage
 
+// Show the most transport being used within the last 7 days
 // ignore: must_be_immutable
 class MostTransport extends StatefulWidget {
   List<Trips> tripList;
@@ -26,6 +28,7 @@ class _MostTransportState extends State<MostTransport>
   String type;
   IconData icon;
 
+  // Increment the transport chosen if that transport is in the list
   int getHighest() {
     for (var trip in widget.tripList) {
       String transport = trip.transport;
@@ -189,6 +192,7 @@ class _MostTransportState extends State<MostTransport>
   }
 }
 
+// Show the total trips taken in the last 7 days
 // ignore: must_be_immutable
 class TripsTotal extends StatefulWidget {
   List<Trips> tripList;
@@ -284,6 +288,7 @@ class _TripsTotalState extends State<TripsTotal> with TickerProviderStateMixin {
   }
 }
 
+// Calculate the total carbon within the last 7 days
 // ignore: must_be_immutable
 class CarbonTotal extends StatefulWidget {
   List<Trips> tripList;

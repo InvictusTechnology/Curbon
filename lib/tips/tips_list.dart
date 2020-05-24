@@ -1,5 +1,9 @@
 import 'package:curbonapp/tips/tips_constructor.dart';
 
+// The list of tips saved in client-side, to make the app run the result screen faster
+// Since the list of tips is still small, it's ok to save it on client-side
+// However, if list keeps growing, it'd be best to keep it on server-side, hence create a StreamBuilder in the list of tips page in Profile section, that will pass 2 random tips to ResultScreen
+// More future developments will be needed to make the tips personalisation better
 class TipsList {
   List<TipsConstructor> _tipsBank = [
     TipsConstructor(
@@ -60,14 +64,17 @@ class TipsList {
             'If you need to make multiple trips, it would be better to combine them in one go. You would be surprise how much it will save you'),
   ];
 
+  // get the total list  to generate the random number
   int getTotalList() {
     return _tipsBank.length;
   }
 
+  // get the content of the selected tips
   String getContent(int i) {
     return _tipsBank[i].content;
   }
 
+  // get the title of selected tips
   String getTitle(int i) {
     return _tipsBank[i].title;
   }

@@ -2,6 +2,7 @@ import 'package:curbonapp/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
+// This widget is called in Visualisation 1 and 2 screens, to show the data visualisation
 Widget chartWidget(
     {String selectedChart, LineChartData lineChartData, String label}) {
   return Padding(
@@ -36,7 +37,7 @@ Widget chartWidget(
                   child: Padding(
                     padding: const EdgeInsets.only(right: 16.0, left: 6.0),
                     child: LineChart(
-                      lineChartData,
+                      lineChartData, // the data of the chart
                       swapAnimationDuration: const Duration(milliseconds: 250),
                     ),
                   ),
@@ -53,6 +54,7 @@ Widget chartWidget(
   );
 }
 
+// An ios design back button used in visualisation 1 and 2 screens
 Widget backButton(BuildContext context) {
   return IconButton(
     icon: Icon(Icons.arrow_back_ios),
@@ -62,6 +64,7 @@ Widget backButton(BuildContext context) {
   );
 }
 
+// This widget is used for the buttons in visualisation 1 and 2 screens
 Container chartButton({Function onPress, String text, bool isSelected}) {
   return Container(
     margin: EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 5),

@@ -8,6 +8,7 @@ import 'package:curbonapp/screen/map/maps_screen.dart';
 import 'package:google_api_availability/google_api_availability.dart';
 import 'package:location/location.dart';
 
+// This screen is used to prepare for Map Screen
 class LoadingScreen extends StatefulWidget {
   @override
   _LoadingScreenState createState() => _LoadingScreenState();
@@ -17,6 +18,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   GooglePlayServicesAvailability _availability =
       GooglePlayServicesAvailability.unknown;
 
+  // Checking GooglePlayServices
   Future<void> checkPlayServices([bool showDialog = false]) async {
     GooglePlayServicesAvailability playStoreAvailability;
     try {
@@ -36,9 +38,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
     super.initState();
-    Platform.isIOS ? getCurrentLocation() : checkPlayServices();
+    Platform.isIOS
+        ? getCurrentLocation()
+        : checkPlayServices(); // Check which platform user is using
   }
 
+  // Get user's current location, then pass it to Map screen
   void getCurrentLocation() async {
     Location location = Location();
     bool _serviceEnabled;

@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+// A class to upload the result from the user to the cloud firestore
 class Uploader {
+  // instances for authentication (user) and cloud firestore
   final _auth = FirebaseAuth.instance;
   final _firestore = Firestore.instance;
+  // variables to hold the values
   String destination;
   String starting;
   String transport;
@@ -18,6 +21,8 @@ class Uploader {
       this.destination,
       this.starting});
 
+  // This will get how much points the user receive from that trip
+  // Points are based on the type of transport user's using
   int getPoint() {
     switch (transport) {
       case 'Bicycle':
@@ -65,36 +70,7 @@ class Uploader {
     }
   }
 
-  void setProfile() async {
-    int newPoint = getPoint();
-    final user = await _auth.currentUser();
-    print(transport);
-    var point;
-    var profile = await _firestore
-        .collection('profile')
-        .where('user', isEqualTo: user.email)
-        .getDocuments();
-
-    for (var doc in profile.documents) {
-      point = doc.data['point'];
-    }
-    point = point + newPoint;
-    if (point >= 100) {
-      point = point - 100;
-      isLevelUp = true;
-    } else {
-      isLevelUp = false;
-    }
-    await _firestore
-        .collection('profile')
-        .document(user.email)
-        .updateData({'point': point});
-  }
-
-  bool getLevelUp() {
-    return isLevelUp;
-  }
-
+  // Upload the result and trip to firestore
   void uploadResult() async {
     try {
       final user = await _auth.currentUser();

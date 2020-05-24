@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'indicator.dart';
 import 'trips_constructor.dart';
 
+// The class is used to show the chart for how many times that particular transport is used
 // ignore: must_be_immutable
 class TransportChoiceChart extends StatefulWidget {
   List<Trips> tripList;

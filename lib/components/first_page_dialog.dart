@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
+// Class component for first page dialog, during registration/login and visualisation
 class CustomDialog extends StatelessWidget {
   final primaryColor = const Color(0xFF26CB7E);
   final grayColor = const Color(0xFF939393);

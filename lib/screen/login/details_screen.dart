@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:curbonapp/constant.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
+// This screen is called when user is registering using emailAndPassword credential, to introduce user to the app
 class UserDetailScreen extends StatefulWidget {
   @override
   _UserDetailScreenState createState() => _UserDetailScreenState();

@@ -46,10 +46,12 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
   String selectedVehicle;
   int userChoice;
 
+  // (Android) if user press back button
   void _moveToHomeScreen(BuildContext context) =>
       Navigator.pushReplacementNamed(
           context, _hasLoggedIn == true ? '/loading_home' : '/');
 
+  // Get starting address location. From coordinates into Google place name
   Future<void> getStartingMessage() async {
     final coordinates = new Coordinates(widget.currentLat, widget.currentLng);
     var addresses =
@@ -72,6 +74,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
         target: LatLng(widget.currentLat, widget.currentLng));
   }
 
+  // Check if user is logged in
   void checkUserLoggedIn(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var email = prefs.getString('email');
@@ -80,12 +83,14 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
     _moveToHomeScreen(context);
   }
 
+  // If there is an error, will show this as a SnackBar
   void onError(PlacesAutocompleteResponse response) {
     homeScaffoldKey.currentState.showSnackBar(
       SnackBar(content: Text(response.errorMessage)),
     );
   }
 
+  // Display Google maps prediction
   Future<void> displayPrediction(
       Prediction p, int i, ScaffoldState scaffold) async {
     if (p != null) {
@@ -112,6 +117,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
     }
   }
 
+  // Add a new marker on the Map screen
   void _onAddMarker(LatLng _mapDest) async {
     setState(() {
       _markers.clear();
@@ -125,12 +131,14 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
     });
   }
 
+  // Create a map controller
   void onMapCreated(controller) {
     setState(() {
       mapController = controller;
     });
   }
 
+  // Set the polylines in Map screen between starting and destination
   setPolylines() async {
     final double distance = await Geolocator().distanceBetween(
       sourceLocation.latitude,
@@ -165,6 +173,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
     });
   }
 
+  // The center location button
   _getLocationButton() async {
     Position position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
