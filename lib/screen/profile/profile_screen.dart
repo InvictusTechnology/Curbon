@@ -158,6 +158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
+      // ignore: missing_return
       onWillPop: () {
         Navigator.pushReplacementNamed(
             context, loggedInUser != null ? '/loading_home' : '/');
@@ -168,9 +169,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         body: ModalProgressHUD(
           inAsyncCall: showSpinner,
           child: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.start,
+            child: ListView(
+              scrollDirection: Axis.vertical,
+              physics: ClampingScrollPhysics(),
               children: [
                 Container(
                   margin: EdgeInsets.only(left: 30, top: 30),
@@ -220,8 +221,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 Container(
                   color: Colors.white,
-                  margin: EdgeInsets.only(top: 10, bottom: 30),
-                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                  margin: EdgeInsets.only(top: 10, bottom: 20),
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,

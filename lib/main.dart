@@ -39,6 +39,12 @@ class MainApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return MaterialApp(
+      builder: (context, child) {
+        return ScrollConfiguration(
+          behavior: MyBehavior(),
+          child: child,
+        );
+      },
       theme: ThemeData(
         fontFamily: 'Assistant',
         brightness: Brightness.light,
@@ -73,5 +79,13 @@ class MainApp extends StatelessWidget {
       initialRoute: '/splash',
       navigatorObservers: [FirebaseAnalyticsObserver(analytics: analytics)],
     );
+  }
+}
+
+class MyBehavior extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
   }
 }

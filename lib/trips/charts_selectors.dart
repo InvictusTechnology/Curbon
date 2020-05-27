@@ -121,7 +121,7 @@ class _MostTransportState extends State<MostTransport>
           AnimatedSize(
             curve: Curves.easeOut,
             vsync: this,
-            duration: Duration(seconds: 2),
+            duration: Duration(milliseconds: 500),
             child: Container(
                 height: widget.size,
                 width: widget.size,
@@ -216,7 +216,7 @@ class _TripsTotalState extends State<TripsTotal> with TickerProviderStateMixin {
           AnimatedSize(
             curve: Curves.easeOut,
             vsync: this,
-            duration: Duration(seconds: 2),
+            duration: Duration(milliseconds: 500),
             child: Container(
                 height: widget.size,
                 width: widget.size,
@@ -320,7 +320,7 @@ class _CarbonTotalState extends State<CarbonTotal>
           AnimatedSize(
             curve: Curves.easeOut,
             vsync: this,
-            duration: Duration(seconds: 2),
+            duration: Duration(milliseconds: 500),
             child: Container(
               height: widget.size,
               width: widget.size,

@@ -100,37 +100,39 @@ class PageOneIntro extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                  margin: EdgeInsets.only(bottom: 40),
-                  child: Image.asset('assets/info1.png')),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                child: Text(
-                  'As we are aware of the world\'s number 1 problem, global warming',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 17),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                    margin: EdgeInsets.only(bottom: 40),
+                    child: Image.asset('assets/info1.png')),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                  child: Text(
+                    'As we are aware of the world\'s number 1 problem, global warming',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 17),
+                  ),
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                child: Text(
-                  'By downloading this app, you have taken the first step to ease the problem',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 17),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                  child: Text(
+                    'By downloading this app, you have taken the first step to ease the problem',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 17),
+                  ),
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                child: Text(
-                  'Your next step is to record all your trips. This would help you progress in reducing the carbon emission',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 17),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  child: Text(
+                    'Your next step is to record all your trips. This would help you progress in reducing the carbon emission',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 17),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -145,29 +147,31 @@ class PageTwoIntro extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                  margin: EdgeInsets.only(bottom: 40),
-                  child: Image.asset('assets/info2.png')),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                child: Text(
-                  'The purpose of data collection in this app is to help you learn about your trip behaviours',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 17),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                    margin: EdgeInsets.only(bottom: 40),
+                    child: Image.asset('assets/info2.png')),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                  child: Text(
+                    'The purpose of data collection in this app is to help you learn about your trip behaviours',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 17),
+                  ),
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                child: Text(
-                  'This would eventually lead you to understand your contribution to the net-zero carbon emission',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 17),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  child: Text(
+                    'This would eventually lead you to understand your contribution to the net-zero carbon emission',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 17),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -183,37 +187,39 @@ class PageThreeIntro extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                  margin: EdgeInsets.only(bottom: 40),
-                  child: Image.asset('assets/info3.png')),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                child: Text(
-                  'We have collected several open datasets to provide you with the most information you can get around carbon emissions',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 17),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                child: Text(
-                  'You can check them out by pressing the Chart button below or from the navigation bar at almost anywhere',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 17),
-                ),
-              ),
-              IconButton(
-                  icon: Icon(
-                    Icons.insert_chart,
-                    size: 40,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                    margin: EdgeInsets.only(bottom: 40),
+                    child: Image.asset('assets/info3.png')),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                  child: Text(
+                    'We have collected several open datasets to provide you with the most information you can get around carbon emissions',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 17),
                   ),
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/visualisation');
-                  })
-            ],
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  child: Text(
+                    'You can check them out by pressing the Chart button below or from the navigation bar at almost anywhere',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 17),
+                  ),
+                ),
+                IconButton(
+                    icon: Icon(
+                      Icons.insert_chart,
+                      size: 40,
+                    ),
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/visualisation');
+                    })
+              ],
+            ),
           ),
         ),
       ),

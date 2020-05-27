@@ -1,4 +1,3 @@
-import 'package:curbonapp/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:curbonapp/components/icon_container_home.dart';
@@ -46,11 +45,16 @@ class PreviousTripCard extends StatelessWidget {
             Color(0xFF1c9c60),
             Color(0xFF1d965e),
           ],
-          begin: Alignment.bottomCenter,
-          end: Alignment.topCenter,
+          begin: Alignment.center,
         ),
         borderRadius: BorderRadius.circular(10),
-        boxShadow: kBoxShadow,
+        boxShadow: [
+          BoxShadow(
+              color: Colors.grey[400],
+              offset: Offset(0, 3),
+              blurRadius: 5,
+              spreadRadius: 2),
+        ],
       ),
       margin: _marginContainer,
       child: Column(

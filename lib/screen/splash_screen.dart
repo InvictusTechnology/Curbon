@@ -39,14 +39,22 @@ class _SplashScreenState extends State<SplashScreen>
       backgroundColor: Color(0xFF1b1b1b),
       body: SafeArea(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Container(
-              margin: EdgeInsets.all(120),
-              child: Image.asset('assets/logo.png'),
+              margin: EdgeInsets.only(top: 120),
+              child: Image.asset(
+                'assets/logo.png',
+                height: 150,
+              ),
             ),
             Container(
-                margin: EdgeInsets.all(100),
-                child: Image.asset('assets/invic.png')),
+                margin: EdgeInsets.only(bottom: 100),
+                child: Image.asset(
+                  'assets/invic.png',
+                  height: 150,
+                )),
           ],
         ),
       ),

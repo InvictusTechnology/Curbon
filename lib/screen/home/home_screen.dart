@@ -203,87 +203,95 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
-                widget.tripList[0].transport == ''
-                    ? Text('')
-                    : Container(
-                        margin: EdgeInsets.symmetric(horizontal: 30),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(75)),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CarbonTotal(widget.tripList, () {
-                              setState(() {
-                                _selectedChart = 'Chart 3';
-                              });
-                            }, _selectedChart == 'Chart 3' ? 75 : 60),
-                            SizedBox(width: 20),
-                            MostTransport(widget.tripList, () {
-                              setState(() {
-                                _selectedChart = 'Chart 2';
-                              });
-                            }, _selectedChart == 'Chart 2' ? 75 : 60),
-                            SizedBox(width: 20),
-                            TripsTotal(widget.tripList, () {
+                Expanded(
+                  child: ListView(
+                    physics: ClampingScrollPhysics(),
+                    children: [
+                      widget.tripList[0].transport == ''
+                          ? Text('')
+                          : Container(
+                              margin: EdgeInsets.symmetric(horizontal: 30),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(75)),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CarbonTotal(widget.tripList, () {
+                                    setState(() {
+                                      _selectedChart = 'Chart 3';
+                                    });
+                                  }, _selectedChart == 'Chart 3' ? 75 : 60),
+                                  SizedBox(width: 20),
+                                  MostTransport(widget.tripList, () {
+                                    setState(() {
+                                      _selectedChart = 'Chart 2';
+                                    });
+                                  }, _selectedChart == 'Chart 2' ? 75 : 60),
+                                  SizedBox(width: 20),
+                                  TripsTotal(widget.tripList, () {
+                                    setState(() {
+                                      _selectedChart = 'Chart 1';
+                                    });
+                                  }, _selectedChart == 'Chart 1' ? 75 : 60)
+                                ],
+                              ),
+                            ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          changeChartButton(
+                              onTapped: () {
+                                setState(() {
+                                  _selectedChart = 'Chart 3';
+                                });
+                              },
+                              selectChart: _selectedChart == 'Chart 3'
+                                  ? kActiveChart
+                                  : kInactiveChart,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10),
+                              ),
+                              title: 'Carbon'),
+                          changeChartButton(
+                              onTapped: () {
+                                setState(() {
+                                  _selectedChart = 'Chart 2';
+                                });
+                              },
+                              selectChart: _selectedChart == 'Chart 2'
+                                  ? kActiveChart
+                                  : kInactiveChart,
+                              title: 'Transport'),
+                          changeChartButton(
+                            onTapped: () {
                               setState(() {
                                 _selectedChart = 'Chart 1';
                               });
-                            }, _selectedChart == 'Chart 1' ? 75 : 60)
-                          ],
-                        ),
+                            },
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10),
+                              bottomRight: Radius.circular(10),
+                            ),
+                            selectChart: _selectedChart == 'Chart 1'
+                                ? kActiveChart
+                                : kInactiveChart,
+                            title: 'Trips',
+                          ),
+                        ],
                       ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    changeChartButton(
-                        onTapped: () {
-                          setState(() {
-                            _selectedChart = 'Chart 3';
-                          });
-                        },
-                        selectChart: _selectedChart == 'Chart 3'
-                            ? kActiveChart
-                            : kInactiveChart,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                        ),
-                        title: 'Carbon'),
-                    changeChartButton(
-                        onTapped: () {
-                          setState(() {
-                            _selectedChart = 'Chart 2';
-                          });
-                        },
-                        selectChart: _selectedChart == 'Chart 2'
-                            ? kActiveChart
-                            : kInactiveChart,
-                        title: 'Transport'),
-                    changeChartButton(
-                      onTapped: () {
-                        setState(() {
-                          _selectedChart = 'Chart 1';
-                        });
-                      },
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
-                      ),
-                      selectChart: _selectedChart == 'Chart 1'
-                          ? kActiveChart
-                          : kInactiveChart,
-                      title: 'Trips',
-                    ),
-                  ],
+                      widget.tripList[0].destination ==
+                              'No record of any address yet'
+                          ? ShowNoChart()
+                          : ShowChart(
+                              tripList: widget.tripList,
+                              selectedChart: _selectedChart),
+                    ],
+                  ),
                 ),
-                widget.tripList[0].destination == 'No record of any address yet'
-                    ? ShowNoChart()
-                    : ShowChart(
-                        tripList: widget.tripList,
-                        selectedChart: _selectedChart),
               ],
             ),
           ),
