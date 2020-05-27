@@ -9,7 +9,7 @@ During development, the emulators that we mostly used to test the functionalitie
 An APK has been provided in a Google Drive link (ask one of our admins for a link)
 Or you build the APK on your own by cloning this project, then on the terminal type the following code
             flutter build apk
-<img src="/Screenshots/first_screen.png />
+<img src="/Screenshots/first_screen.png" />
 
 ## Functionalities
 ### User Profile
