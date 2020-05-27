@@ -9,11 +9,15 @@ During development, the emulators that we mostly used to test the functionalitie
 An APK has been provided in a Google Drive link (ask one of our admins for a link)
 Or you build the APK on your own by cloning this project, then on the terminal type the following code
             flutter build apk
-<img src="/Screenshots/first_screen.png" />
+<img src="/Screenshots/first_screen.png" width="100" />
 
 ## Functionalities
 ### User Profile
 Users can create and register their account from 3 different providers, default Firebase account (email and password), Google and Facebook. Other abilities for users include verifying email address, forgot password, and change profile picture.
+<p float="left">
+  <img src="/Screenshots/register.png" width="100" />
+  <img src="/Screenshots/profile.png" width="100" /> 
+</p>
 
 ### Map Screen
 A map will be displayed in the second tab of Navigation bar.
