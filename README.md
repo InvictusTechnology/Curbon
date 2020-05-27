@@ -8,8 +8,11 @@ The project was created and designed to target broader audience in term of platf
 During development, the emulators that we mostly used to test the functionalities were Google Pixel 3a XL, iPhone 11 and iPhone X
 An APK has been provided in a Google Drive link (ask one of our admins for a link)
 Or you build the APK on your own by cloning this project, then on the terminal type the following code
-            flutter build apk
-<img src="/Screenshots/first_screen.png" width="100" />
+        >> flutter build apk
+  >> test
+<p float="left">
+    <img src="/Screenshots/first_screen.png" width="100" />
+</p>
 
 ## Functionalities
 ### User Profile
