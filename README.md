@@ -46,14 +46,14 @@ As mentioned earlier, Curbon aims to raise the awareness of users and guide them
 Going back to the Home tab, it has 3 different charts at the bottom. We decided that it'd be best to give an overview of user's activity in the last 7 days (including today).The 3 charts represent:
 <p float="left">
     (1) the amount of carbon emission per day
-    (2) choice of transport 
-    (3) total trips per day
+<br>(2) choice of transport 
+<br>(3) total trips per day
 </p>
 However, we again thought that user may not have the ability to get the summary of those information. Therefore, we created a simple circular chart(but can also act as a button), that represent the summary of the previous 3 charts:
 <p float="left">
     (1) total carbon emission for the last 7 days
-    (2) most used/chosen type of transport
-    (3) total trips for the last 7 days 
+<br>(2) most used/chosen type of transport
+<br>(3) total trips for the last 7 days 
 </p>
 <p float="left">
   <img src="/Screenshots/home.png" width="100" />
@@ -77,8 +77,8 @@ The 2 visualisations are generated automatically by downloading the open dataset
 To provide the users with additional information of our application, we have a dedicated website to host information such as:
 <p float="left">
     (1) About us - information about our team, Invictus Technology
-    (2) How it works - how the app works, calculation, and everything else
-    (3) Ethical and social responsibilities - how do we handle user's privacy and other sensitive information
+<br>(2) How it works - how the app works, calculation, and everything else
+<br>(3) Ethical and social responsibilities - how do we handle user's privacy and other sensitive information
 </p>
 By clicking on one of the buttons provided in the Profile tab (shown below), will take the user to our website
 <p float="left">
