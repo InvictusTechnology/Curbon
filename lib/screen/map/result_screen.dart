@@ -251,6 +251,11 @@ class _ResultScreenState extends State<ResultScreen>
       calculationBox(
           choice: 6, transport: 'Motorbike', carbon: motorcycleCarbon),
     ];
+
+    // This will not show the selected user choice in the What-If tab
+    print('deleting');
+    int userChoice = widget.userChoice;
+    whatIfPages.removeAt(userChoice);
   }
 
   @override

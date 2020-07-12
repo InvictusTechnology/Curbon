@@ -20,10 +20,16 @@ class HomeScreen extends StatefulWidget {
   String date;
   String hour;
 
+  List<Trips> tripList30Days;
   List<Trips> tripList;
 
   HomeScreen(
-      {this.hasLoggedIn, this.name, this.date, this.hour, this.tripList});
+      {this.hasLoggedIn,
+      this.name,
+      this.date,
+      this.hour,
+      this.tripList,
+      this.tripList30Days});
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -150,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 ),
                 Container(
                   margin:
-                      EdgeInsets.only(left: 30, top: 10, right: 30, bottom: 5),
+                      EdgeInsets.only(left: 30, top: 0, right: 30, bottom: 0),
                   child: Text(
                     'Let\'s see your previous trip:',
                     style: TextStyle(fontSize: 17.5, color: Colors.grey[700]),
@@ -219,19 +225,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  CarbonTotal(widget.tripList, () {
+                                  CarbonTotal(widget.tripList30Days, () {
                                     setState(() {
                                       _selectedChart = 'Chart 3';
                                     });
                                   }, _selectedChart == 'Chart 3' ? 75 : 60),
                                   SizedBox(width: 20),
-                                  MostTransport(widget.tripList, () {
+                                  MostTransport(widget.tripList30Days, () {
                                     setState(() {
                                       _selectedChart = 'Chart 2';
                                     });
                                   }, _selectedChart == 'Chart 2' ? 75 : 60),
                                   SizedBox(width: 20),
-                                  TripsTotal(widget.tripList, () {
+                                  TripsTotal(widget.tripList30Days, () {
                                     setState(() {
                                       _selectedChart = 'Chart 1';
                                     });
@@ -288,7 +294,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           ? ShowNoChart()
                           : ShowChart(
                               tripList: widget.tripList,
-                              selectedChart: _selectedChart),
+                              selectedChart: _selectedChart,
+                              tripList30Days: widget.tripList30Days,
+                            ),
                     ],
                   ),
                 ),

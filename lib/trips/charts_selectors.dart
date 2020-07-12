@@ -235,7 +235,7 @@ class _TripsTotalState extends State<TripsTotal> with TickerProviderStateMixin {
               children: [
                 TextItem(
                   text: Text(
-                    "TRIPS THIS WEEK".toUpperCase(),
+                    "TOTAL TRIPS LAST 30 DAYS".toUpperCase(),
                     style: TextStyle(
                       fontSize: 28,
                       color: Colors.black,
@@ -341,7 +341,7 @@ class _CarbonTotalState extends State<CarbonTotal>
               children: [
                 TextItem(
                   text: Text(
-                    "EMITTED THIS WEEK".toUpperCase(),
+                    "CARBON EMITTED 30 DAYS".toUpperCase(),
                     style: TextStyle(
                       fontSize: 28,
                       color: Colors.black,

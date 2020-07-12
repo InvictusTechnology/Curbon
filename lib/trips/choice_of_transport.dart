@@ -84,7 +84,7 @@ class _TransportChoiceChartState extends State<TransportChoiceChart> {
             ),
             Container(
               child: Text(
-                'Within the Last 7 Days',
+                'Within the Last 30 Days',
                 style: TextStyle(
                     color: Color(0xff77839a),
                     fontSize: 18,

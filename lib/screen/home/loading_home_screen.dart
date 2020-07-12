@@ -18,6 +18,7 @@ class _LoadingHomeScreenState extends State<LoadingHomeScreen> {
   FirebaseUser loggedInUser;
 
   List<Trips> tripList = [];
+  List<Trips> tripList30Days = [];
 
   @override
   void initState() {
@@ -28,6 +29,37 @@ class _LoadingHomeScreenState extends State<LoadingHomeScreen> {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  void getDocument30Days(String name) async {
+    // Get the millisecondsSinceEpoch to limit the day since last 7 days only
+    var time = DateTime(
+            DateTime.now().year, DateTime.now().month, DateTime.now().day - 30)
+        .millisecondsSinceEpoch;
+
+    var currentUser = loggedInUser.email;
+
+    // Implement the time var to limit the retrieve to end only after D-7
+    final pastTrips30Days = await _firestore
+        .collection('past_trips')
+        .where('user', isEqualTo: currentUser)
+        .orderBy('createdTime', descending: true)
+        .endAt([time]).getDocuments();
+
+    for (var trip in pastTrips30Days.documents) {
+      tripList30Days.add(
+        Trips(
+          destination: trip.data['to'],
+          starting: trip.data['from'],
+          transport: trip.data['transport'],
+          carbon: trip.data['carbon'],
+          distance: trip.data['distance'],
+          user: trip.data['user'],
+          date: trip.data['createdTime'],
+        ),
+      );
+    }
+    getDocument(name);
   }
 
   void getDocument(String name) async {
@@ -74,6 +106,7 @@ class _LoadingHomeScreenState extends State<LoadingHomeScreen> {
             date: dateString,
             hour: hourString,
             tripList: tripList,
+            tripList30Days: tripList30Days,
           ),
         ),
       );
@@ -96,6 +129,7 @@ class _LoadingHomeScreenState extends State<LoadingHomeScreen> {
             date: 'You have no record of any trip',
             hour: '-',
             tripList: tripList,
+            tripList30Days: tripList30Days,
           ),
         ),
       );
@@ -111,7 +145,7 @@ class _LoadingHomeScreenState extends State<LoadingHomeScreen> {
         if (loggedInUser.displayName == null) {
           Navigator.pushReplacementNamed(context, '/detail');
         } else {
-          getDocument(name);
+          getDocument30Days(name);
         }
       } else {
         Navigator.push(

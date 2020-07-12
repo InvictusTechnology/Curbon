@@ -17,37 +17,12 @@ class TotalTripsState extends State<TotalTrips> {
   final Color leftBarColor = const Color(0xFF67ECAB);
   final double width = 18;
 
-  List<BarChartGroupData> rawBarGroups;
-  List<BarChartGroupData> showingBarGroups;
-
-  int d1 = 0, d2 = 0, d3 = 0, d4 = 0, d5 = 0, d6 = 0, d7 = 0;
+  List<BarChartGroupData> showingBarGroups = [];
 
   @override
   void initState() {
     super.initState();
     getPerDay();
-
-    // Assigning the result of calculation to the charts
-    final barGroup1 = makeGroupData(0, d7.toDouble());
-    final barGroup2 = makeGroupData(1, d6.toDouble());
-    final barGroup3 = makeGroupData(2, d5.toDouble());
-    final barGroup4 = makeGroupData(3, d4.toDouble());
-    final barGroup5 = makeGroupData(4, d3.toDouble());
-    final barGroup6 = makeGroupData(5, d2.toDouble());
-    final barGroup7 = makeGroupData(6, d1.toDouble());
-    // Organising them into the bar items
-    final items = [
-      barGroup1,
-      barGroup2,
-      barGroup3,
-      barGroup4,
-      barGroup5,
-      barGroup6,
-      barGroup7,
-    ];
-
-    rawBarGroups = items;
-    showingBarGroups = rawBarGroups;
   }
 
   String getDay(DateTime dateTime) {
@@ -57,40 +32,19 @@ class TotalTripsState extends State<TotalTrips> {
   }
 
   void getPerDay() {
-    var dayMinOne =
-        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-    var dayMinTwo = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 1);
-    var dayMinThree = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 2);
-    var dayMinFour = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 3);
-    var dayMinFive = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 4);
-    var dayMinSix = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 5);
-    var dayMinSeven = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day - 6);
-
-    for (int i = 0; i <= widget.tripList.length - 1; i++) {
-      int epochNumber = widget.tripList[i].date;
-      DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(epochNumber);
-      var newDate = DateTime(dateTime.year, dateTime.month, dateTime.day);
-      if (newDate == dayMinOne) {
-        d1++;
-      } else if (newDate == dayMinTwo) {
-        d2++;
-      } else if (newDate == dayMinThree) {
-        d3++;
-      } else if (newDate == dayMinFour) {
-        d4++;
-      } else if (newDate == dayMinFive) {
-        d5++;
-      } else if (newDate == dayMinSix) {
-        d6++;
-      } else if (newDate == dayMinSeven) {
-        d7++;
+    for (int i = 0; i < 30; i++) {
+      int _numberTrip = 0;
+      var todayDate = DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day - 29 + i)
+          .day; // get the number of today's date
+      print(todayDate);
+      for (var trip in widget.tripList) {
+        var tripDate = DateTime.fromMillisecondsSinceEpoch(trip.date).day;
+        if (tripDate == todayDate) {
+          _numberTrip++;
+        }
       }
+      showingBarGroups.add(makeGroupData(1 + i, _numberTrip.toDouble()));
     }
   }
 
@@ -166,44 +120,59 @@ class TotalTripsState extends State<TotalTrips> {
                               fontWeight: FontWeight.bold,
                               fontSize: 14),
                           margin: 20,
-                          getTitles: (double value) {
+                          getTitles: (value) {
                             switch (value.toInt()) {
-                              case 0:
-                                return getDay(DateTime(
-                                    DateTime.now().year,
-                                    DateTime.now().month,
-                                    DateTime.now().day - 6));
-                              case 1:
-                                return getDay(DateTime(
-                                    DateTime.now().year,
-                                    DateTime.now().month,
-                                    DateTime.now().day - 5));
-                              case 2:
-                                return getDay(DateTime(
-                                    DateTime.now().year,
-                                    DateTime.now().month,
-                                    DateTime.now().day - 4));
-                              case 3:
-                                return getDay(DateTime(
-                                    DateTime.now().year,
-                                    DateTime.now().month,
-                                    DateTime.now().day - 3));
-                              case 4:
-                                return getDay(DateTime(
-                                    DateTime.now().year,
-                                    DateTime.now().month,
-                                    DateTime.now().day - 2));
+                              case 29:
+                                return (DateTime(
+                                            DateTime.now().year,
+                                            DateTime.now().month,
+                                            DateTime.now().day - 0)
+                                        .day)
+                                    .toString();
+                              case 25:
+                                return (DateTime(
+                                            DateTime.now().year,
+                                            DateTime.now().month,
+                                            DateTime.now().day - 4)
+                                        .day)
+                                    .toString();
+                              case 20:
+                                return (DateTime(
+                                            DateTime.now().year,
+                                            DateTime.now().month,
+                                            DateTime.now().day - 9)
+                                        .day)
+                                    .toString();
+                              case 15:
+                                return (DateTime(
+                                            DateTime.now().year,
+                                            DateTime.now().month,
+                                            DateTime.now().day - 14)
+                                        .day)
+                                    .toString();
+                              case 10:
+                                return (DateTime(
+                                            DateTime.now().year,
+                                            DateTime.now().month,
+                                            DateTime.now().day - 19)
+                                        .day)
+                                    .toString();
                               case 5:
-                                return getDay(DateTime(
-                                    DateTime.now().year,
-                                    DateTime.now().month,
-                                    DateTime.now().day - 1));
-                              case 6:
-                                return getDay(DateTime(DateTime.now().year,
-                                    DateTime.now().month, DateTime.now().day));
-                              default:
-                                return '';
+                                return (DateTime(
+                                            DateTime.now().year,
+                                            DateTime.now().month,
+                                            DateTime.now().day - 24)
+                                        .day)
+                                    .toString();
+                              case 1:
+                                return (DateTime(
+                                            DateTime.now().year,
+                                            DateTime.now().month,
+                                            DateTime.now().day - 29)
+                                        .day)
+                                    .toString();
                             }
+                            return '';
                           },
                         ),
                         leftTitles: SideTitles(
