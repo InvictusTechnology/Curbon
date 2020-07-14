@@ -15,7 +15,7 @@ class TotalTrips extends StatefulWidget {
 
 class TotalTripsState extends State<TotalTrips> {
   final Color leftBarColor = const Color(0xFF67ECAB);
-  final double width = 18;
+  final double width = 7.5;
 
   List<BarChartGroupData> showingBarGroups = [];
 
@@ -83,7 +83,7 @@ class TotalTripsState extends State<TotalTrips> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    'Within the Last 7 Days',
+                    'Within the Last 30 Days',
                     style: TextStyle(
                         color: Color(0xff77839a),
                         fontSize: 18,
@@ -231,7 +231,7 @@ class TotalTripsState extends State<TotalTrips> {
   }
 
   BarChartGroupData makeGroupData(int x, double y1) {
-    return BarChartGroupData(barsSpace: 4, x: x, barRods: [
+    return BarChartGroupData(barsSpace: 10, x: x, barRods: [
       BarChartRodData(
         y: y1,
         color: leftBarColor,
